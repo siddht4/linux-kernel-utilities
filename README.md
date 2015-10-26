@@ -1,4 +1,4 @@
-# Linux Kernel Compilation Utilities
+# Linux Kernel Utilities
 ##Script Descriptions##
 ###compile_linux_kernel.sh###
 Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually sellecting options.
