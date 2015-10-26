@@ -70,10 +70,10 @@ if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 	exit 0
 else
 	echo -e "\n\n${PLUS} Compiling your kernel!"
-	$SUDO fakeroot make-kpkg --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers || { echo "Something happened during the compilation process, but I can't help you."; exit 1; }
+	$SUDO fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers || { echo "Something happened during the compilation process, but I can't help you."; exit 1; }
 fi
 
-read -p "[?]Kernel compiled successfully. Would you like to install? (y/N)" -n 1 -r
+read -p "[?] Kernel compiled successfully. Would you like to install? (y/N)" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 	echo -e "\n\nSkipping kernel installation . . ."
 else
