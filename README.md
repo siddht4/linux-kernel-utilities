@@ -6,7 +6,7 @@ Bash script that will poll http://www.kernel.org for available kernels and prese
 **Note:** The user *MUST* save a configuration from the GUI even if defaults are used. The configuration routine will pull the current machine's configuration in to the utility as a base.
 
 ###remove_old_kernels.sh###
-Bash script that will purge **ALL** inactive kernels. This may not purdent for some as this will leave no default / backup safety kernel. Some of us live on the edge. It is highly recommended that a simple reboot be performed before executing this script.
+Bash script that will purge **ALL** inactive kernels. This may not be prudent for some as this will leave no default / backup safety kernel. The only kernel that will remain is the currently loaded version. It is highly recommended that a reboot be performed before executing this script.
 
 ##Usage##
 Configure utilities
