@@ -19,7 +19,7 @@ fi
 
 # Init variables
 NOW=$(date +%h%d_%H-%m-%S)
-VERAPPEND=$(date +.%Y.%m.%d)
+VERAPPEND=$(date +.%y%m%d)
 FOLDER="Build_$NOW"
 OUTPUT="kernel_$NOW.tar.xz"
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential libqt4-dev qt4-qmake"
@@ -58,19 +58,19 @@ echo -e "${PLUS} Launching configuratino GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || { echo "Error occured while running \"make xconfig\"."; exit 1; }
 
 echo -e "${PLUS} Cleaning the source tree and reseting kernel-package parameters . . ."
-$SUDO make-kpkg clean 1>/dev/null 2>/dev/null || { echo "Error occurred while running \"make-kpkg clean\"."; exit 1; }
+	fakeroot make-kpkg clean 1>/dev/null 2>/dev/null || { echo "Error occurred while running \"make-kpkg clean\"."; exit 1; }
 echo -e "\_ ${Green}Cleaned${Reg}"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	echo -e "\n\nYou can build it later with:\nfakeroot make-kpkg --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers"
+	echo -e "\n\nYou can build it later with:\nfakeroot make-kpkg -rootcmd --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers"
 	cleanup
 	echo -e "${Green}[%] Exiting without compilation.${Reg}"
 	popd
 	exit 0
 else
 	echo -e "\n\n${PLUS} Compiling your kernel!"
-	$SUDO fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers || { echo "Something happened during the compilation process, but I can't help you."; exit 1; }
+	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers || { echo "Something happened during the compilation process, but I can't help you."; exit 1; }
 fi
 
 read -p "[?] Kernel compiled successfully. Would you like to install? (y/N)" -n 1 -r

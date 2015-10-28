@@ -24,7 +24,7 @@ check_deps(){
 }
 
 cleanup(){
-	$SUDO rm $OUTPUT -f
+	fakeroot rm $OUTPUT -f
 }
 
 print_kernels(){
