@@ -3,7 +3,7 @@
 # Requires colors.sh - sourced in functions.sh
 
 reqexit(){
-	echo -e "${Red}Response not in the offered list of options. Interpretted as an exit request. Exiting.${Reg}"
+	echo -e "${Red}Response not in the offered list of options. Interpreted as an exit request. Exiting.${Reg}"
 	exit 0
 }
 
