@@ -1,7 +1,8 @@
 # Linux Kernel Utilities
 ##Script Descriptions##
-###cupdate_ubuntu_kernel.sh###
-Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection. It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.
+###update_ubuntu_kernel.sh###
+Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection. It is set to currently filter for kernels at v4.    
+Both **generic** and **lowlatency** choices are provided.
 
 ###compile_linux_kernel.sh###
 Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options.
