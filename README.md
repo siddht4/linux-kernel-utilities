@@ -19,7 +19,7 @@ Configure utilities
     cd linux-kernel-utilities
     chmod +x compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
-To download and install a precompiled Ubuntu kernel from [Ubuntu](https://kernel.ubuntu.com)
+To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 
     ./update_ubuntu_kernel.sh
 
