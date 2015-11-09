@@ -1,4 +1,6 @@
-# Linux Kernel Utilities
+![Project Status: Active][Project Status Image]
+<img align="right" src="https://www.kernel.org/theme/images/logos/tux.png" alt="Linux Logo" title="Tux">
+# Linux Kernel Utilities #
 ##Script Descriptions##
 ###update_ubuntu_kernel.sh###
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection. It is set to currently filter for kernels at v4.    
@@ -33,3 +35,4 @@ To remove ALL non-active kernels
 
 ##TIP##
 For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system. If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
+[Project Status Image]: https://img.shields.io/badge/project-active-green.svg "Project Status: Active"
