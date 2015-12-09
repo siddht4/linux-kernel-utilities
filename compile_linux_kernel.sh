@@ -75,9 +75,9 @@ fi
 
 read -p "[?] Kernel compiled successfully. Would you like to install? (y/N)" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	echo -e "\n\nSkipping kernel installation . . ."
+	echo -e "\n\_ Skipping kernel installation . . ."
 else
-	echo -e "\_ ${Green}Installing kernel . . .${Reg}"
+	echo -e "\n\_ ${Green}Installing kernel . . .${Reg}"
 	$SUDO dpkg -i ../*.deb
 fi
 
