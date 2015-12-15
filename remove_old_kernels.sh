@@ -17,7 +17,7 @@ if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 	echo -e "\n\nExiting kernel removal process."
 	exit 0
 else
-	echo -e "\_ ${Green}Removing ALL old kernels . . .${Reg}"
+	echo -e "\n\_ ${Green}Removing ALL old kernels . . .${Reg}"
 fi
 
 # Ensure root privledges
