@@ -73,8 +73,6 @@ print_kernels(){
 	done
 }
 
-
-
 update(){
 	echo -e "${PLUS} Dependencies"
 	printf "%-20s" "\_ Updating APT"
