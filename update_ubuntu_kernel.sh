@@ -21,6 +21,7 @@ UPDATENEEDED=0
 OS=$(lsb_release -si)
 
 echo -e "${PLUS} Checking OS"
+shopt -s nocasematch
 if [[ "$OS" != "ubuntu" ]]; then
 	echo -n -e "[?] ${Red}This script is intended to update an Ubuntu distro. ${Cyan}${OS}${Red} detected ... continue anyway? (y/N) ${Reg}"
 	read INPUT
