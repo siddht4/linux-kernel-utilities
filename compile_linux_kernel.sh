@@ -83,9 +83,10 @@ else
 	if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 		echo -e "\n\_ Skipping wifi installation . . ."
 	else
-	. ./dkms-wifi.sh
-	echo -e "\n\n${PLUS} Compiling wifi driver and installing . . "
-	dkms-wifi-install
+		. ./dkms-wifi.sh
+		echo -e "\n\n${PLUS} Compiling wifi driver and installing . . "
+		dkms-wifi-install
+	fi
 fi
 
 cleanup
