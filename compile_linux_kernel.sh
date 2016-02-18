@@ -79,14 +79,6 @@ if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 else
 	echo -e "\n\_ ${Green}Installing kernel . . .${Reg}"
 	$SUDO dpkg -i ../*.deb
-	read -p "[?] Kernel installed successfully. Would you like to purge and reinstall external wifi driver [rtl8812AU_8821AU]? (y/N)" -n 1 -r
-	if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-		echo -e "\n\_ Skipping wifi installation . . ."
-	else
-		. ./dkms-wifi.sh
-		echo -e "\n\n${PLUS} Compiling wifi driver and installing . . "
-		dkms-wifi-install
-	fi
 fi
 
 cleanup
