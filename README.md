@@ -15,7 +15,7 @@ Bash script that will poll http://www.kernel.org for available kernels and prese
 Bash script that will purge **ALL** inactive kernels. This may not be prudent for some as this will leave no default / backup safety kernel. The only kernel that will remain is the currently loaded version. It is highly recommended that a reboot be performed before executing this script.
 
 ##Usage##
-Download and enable utilities
+Download and enable scripts
 
     git clone git@github.com:mtompkins/linux-kernel-utilities.git
     cd linux-kernel-utilities
