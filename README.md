@@ -17,7 +17,7 @@ Bash script that will purge **ALL** inactive kernels. This may not be prudent fo
 ##Usage##
 Download and enable scripts
 
-    git clone git@github.com:mtompkins/linux-kernel-utilities.git
+    git clone https://github.com/mtompkins/linux-kernel-utilities.git
     cd linux-kernel-utilities
     chmod +x compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
