@@ -11,6 +11,10 @@ clear
 # Ensure root privledges
 SUDO=''
 
+if (( $EUID != 0 )); then
+	SUDO='sudo'
+fi
+
 # Init variables
 NOW=$(date +%h%d_%H-%m-%S)
 VERAPPEND=$(date +.%y%m%d)
