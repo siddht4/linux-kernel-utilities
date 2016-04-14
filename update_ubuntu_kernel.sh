@@ -59,13 +59,3 @@ get_kernel
 echo -e "${PLUS} Installing kernel . . ."
 ${SUDO} dpkg -i linux*.deb
 echo -e "${Cyan} \_ Done${Reg}\n"
-
-echo -e "\t-----------------------------------------------------------------"
-echo -e "\t---                                                           ---"
-echo -e "\t---  If this script proved handy, buy me an espresso:         ---"
-echo -e "\t---                                                           ---"
-echo -e "\t---   ${Yellow}https://github.com/mtompkins/openAlgo${Reg}                   ---"
-echo -e "\t---                                                           ---"
-echo -e "\t-----------------------------------------------------------------"
-echo -e "\n\n\n"
-
