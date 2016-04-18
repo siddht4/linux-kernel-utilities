@@ -60,14 +60,14 @@ print_kernels(){
 		((COUNT++))
 		if [ $COUNT -eq $INPUT ]; then
 			echo -e "${PLUS} Downloading Kernel"
-			echo -e "\_ Saving as ${Cyan}${OUTPUT}${Reg}"
+			echo -e " \_ Saving as ${Cyan}${OUTPUT}${Reg}"
 			echo -e "\nVer: ${ver}     Output: ${OUTPUT}\n"
+			TEMPFILES+=( "$OUTPUT" )
 			eval curl -# $ver -o "$OUTPUT"
 			err=$?
 			if [ $err -ne 0 ]
 			then
-			    echo -e "${Red}Download source failure. Error code${Reg} $err"
-			    exit $err
+				error "Func: print_kernels" "Download source failure." $err
 			fi
 		fi
 	done
@@ -75,11 +75,55 @@ print_kernels(){
 
 update(){
 	echo -e "${PLUS} Dependencies"
-	printf "%-20s" "\_ Updating APT"
+	printf "%-20s" " \_ Updating APT"
 	$SUDO apt-get update 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}"
-	printf "%-20s" "\_ Installing"
+	printf "%-20s" " \_ Installing"
 	$SUDO apt-get install -y $DEPENDENCIES 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}\n"
 	return 1
 }
+
+countdown(){
+	local txt=$1
+	local secs=$2
+	while [ $secs -gt 0 ]; do
+	echo -ne "$txt $secs\033[0K\r"
+	sleep 1
+	: $((secs--))
+	done
+}
+
+spinner(){
+    local pid=$1
+    local delay=0.25
+    local spinstr='|/-\'
+    while [ "$(ps | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
+
+# TRAPS
+TEMPFILES=( )
+cleanupfiles() {
+  rm -f "${TEMPFILES[@]}"
+}
+trap cleanupfiles 0
+
+error() {
+  local parent_lineno="$1"
+  local message="$2"
+  local code="${3:-1}"
+  if [[ -n "$message" ]] ; then
+    echo -e "\n${Red}Error on or near line ${parent_lineno}:${Reg} ${message} - exiting with status ${code}"
+  else
+    echo -e "\n${Red}Error on or near line ${parent_lineno}${Reg} - exiting with status ${code}"
+  fi
+  exit "${code}"
+}
+trap 'error ${LINENO}' ERR
