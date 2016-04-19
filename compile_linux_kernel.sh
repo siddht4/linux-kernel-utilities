@@ -8,9 +8,11 @@ clear
 
 # Source functions - Simulate prototyping
 # check_deps()
+# check_sign()
 # cleanup()
 # cleanupfiles()
 # error()
+# install_key
 # print_kernels()
 # spinner()
 # update()
@@ -45,12 +47,14 @@ else
 	print_kernels
 fi
 
+check_sign
+
 echo -e "${PLUS} Checking Dependencies"
 check_deps
 
 echo -e "${PLUS} Creating a directory to build your kernel from source."
 mkdir $FOLDER 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
-echo -e "    Directory Created:\t${Cyan}${FOLDER}${Reg}\n"
+echo -e " \_ Directory Created:\t${Cyan}${FOLDER}${Reg}\n"
 
 echo -ne "${PLUS} Extracting your kernel . . . "
 tar xf $OUTPUT -C ./$FOLDER &
@@ -65,9 +69,9 @@ then
 fi
 
 EXTRACTED=$(ls $FOLDER/)
-echo -e "\n    Extracted Folder:\t${Cyan}${FOLDER}/${EXTRACTED}${Reg}\n"
+echo -e "\n \_ Extracted Folder:\t${Cyan}${FOLDER}/${EXTRACTED}${Reg}\n"
 
-pushd $FOLDER/linux*
+pushd $FOLDER/linux* 1>/dev/null 2>/dev/null
 
 echo -e "${PLUS} Launching configuratino GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
@@ -78,13 +82,13 @@ echo -e "\n \_ ${Green}Cleaned${Reg}\n"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	echo -e "\n\nYou can build it later with:\nfakeroot make-kpkg -rootcmd --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers"
+	echo -e "\n\nYou can build it later with:\n   ${Yellow}fakeroot make-kpkg -rootcmd --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers${Reg}"
 	cleanup
-	echo -e "${Green}[%] Exiting without compilation.${Reg}"
+	echo -e "\n\n${Green}[%] Exiting without compilation.${Reg}\n\n"
 	popd 1>/dev/null 2>/dev/null
 	exit 0
 else
-	echo -e "\n${PLUS} Compiling your kernel!"
+	echo -e "\n\n${PLUS} Compiling your kernel!"
 	echo -e " \_ An alert notification will trigger when complete. Time for a stroll . . .\n\n"
 	echo -e "--------------------------------------------------------------------------------------------------"
 	countdown 'Compilation will begin in ' 10

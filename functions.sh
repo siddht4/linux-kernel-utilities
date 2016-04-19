@@ -61,7 +61,7 @@ print_kernels(){
 		if [ $COUNT -eq $INPUT ]; then
 			echo -e "${PLUS} Downloading Kernel"
 			echo -e " \_ Saving as ${Cyan}${OUTPUT}${Reg}"
-			echo -e "\nVer: ${ver}     Output: ${OUTPUT}\n"
+			echo -e "\nURL: ${ver}     Output: ${OUTPUT}\n"
 			TEMPFILES+=( "$OUTPUT" )
 			eval curl -# $ver -o "$OUTPUT"
 			err=$?
@@ -69,8 +69,25 @@ print_kernels(){
 			then
 				error "Func: print_kernels" "Download source failure." $err
 			fi
+			
+			SIGNurl=`sed 's/.xz/.sign/g' <<< ${ver}`
+            SIGNfile=`sed 's/.xz/.sign/g' <<< ${OUTPUT}`
+            TEMPFILES+=( "$SIGNfile" )
+            echo -e "${PLUS} Downloading Signature"
+			echo -e " \_ Saving as ${Cyan}${SIGNfile}${Reg}"
+			echo -e "\nURL: ${SIGNurl}     Output: ${SIGNfile}\n"
+            eval curl -# $SIGNurl -o "$SIGNfile"
+			err=$?
+			if [ $err -ne 0 ]
+			then
+				error "Func: print_kernels" "Download signature file failed." $err
+			fi
 		fi
 	done
+}
+
+install_key(){
+    gpg --recv-keys $CHK_ID
 }
 
 update(){
@@ -127,3 +144,42 @@ error() {
   exit "${code}"
 }
 trap 'error ${LINENO}' ERR
+
+check_sign(){
+    echo -e "\n${PLUS} Checking archive signature"
+    CHK_SIGN=`unxz -c ${OUTPUT} | gpg --verify ${SIGNfile} - 2>&1`
+    CHK_SIGN_MISS_SIG=`grep -o 'public key not found' <<<$CHK_SIGN`
+
+    CHK_ID=`grep -Po -- 'RSA key ID \K\w*' <<< "$CHK_SIGN"`
+
+    if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
+        echo -e "\n[!] The public key for this file was not found in your PGP store."
+        echo -e "[?] Do you want to install ID $CHK_ID:"
+        echo -e "    [Y]es  - Install the RSA key ID for ${Yellow}$CHK_ID${Reg}"
+        echo -e "    [n]o   - Do NOT install ID and EXIT"
+        echo -e "    [s]kip - Do NOT install ID and CONTINUE"
+	
+        echo -n -e "\n\nSelect your desired action: "
+        read INSTALL_ID
+    
+        case $INSTALL_ID in
+            [Nn]*) 
+                echo -e "No"
+                exit 0;
+                ;;
+            [Ss]*) 
+                echo -e "Skip"
+                ;;
+            *) echo -e "Yes"
+                install_key
+                check_sign
+        esac
+    else
+        CHK_SIGN_VALID=`grep -Po -- 'Good signature from' <<< "$CHK_SIGN"`
+        if [[ "$CHK_SIGN_VALID" == "Good signature from" ]] ; then
+            echo -e " \_ Signature validated: ${Green}$CHK_ID${Reg}\n"
+        else
+			error "Func: chk_sign" "Signature invalid. Exiting." 1 
+        fi
+    fi
+}
