@@ -2,7 +2,7 @@
 <img align="right" src="https://www.kernel.org/theme/images/logos/tux.png" alt="Linux Logo" title="Tux">
 # Linux Kernel Utilities
 ##Descriptions
-----
+
 ###Compile a kernel from source
 ####compile_linux_kernel.sh
 Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.
