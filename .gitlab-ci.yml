@@ -1,4 +1,6 @@
 bats:
   script:
     - export PATH="/usr/local/bin:$PATH"
+    - which bats
+    - which bash
     - bash ./tests-compile.bats 
