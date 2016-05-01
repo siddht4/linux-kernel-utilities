@@ -4,12 +4,12 @@ load tests-helper
 
 # Executes before each test
 setup {
-	echo "Unused"
+	echo "Unused" >&2
 }
 
 # Executes after each test
 teardown {
-	echo "Unused"
+	echo "Unused" >&2
 }
 
 ## Test to ensure BATS itself is working
