@@ -27,8 +27,5 @@ load tests-helper
 	[ "$?" -eq 0 ]
 }
 
-@test "Source main script" {
-	source "${BATS_TEST_DIRNAME}/compile_linux_kernel.sh"
-	[ "$?" -eq 0 ]
-}
+
 
