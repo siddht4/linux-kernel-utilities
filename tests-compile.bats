@@ -17,6 +17,8 @@ load tests-helper
 
 	rm -f "$TEST_FILE"
 	ls -lh
+	echo $?
+	echo "${status}"
 	[ "$status" -eq 0 ]
 }
 
