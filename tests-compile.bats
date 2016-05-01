@@ -16,7 +16,7 @@ load tests-helper
 	echo "content" > "$TEST_FILE"
 
 	rm -f "$TEST_FILE"
-	[ "$status" -eq "" ]
+	[ "$output" -eq "" ]
 }
 
 ## Test compile_linux_kernel
