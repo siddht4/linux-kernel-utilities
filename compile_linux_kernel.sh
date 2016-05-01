@@ -6,7 +6,7 @@ clear
 # Source terminal colors
 . ./colors.sh
 
-# Source functions - Simulate prototyping
+# Simulate prototyping
 # check_deps()
 # check_sign()
 # cleanup()
@@ -16,6 +16,7 @@ clear
 # print_kernels()
 # spinner()
 # update()
+# Source functions
 . ./functions.sh
 
 # Ensure root privledges
@@ -25,14 +26,8 @@ if (( $EUID != 0 )); then
 	SUDO='sudo'
 fi
 
-# Init variables
-NOW=$(date +%h%d_%H-%m-%S)
-VERAPPEND=$(date +.%y%m%d)
-FOLDER="Build_$NOW"
-OUTPUT="kernel_$NOW.tar.xz"
-DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin gnupg"
-UPDATENEEDED=0
-PLUS="${Cyan}[+]${Reg}"
+# Source variables
+. ./compile_variables.sh
 
 if [ "$#" -gt 1 ]; then
 	usage
