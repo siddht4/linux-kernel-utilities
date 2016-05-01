@@ -3,13 +3,13 @@
 load tests-helper
 
 # Executes before each test
-function setup {
-
+setup {
+	echo "Unused"
 }
 
 # Executes after each test
-function teardown {
-
+teardown {
+	echo "Unused"
 }
 
 ## Test to ensure BATS itself is working
