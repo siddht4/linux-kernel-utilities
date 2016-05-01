@@ -2,11 +2,31 @@
 
 load tests-helper
 
+# Executes before each test
+function setup {
+
+}
+
+# Executes after each test
+function teardown {
+
+}
+
 ## Test to ensure BATS itself is working
 
 @test "Confirm BATS is working properly" {
 	result="$(echo 2+2 | bc)"
 	[ "$result" -eq 4 ]
+}
+
+## Test local folder write permission
+@test "Test local folder write permission" {
+	local TEST_FILE='test_file'
+	touch "$TEST_FILE"
+	echo "content" > "$TEST_FILE"
+
+	rm -f "$TEST_FILE"
+	[ "$status" -eq 0 ]
 }
 
 ## Test compile_linux_kernel
