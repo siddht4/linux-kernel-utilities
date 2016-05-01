@@ -16,6 +16,7 @@ load tests-helper
 	echo "content" > "$TEST_FILE"
 
 	rm -f "$TEST_FILE"
+	ls -lh
 	[ "$status" -eq 0 ]
 }
 
