@@ -16,10 +16,7 @@ load tests-helper
 	echo "content" > "$TEST_FILE"
 
 	rm -f "$TEST_FILE"
-	ls -lh
-	echo $?
-	echo "${status}"
-	[ "$status" -eq 0 ]
+	[ "$status" -eq "" ]
 }
 
 ## Test compile_linux_kernel
