@@ -1,3 +1,4 @@
 bats:
   script:
+    - export PATH="/usr/local/bin:$PATH"
     - bash ./tests-compile.bats 
