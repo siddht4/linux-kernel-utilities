@@ -42,3 +42,8 @@ load tests-helper
 	run check_deps
 	[ "$?" -eq 0 ]
 }
+
+@test "Test print_kernels" {
+	run print_kernels
+	[ "$?" -eq 0 ]
+}

@@ -41,9 +41,12 @@ print_kernels(){
 		printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
 		[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
 	done
+	
 	NUMOPTS=$COUNT
 	COUNT=0
+}
 
+select_kernel(){
 	echo -n -e "\n\nSelect your desired kernel: "
 	read INPUT
 	# Check for non-integer

@@ -19,13 +19,6 @@ clear
 # Source functions
 . ./functions.sh
 
-# Ensure root privledges
-SUDO=''
-
-if (( $EUID != 0 )); then
-	SUDO='sudo'
-fi
-
 # Source variables
 . ./compile_variables.sh
 
@@ -39,8 +32,11 @@ if [ "$#" -eq 1 ]; then
 	OUTPUT=$1
 else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
-	print_kernels
 fi
+
+print_kernels
+
+select_kernel
 
 check_sign
 
