@@ -11,15 +11,20 @@ This script will also check the downloaded archive against the PGP signature fil
 ----
 ### Download precompiled Ubuntu kernel
 #### update_ubuntu_kernel.sh
-Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection. It is set to currently filter for kernels at v4.    
+Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.    
+It is set to currently filter for kernels at v4.    
 Both **generic** and **lowlatency** choices are provided.
 
-**Note:** The user *MUST* save a configuration from the GUI even if defaults are used. The configuration routine will pull the current machine's configuration in to the utility as a base.
+**Note:** The user *MUST* save a configuration from the GUI even if defaults are used.    
+The configuration routine will pull the current machine's configuration in to the utility as a base.
 
 ----
 ### Remove all inactive kernels
 #### remove_old_kernels.sh
-Bash script that will purge **ALL** inactive kernels. This may not be prudent for some as this will leave no default / backup safety kernel. The only kernel that will remain is the currently loaded version. It is highly recommended that a reboot be performed before executing this script.
+Bash script that will purge **ALL** inactive kernels.    
+This may not be prudent for some as this will leave no default / backup safety kernel.    
+The only kernel that will remain is the currently loaded version.    
+It is highly recommended that a reboot be performed before executing this script.
 
 ----
 ## Usage
@@ -48,4 +53,5 @@ To remove ALL non-active kernels
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.
 
 ## TIP
-For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system. If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
+For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
+If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
