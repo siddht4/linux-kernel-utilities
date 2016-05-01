@@ -37,5 +37,8 @@ load tests-helper
 	[ "$?" -eq 0 ]
 }
 
-
-
+# Test functions
+@test "Test check_deps" {
+	run check_deps
+	[ "$?" -eq 0 ]
+}
