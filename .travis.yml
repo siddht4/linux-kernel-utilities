@@ -1,6 +1,6 @@
 before_install:
   - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
-  - sudo apt-get install -qq bats
+  - sudo apt-get install -qq bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin gnupg
 script:
   - bats ./unitTesting/tests-compile.bats 
