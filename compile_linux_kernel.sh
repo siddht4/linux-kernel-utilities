@@ -4,7 +4,7 @@
 clear
 
 # Source terminal colors
-. ./colors.sh
+. ./colors
 
 # Simulate prototyping
 # check_deps()
@@ -17,19 +17,22 @@ clear
 # spinner()
 # update()
 # Source functions
-. ./functions.sh
+. ./functions
 
 # Source variables
-. ./compile_variables.sh
+. ./compile_variables
 
 
 if [ "$#" -gt 1 ]; then
 	usage
 fi
+
 if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
 		if [[ "$1" = "latest" ]]; then
 			USE_LATEST=1
+		elif [[ "$1" = "-h" || "$1" = "--help" ]]; then
+			usage
 		else
 			error ${LINENO} "$1 is not a file or does not exist." 1
 		fi

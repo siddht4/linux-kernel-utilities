@@ -59,10 +59,10 @@ To remove ALL non-active kernels
 > Do not run the scripts with `sudo`. They will prompt for elevated priviledges if necessary.
 
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.    
-
-> Unit tests are being incorporated to help detect any Bash errors.
->
-> Internally Gitlab CI is used in conjunction with [BATS](https://github.com/sstephenson/bats)
+## CI & Unit Testing
+> Internal: Gitlab & Gitlab CI    
+> External: Github & Travis CI    
+> [BATS](https://github.com/sstephenson/bats)
 
 ## TIP
 For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    

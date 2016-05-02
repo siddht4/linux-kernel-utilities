@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Requires colors.sh - sourced in functions.sh
+# Requires `colors` - sourced in `functions`
 
 reqexit(){
 	echo -e "${Red}Response not in the offered list of options. Interpreted as an exit request. Exiting.${Reg}"
@@ -193,4 +193,9 @@ check_sign(){
 			error "Func: chk_sign" "Signature invalid. Exiting." 1 
         fi
     fi
+}
+
+usage(){
+	echo -e "\n TO DO: Create usage feedback"
+	exit 0
 }

@@ -1,3 +1,3 @@
 bats:
   script:
-    - bats ./tests-compile.bats 
+    - bats ./unitTesting/tests-compile.bats 
