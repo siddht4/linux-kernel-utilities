@@ -1,4 +1,5 @@
-![Project Status: Active](https://img.shields.io/badge/project-active-green.svg)[![Build Status](https://travis-ci.org/mtompkins/linux-kernel-utilities.svg?branch=master)](https://travis-ci.org/mtompkins/linux-kernel-utilities)
+![Project Status: Active](https://img.shields.io/badge/project-active-green.svg)
+[[ Internal ]https://git.marktompkins.me/mtompkins/linux-kernel-utilities/badges/master/build.svg](https://git.marktompkins.me/mtompkins/linux-kernel-utilities)[[External](https://travis-ci.org/mtompkins/linux-kernel-utilities.svg?branch=master)](https://travis-ci.org/mtompkins/linux-kernel-utilities)
 <img align="right" src="https://www.kernel.org/theme/images/logos/tux.png" alt="Linux Logo" title="Tux">
 # Linux Kernel Utilities
 ## Descriptions
