@@ -33,8 +33,10 @@ if [ "$#" -eq 1 ]; then
 		else
 			error ${LINENO} "$1 is not a file or does not exist." 1
 		fi
+	else
+		OUTPUT=$1
 	fi
-	OUTPUT=$1
+	
 else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
 fi
@@ -42,6 +44,8 @@ fi
 print_kernels
 
 select_kernel
+
+get_kernel
 
 check_sign
 

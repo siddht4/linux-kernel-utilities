@@ -63,7 +63,9 @@ select_kernel(){
 			reqexit
 		fi
 	fi
-	
+}
+
+get_kernel(){
 	echo ""
 	for ver in $(echo -e $TOTAL); do
 		((COUNT++))
