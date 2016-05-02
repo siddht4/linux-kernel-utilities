@@ -34,9 +34,17 @@ Download and enable scripts
     cd linux-kernel-utilities
     chmod +x compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
-To compile a kernel
+To compile a kernel with manual selection
 
     ./compile_linux_kernel.sh
+
+To compile the latest kernel
+
+    ./compile_linux_kernel.sh latest
+
+To compile a kernel from a local archive file
+
+    ./compile_linux_kernel.sh linux-4.5.2.tar.xz
 
 To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 
@@ -53,7 +61,7 @@ To remove ALL non-active kernels
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.    
 
 > Unit tests are being incorporated to help detect any Bash errors.
-> 
+>
 > Internally Gitlab CI is used in conjunction with [BATS](https://github.com/sstephenson/bats)
 
 ## TIP

@@ -47,15 +47,21 @@ print_kernels(){
 }
 
 select_kernel(){
-	echo -n -e "\n\nSelect your desired kernel: "
-	read INPUT
-	# Check for non-integer
-	if ! [ $INPUT -eq $INPUT 2>/dev/null ]; then
-		reqexit
-	fi
-	# Check for non-offerred option
-	if [ $INPUT -gt $NUMOPTS ]; then
-		reqexit
+	if [[ $USE_LATEST -eq 1 ]] ; then
+		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
+		INPUT=1
+	else
+		echo -n -e "\n\nSelect your desired kernel: "
+		read INPUT
+	
+		# Check for non-integer
+		if ! [ $INPUT -eq $INPUT 2>/dev/null ]; then
+			reqexit
+		fi
+		# Check for non-offerred option
+		if [ $INPUT -gt $NUMOPTS ]; then
+			reqexit
+		fi
 	fi
 	
 	echo ""

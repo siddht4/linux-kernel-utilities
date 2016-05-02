@@ -47,3 +47,15 @@ load tests-helper
 	run print_kernels
 	[ "$?" -eq 0 ]
 }
+
+@test "Test select_kernel" {
+	run select_kernel
+	[ "$?" -eq 0 ]
+}
+
+@test "Test select_kernel latest" {
+	USE_LATEST=1
+	NUMOPTS=1
+	run select_kernel latest
+	[ "$?" -eq 0 ]
+}

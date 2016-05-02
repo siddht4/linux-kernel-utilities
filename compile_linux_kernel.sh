@@ -22,12 +22,17 @@ clear
 # Source variables
 . ./compile_variables.sh
 
+
 if [ "$#" -gt 1 ]; then
 	usage
 fi
 if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
-		error ${LINENO} "$1 is not a file or does not exist." 1
+		if [[ "$1" = "latest" ]]; then
+			USE_LATEST=1
+		else
+			error ${LINENO} "$1 is not a file or does not exist." 1
+		fi
 	fi
 	OUTPUT=$1
 else
