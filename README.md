@@ -3,28 +3,22 @@
 # Linux Kernel Utilities
 ## Descriptions
 
-### Compile a kernel from source
-#### compile_linux_kernel.sh
-Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options.    
-This script will also check the downloaded archive against the PGP signature file.
+### Compile a kernel from source: `compile_linux_kernel.sh`
+Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.
 
 ----
-### Download precompiled Ubuntu kernel
-#### update_ubuntu_kernel.sh
-Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.    
-It is set to currently filter for kernels at v4.    
-Both **generic** and **lowlatency** choices are provided.
+### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
+Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
+It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.
 
-**Note:** The user *MUST* save a configuration from the GUI even if defaults are used.    
+**Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
 
 ----
-### Remove all inactive kernels
-#### remove_old_kernels.sh
+### Remove all inactive kernels: `remove_old_kernels.sh`
 Bash script that will purge **ALL** inactive kernels.    
-This may not be prudent for some as this will leave no default / backup safety kernel.    
-The only kernel that will remain is the currently loaded version.    
-It is highly recommended that a reboot be performed before executing this script.
+
+This may not be prudent for some as this will leave no default / backup safety kernel. The only kernel that will remain is the currently loaded version. It is highly recommended that a reboot be performed before executing this script.
 
 ----
 ## Usage
@@ -34,11 +28,11 @@ Download and enable scripts
     cd linux-kernel-utilities
     chmod +x compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
-To compile a kernel with manual selection
+To compile a kernel with manual version selection
 
     ./compile_linux_kernel.sh
 
-To compile the latest kernel
+To compile the latest kernel available (includes release candidates)
 
     ./compile_linux_kernel.sh latest
 
