@@ -1,6 +1,9 @@
 before_install:
   - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
-  - sudo apt-get install -qq bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin gnupg
+  - sudo apt-get install -qq bats 
+  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-devgcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg
 script:
   - bats ./unitTesting/tests-compile.bats 
