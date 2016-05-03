@@ -31,6 +31,7 @@ Download and enable scripts
     cd linux-kernel-utilities
     chmod 550 compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
+### Debian
 To compile a kernel with manual version selection
 
     ./compile_linux_kernel.sh
@@ -43,6 +44,7 @@ To compile a kernel from a local archive file
 
     ./compile_linux_kernel.sh linux-4.5.2.tar.xz
 
+### Ubuntu
 To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 
     ./update_ubuntu_kernel.sh
@@ -51,6 +53,7 @@ To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu
 
     ./update_ubuntu_kernel.sh latest
 
+### General
 To remove ALL non-active kernels
 
     ./remove_old_kernels.sh
