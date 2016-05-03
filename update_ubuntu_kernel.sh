@@ -6,23 +6,10 @@ clear
 # Source terminal colors
 . ./colors
 # Source functions
-. ./ubu_functions
-
-# Ensure root privledges
-SUDO=''
-
-if (( $EUID != 0 )); then
-	SUDO='sudo'
-fi
-
-# Init variables
-NOW=$(date +%h%d_%H-%m-%S)
-VERAPPEND=$(date +.%y%m%d)
-DEPENDENCIES="lynx curl"
-FOLDER="/tmp"
-PLUS="${Cyan}[+]${Reg}"
-UPDATENEEDED=0
-OS=$(lsb_release -si)
+#. ./ubu_functions
+. ./functions
+# Source variables
+. ./variables
 
 echo -e "${PLUS} Checking OS"
 shopt -s nocasematch
@@ -41,8 +28,8 @@ echo -e "${PLUS} Checking Dependencies"
 check_deps
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
-cd $FOLDER 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
-echo -e "${Cyan} \_ Temporary directory access granted:\t${Reg}${FOLDER}\n"
+cd $TMP_FLDR 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
+echo -e "${Cyan} \_ Temporary directory access granted:\t${Reg}${TMP_FLDR}\n"
 
 echo -e "${PLUS} Removing any conflicting remnants . . ."
 if ls /tmp/linux-* 1> /dev/null 2>&1; then
@@ -53,8 +40,10 @@ echo -e "${Cyan} \_ Done${Reg}\n"
 echo -e "${PLUS} Retrieving available kernel choices . . ."
 print_kernels
 
+select_kernel
+
 echo -e "${PLUS} Processing selection"
-get_kernel
+get_precompiled_ubu_kernel
 
 echo -e "${PLUS} Installing kernel . . ."
 ${SUDO} dpkg -i linux*.deb

@@ -2,6 +2,12 @@
 
 # Requires `colors` - sourced in `functions`
 
+get_arch(){
+	echo -en "${Cyan} \_ Determining CPU type: "
+	if [ "$(getconf LONG_BIT)" == "64" ]; then arch=amd64; else arch=i386; fi
+	echo -e "${Yellow}${arch}${Reg}"
+}
+
 reqexit(){
 	echo -e "${Red}Response not in the offered list of options. Interpreted as an exit request. Exiting.${Reg}"
 	exit 0
@@ -49,7 +55,13 @@ print_kernels(){
 select_kernel(){
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
-		INPUT=1
+		if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
+			INPUT=1
+		elif ["${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+			INPUT=$NUMOPTS
+		else
+			error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
+		fi
 	else
 		echo -n -e "\n\nSelect your desired kernel: "
 		read INPUT
@@ -63,9 +75,73 @@ select_kernel(){
 			reqexit
 		fi
 	fi
+
+	# Prompt for Ubuntu Low Latency kernel
+	if ["${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+		echo ""
+
+		# Set low latency default to no	
+		read -p "Do you want the lowlatency kernel? (y/[n]):" lowlatency
+		case "$lowlatency" in
+		   y* | Y*) lowlatency=1 ;;
+		   *) lowlatency=0 ;;
+		esac
+
+		echo ""
+	fi
+	
 }
 
-get_kernel(){
+get_precompiled_ubu_kernel(){
+	get_arch
+	for ver in $(echo -e $TOTAL); do
+		((COUNT++))
+		if [ $COUNT -eq $INPUT ]; then
+			for verd in $(echo -e $DOWN); do
+				((COUNTD++))
+				if [ $COUNTD -eq $INPUT ]; then
+					# Download Kernel
+					if [ "$lowlatency" == "0" ]; then
+						echo -e "${Cyan} \_ Locating source of ${ver} generic kernel packages.${Reg}"
+						get_ubu_shared_header
+						get_ubu_files generic header
+						get_ubu_files generic image
+					elif [ "$lowlatency" == "1" ]; then
+						echo -e "${Cyan} \_ Locating source of ${ver} lowlatency kernel packages.${Reg}"
+						get_ubu_shared_header
+						get_ubu_files lowlatency header
+						get_ubu_files lowlatency image
+					fi
+				fi				
+			done
+		fi
+	done
+	echo -e "${Cyan} \_ Done${Reg}\n"
+}
+
+get_ubu_shared_header(){
+	echo -e "${Cyan} \_ Getting ${ver} shared header . . .${Reg}"
+	eval curl -# -O $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep all | cut -d ' ' -f 4)
+	err=$?
+	if [ $err -ne 0 ]
+	then
+	    echo -e "Download package failure. Error code $err"
+	    exit $err
+	fi
+}
+
+get_ubu_files() {
+	echo -e "${Cyan} \_ Getting ${ver} ${1} ${2}. . .${Reg}"
+	eval curl -# -O $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep "$1" | grep "$2" | grep "$arch" | cut -d ' ' -f 4)
+	err=$?
+	if [ $err -ne 0 ]
+	then
+	    echo -e "Download package failure. Error code $err"
+	    exit $err
+	fi
+}
+
+get_kernel_archive(){
 	echo ""
 	for ver in $(echo -e $TOTAL); do
 		((COUNT++))

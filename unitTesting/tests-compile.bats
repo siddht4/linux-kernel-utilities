@@ -23,7 +23,7 @@ load tests-functions
 }
 
 @test "Confirm variables" {
-	run stat ${BATS_TEST_DIRNAME}/../compile_variables
+	run stat ${BATS_TEST_DIRNAME}/../variables
 	assert_success
 }
 

@@ -2,30 +2,7 @@
 
 # Requires colors.sh - sourced in functions.sh
 
-BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
-MINVER=4
-FIELD=7
 
-reqexit(){
-	echo -e "${Red}Response not in the offered list of options. Interpreted as an exit request. Exiting.${Reg}"
-	exit 0
-}
-
-check_deps(){
-	for dep in $(echo ${DEPENDENCIES} | tr ' ' $'\n'); do
-		printf '\t%-24s' "${dep}"
-		if ! [ -z "`dpkg-query -W 2>&1 | grep $dep`" ]; then
-			echo -e "${Green}Found${Reg}"
-		else
-			echo -e "${Red}Not Found${Reg}"
-			UPDATENEEDED=1
-		fi
-	done
-	echo ""
-	if [ $UPDATENEEDED -eq 1 ]; then
-		update
-	fi
-}
 
 print_kernels(){
 	TOTAL1=""
@@ -44,16 +21,29 @@ print_kernels(){
 	done
 	NUMOPTS=$COUNT
 	COUNT=0
+}
 
-	echo -n -e "\n\nSelect your desired kernel: "
-	read INPUT
-	# Check for non-integer
-	if ! [ $INPUT -eq $INPUT 2>/dev/null ]; then
-		reqexit
-	fi
-	# Check for non-offerred option
-	if [ $INPUT -gt $NUMOPTS ]; then
-		reqexit
+select_kernel() {
+	if [[ $USE_LATEST -eq 1 ]] ; then
+		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
+		if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
+			INPUT=1
+		elif ["${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+			INPUT=$NUMOPTS
+		else
+			error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
+		fi
+	else
+		echo -n -e "\n\nSelect your desired kernel: "
+		read INPUT
+		# Check for non-integer
+		if ! [ $INPUT -eq $INPUT 2>/dev/null ]; then
+			reqexit
+		fi
+		# Check for non-offerred option
+		if [ $INPUT -gt $NUMOPTS ]; then
+			reqexit
+		fi
 	fi
 	
 	echo ""

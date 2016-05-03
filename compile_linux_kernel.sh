@@ -20,7 +20,7 @@ clear
 . ./functions
 
 # Source variables
-. ./compile_variables
+. ./variables
 
 
 if [ "$#" -gt 1 ]; then
@@ -48,7 +48,7 @@ print_kernels
 
 select_kernel
 
-get_kernel
+get_kernel_archive
 
 check_sign
 
@@ -56,11 +56,11 @@ echo -e "${PLUS} Checking Dependencies"
 check_deps
 
 echo -e "${PLUS} Creating a directory to build your kernel from source."
-mkdir $FOLDER 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
-echo -e " \_ Directory Created:\t${Cyan}${FOLDER}${Reg}\n"
+mkdir $CMP_FLDR 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
+echo -e " \_ Directory Created:\t${Cyan}${CMP_FLDR}${Reg}\n"
 
 echo -ne "${PLUS} Extracting your kernel . . . "
-tar xf $OUTPUT -C ./$FOLDER &
+tar xf $OUTPUT -C ./$CMP_FLDR &
 spinner $!
 
 # Check for successful extraction
@@ -71,10 +71,10 @@ then
 	error ${LINENO} "An error occured while extracting the archive." $EXIT_STAT
 fi
 
-EXTRACTED=$(ls $FOLDER/)
-echo -e "\n \_ Extracted Folder:\t${Cyan}${FOLDER}/${EXTRACTED}${Reg}\n"
+EXTRACTED=$(ls $CMP_FLDR/)
+echo -e "\n \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
 
-pushd $FOLDER/linux* 1>/dev/null 2>/dev/null
+pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
 
 echo -e "${PLUS} Launching configuratino GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
