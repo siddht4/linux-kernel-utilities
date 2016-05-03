@@ -16,7 +16,7 @@ reqexit(){
 check_deps(){
 	for dep in $(echo ${DEPENDENCIES} | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
-		if ! [ `dpkg-query -W -f='${Status}\n' $dep | head -n1 | awk '{print $3;}'` = "installed" ]; then
+		if [ `dpkg-query -W -f='${Status}\n' $dep | head -n1 | awk '{print $3;}'` = "installed" ]; then
 			echo -e "${Green}Found${Reg}"
 		else
 			echo -e "${Red}Not Found${Reg}"
@@ -34,25 +34,45 @@ cleanup(){
 }
 
 print_kernels(){
-	echo "Kernels Available from https://www.kernel.org:"
+	
 	TOTAL1=""
 	TOTAL2=""
 	COUNT=0
-	for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
-		TOTAL="${TOTAL}\nhttps://$ver"
+	if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
+		echo "Kernels Available from https://www.kernel.org:"
+		for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
+			TOTAL="${TOTAL}\nhttps://$ver"
+		done
+		echo -ne "\n"
+		for ver in $(echo -e $TOTAL); do
+			((COUNT++))
+			printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
+			[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
 	done
-	echo -ne "\n"
-	for ver in $(echo -e $TOTAL); do
-		((COUNT++))
-		printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
-		[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
+	elif [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
+		for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
+			TOTAL="${TOTAL}\n$ver"
+			DOWN="${DOWN}\n$ver"
+		done
+		echo -ne "\n"
+		for ver in $(echo -e $TOTAL); do
+			((COUNT++))
+			printf ' %-3s Linux %-20s' "${COUNT})" "`echo ${ver##*'/'}|cut -d '>' -f 7 | sed 's/-$//'`"
+			[ $((COUNT%4)) -eq 0 ] && echo -e -n '\n'
 	done
+	elif [ "${BASH_SOURCE[1]}" = "./unitTesting/tests=functions.bash" ]; then
+		echo ""
+	else
+		error "Func: Print_kernel" "Logic error in parsing latest kernel. Exiting." 1 
+	fi
 	
 	NUMOPTS=$COUNT
 	COUNT=0
 }
 
 select_kernel(){
+	
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
 		if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
