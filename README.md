@@ -47,6 +47,9 @@ To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](htt
 
     ./update_ubuntu_kernel.sh
 
+To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com) (includes release candidates)
+
+    ./update_ubuntu_kernel.sh latest
 
 To remove ALL non-active kernels
 
