@@ -77,7 +77,7 @@ select_kernel(){
 	fi
 
 	# Prompt for Ubuntu Low Latency kernel
-	if ["${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+	if [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
 		echo ""
 
 		# Set low latency default to no	
