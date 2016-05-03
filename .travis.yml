@@ -6,4 +6,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq qt5-qmake gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg
 script:
-  - bats ./unitTesting/tests-compile.bats 
+  - bats ./unitTesting/tests-linux-kernel-utilities.bats 
