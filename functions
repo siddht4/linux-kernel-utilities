@@ -16,7 +16,7 @@ reqexit(){
 check_deps(){
 	for dep in $(echo ${DEPENDENCIES} | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
-		if ! [ -z "`dpkg-query -W 2>&1 | grep $dep`" ]; then
+		if ! [ `dpkg-query -W -f='${Status}\n' $dep | head -n1 | awk '{print $3;}'` = "installed" ]; then
 			echo -e "${Green}Found${Reg}"
 		else
 			echo -e "${Red}Not Found${Reg}"
