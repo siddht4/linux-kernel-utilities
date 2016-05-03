@@ -4,16 +4,16 @@
 # Linux Kernel Utilities
 ## Descriptions
 
-### Compile a kernel from source: `compile_linux_kernel.sh`
-Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.
+### Compile a Debian kernel from source: `compile_linux_kernel.sh`
+Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file. This is intended explicitly for **Debian** systems.
+
+**Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
+The configuration routine will pull the current machine's configuration in to the utility as a base.
 
 ----
 ### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
-It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.
-
-**Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
-The configuration routine will pull the current machine's configuration in to the utility as a base.
+It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided. This is intended explicitly for **Ubuntu** and derivatives like **linuxMint**.
 
 ----
 ### Remove all inactive kernels: `remove_old_kernels.sh`
