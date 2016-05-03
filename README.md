@@ -29,7 +29,7 @@ Download and enable scripts
 
     git clone https://github.com/mtompkins/linux-kernel-utilities.git
     cd linux-kernel-utilities
-    chmod +x compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
+    chmod 550 compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
 To compile a kernel with manual version selection
 
