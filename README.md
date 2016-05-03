@@ -62,5 +62,4 @@ To remove ALL non-active kernels
 > [BATS](https://github.com/sstephenson/bats)
 >### TIPS
 >- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
->- For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
->If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
+>- For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system. If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
