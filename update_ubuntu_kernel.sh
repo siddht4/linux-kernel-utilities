@@ -12,9 +12,9 @@ clear
 # Source functions
 . ./functions
 
-if [ "$#" -gt 1 || -f "$1" ]; then
+if [ "$#" -gt 1 ]; then
 	usage
-elif [[ "$1" = "latest" ]]; then
+elif [ "$1" = "latest" ]; then
 	USE_LATEST=1
 else
 	usage
