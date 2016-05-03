@@ -11,11 +11,6 @@ load tests-functions
 }
 
 ## Actual tests
-@test "Test local folder write permission" {
-	run test_write_permission
-	assert_success
-}
-
 # Test Sourcing of Files
 @test "Confirm colors" {
 	run stat ${BATS_TEST_DIRNAME}/../colors
@@ -32,6 +27,16 @@ load tests-functions
 	assert_success
 }
 
+@test "Test local folder write permission" {
+	run test_write_permission
+	assert_success
+}
+
+@test "Test detect architecture" {
+	run test_get_arch
+	assert_success
+}
+
 @test "Test request exit" {
 	run test_reqexit
 	assert_success
@@ -42,18 +47,39 @@ load tests-functions
 	assert_success
 }
 
-@test "Test retrieving kernel list" {
-	run test_print_kernels
+@test "Test retrieving debian kernel archives list" {
+	run test_print_kernels_debian
 	assert_success
 }
 
-@test "Test selecting kernel with latest option" {
-	run test_select_kernel latest
+@test "Test retrieving ubuntu precompiled kernel list" {
+	run test_print_kernels_ubuntu
 	assert_success
 }
 
-@test "Test retrieving the lastest kernel" {
+@test "Test selecting latest kernel option" {
+	run test_select_latest_kernel latest
+	assert_success
+}
+
+#This will download and delete an archive which can be a substantial amount of time
+@test "Test retrieving the lastest debian kernel" {
 	skip
-	run test_get_kernel_latest latest
+	run test_get_latest_debian_kernal latest
+	assert_success
+}
+
+@test "Test feedback spinner" {
+	run test_spinner
+	assert_success
+}
+
+@test "Test countdown timer" {
+	run test_countdown
+	assert_success
+}
+
+@test "Test direct call to update function" {
+	run test_update
 	assert_success
 }

@@ -12,6 +12,11 @@ clear
 # Source functions
 . ./functions
 
+# Set overlap variables
+DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
+						build-essential pkg-config qt5-qmake libnotify-bin gnupg"
+BASEURL=kernel.org
+
 if [ "$#" -gt 1 ]; then
 	usage
 fi

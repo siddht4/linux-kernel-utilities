@@ -24,14 +24,4 @@ TMP_FLDR="/tmp"
 MINVER=4
 FIELD=7
 
-# Dynamically assign dependencies
-if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
-	DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
-					build-essential pkg-config qt5-qmake libnotify-bin gnupg"
-	BASEURL=kernel.org
-elif [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
-	DEPENDENCIES="lynx curl"
-	BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
-else
-	error "Variables: Unknown option" "Logic error in parsing dependencies. Exiting." 1 
-fi
+

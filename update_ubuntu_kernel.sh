@@ -12,6 +12,10 @@ clear
 # Source functions
 . ./functions
 
+# Set overlap variables
+DEPENDENCIES="lynx curl"
+BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
+
 if [ "$#" -gt 1 ]; then
 	usage
 elif [ "$1" = "latest" ]; then

@@ -33,36 +33,47 @@ cleanup(){
 	fakeroot rm $OUTPUT -f
 }
 
+get_debian_list(){
+	for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
+		TOTAL="${TOTAL}\nhttps://$ver"
+	done
+	echo -ne "\n"
+	for ver in $(echo -e $TOTAL); do
+		((COUNT++))
+		printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
+		[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
+	done
+}
+
+get_ubuntu_list(){
+	for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
+		TOTAL="${TOTAL}\n$ver"
+		DOWN="${DOWN}\n$ver"
+	done
+	echo -ne "\n"
+	for ver in $(echo -e $TOTAL); do
+		((COUNT++))
+		printf ' %-3s Linux %-20s' "${COUNT})" "`echo ${ver##*'/'}|cut -d '>' -f 7 | sed 's/-$//'`"
+		[ $((COUNT%4)) -eq 0 ] && echo -e -n '\n'
+	done
+}
+
 print_kernels(){
-	
 	TOTAL1=""
 	TOTAL2=""
 	COUNT=0
-	if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
-		echo "Kernels Available from https://www.kernel.org:"
-		for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
-			TOTAL="${TOTAL}\nhttps://$ver"
-		done
-		echo -ne "\n"
-		for ver in $(echo -e $TOTAL); do
-			((COUNT++))
-			printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
-			[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
-	done
-	elif [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+	if [ "`basename "$0"`" = "compile_linux_kernel.sh" ]; then
+		echo -e "Kernels Available from https://www.kernel.org:"
+		get_debian_list
+	elif [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
 		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
-		for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
-			TOTAL="${TOTAL}\n$ver"
-			DOWN="${DOWN}\n$ver"
-		done
-		echo -ne "\n"
-		for ver in $(echo -e $TOTAL); do
-			((COUNT++))
-			printf ' %-3s Linux %-20s' "${COUNT})" "`echo ${ver##*'/'}|cut -d '>' -f 7 | sed 's/-$//'`"
-			[ $((COUNT%4)) -eq 0 ] && echo -e -n '\n'
-	done
-	elif [ "${BASH_SOURCE[1]}" = "./unitTesting/tests=functions.bash" ]; then
-		echo ""
+		get_ubuntu_list
+	elif [ "`basename "$0"`" = "bats-exec-test" ]; then
+		if [ "$1" = "debian" ]; then
+			get_debian_list
+		elif [ "$1" = "ubuntu" ]; then
+			get_ubuntu_list
+		fi
 	else
 		error "Func: Print_kernel" "Logic error in parsing latest kernel. Exiting." 1 
 	fi
@@ -71,15 +82,16 @@ print_kernels(){
 	COUNT=0
 }
 
+
+
 select_kernel(){
-	
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
-		if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
+		if [ "`basename "$0"`" = "compile_linux_kernel.sh" ]; then
 			INPUT=1
-		elif [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+		elif [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
 			INPUT=$NUMOPTS
-		elif [ "${BASH_SOURCE[1]}" = "./unitTesting/tests=functions.bash" ]; then
+		elif [ "`basename "$0"`" = "bats-exec-test" ]; then
 			INPUT=1
 		else
 			error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
@@ -99,7 +111,7 @@ select_kernel(){
 	fi
 
 	# Prompt for Ubuntu Low Latency kernel
-	if [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+	if [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
 		echo ""
 
 		# Set low latency default to no	
@@ -207,7 +219,6 @@ update(){
 	printf "%-20s" " \_ Installing"
 	$SUDO apt-get install -y $DEPENDENCIES 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}\n"
-	#return 1
 }
 
 countdown(){
@@ -284,3 +295,5 @@ usage(){
 	echo -e "\n TO DO: Create usage feedback"
 	exit 0
 }
+
+
