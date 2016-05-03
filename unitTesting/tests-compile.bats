@@ -7,7 +7,7 @@ load tests-functions
 
 @test "Confirm BATS is working properly" {
 	result="$(echo 2+2 | bc)"
-	[ "$result" -eq 4 ]
+	assert_equal ${result} 4
 }
 
 ## Actual tests
