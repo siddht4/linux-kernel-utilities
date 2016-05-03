@@ -57,8 +57,10 @@ select_kernel(){
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
 		if [ "${BASH_SOURCE[1]}" = "./compile_linux_kernel.sh" ]; then
 			INPUT=1
-		elif ["${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
+		elif [ "${BASH_SOURCE[1]}" = "./update_ubuntu_kernel.sh" ]; then
 			INPUT=$NUMOPTS
+		elif [ "${BASH_SOURCE[1]}" = "./unitTesting/tests=functions.bash" ]; then
+			INPUT=1
 		else
 			error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
 		fi
