@@ -187,7 +187,7 @@ update(){
 	printf "%-20s" " \_ Installing"
 	$SUDO apt-get install -y $DEPENDENCIES 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}\n"
-	return 1
+	#return 1
 }
 
 countdown(){
