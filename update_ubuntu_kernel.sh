@@ -5,11 +5,12 @@ clear
 
 # Source terminal colors
 . ./colors
-# Source functions
-#. ./ubu_functions
-. ./functions
+# Source error trap
+. ./error_trap
 # Source variables
 . ./variables
+# Source functions
+. ./functions
 
 echo -e "${PLUS} Checking OS"
 shopt -s nocasematch

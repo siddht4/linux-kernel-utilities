@@ -221,19 +221,6 @@ cleanupfiles() {
 }
 trap cleanupfiles 0
 
-error() {
-  local parent_lineno="$1"
-  local message="$2"
-  local code="${3:-1}"
-  if [[ -n "$message" ]] ; then
-    echo -e "\n${Red}Error on or near line ${parent_lineno}:${Reg} ${message} - exiting with status ${code}"
-  else
-    echo -e "\n${Red}Error on or near line ${parent_lineno}${Reg} - exiting with status ${code}"
-  fi
-  exit "${code}"
-}
-trap 'error ${LINENO}' ERR
-
 check_sign(){
     echo -e "\n${PLUS} Checking archive signature"
     CHK_SIGN=`unxz -c ${OUTPUT} | gpg --verify ${SIGNfile} - 2>&1`

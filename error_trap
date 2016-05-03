@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# Error trap is isolated to allow unit tests to properly manage order of loading variables and functions
+# This is necessary because there is a string comparison for dynamically assigning dependencies with an error trap
+
+error() {
+  local parent_lineno="$1"
+  local message="$2"
+  local code="${3:-1}"
+  if [[ -n "$message" ]] ; then
+    echo -e "\n${Red}Error on or near line ${parent_lineno}:${Reg} ${message} - exiting with status ${code}"
+  else
+    echo -e "\n${Red}Error on or near line ${parent_lineno}${Reg} - exiting with status ${code}"
+  fi
+  exit "${code}"
+}
+trap 'error ${LINENO}' ERR

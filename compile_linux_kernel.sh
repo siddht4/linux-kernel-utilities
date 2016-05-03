@@ -5,23 +5,12 @@ clear
 
 # Source terminal colors
 . ./colors
-
-# Simulate prototyping
-# check_deps()
-# check_sign()
-# cleanup()
-# cleanupfiles()
-# error()
-# install_key
-# print_kernels()
-# spinner()
-# update()
-# Source functions
-. ./functions
-
+# Source error trap
+. ./error_trap
 # Source variables
 . ./variables
-
+# Source functions
+. ./functions
 
 if [ "$#" -gt 1 ]; then
 	usage
