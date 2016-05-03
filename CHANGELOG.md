@@ -6,6 +6,7 @@ NEW FEATURES
 
 IMPROVEMENTS
 - Additional README.md instructions
+- BATS unit testing
 
 BUG FIXES
 - none
@@ -14,7 +15,7 @@ DEPRECATED
 - none
 
 WORK IN PROCESS
-- BATS unit testing
+- none
 
 TO DO
-- none
+- Create usage feedback

@@ -64,7 +64,7 @@ load tests-functions
 
 #This will download and delete an archive which can be a substantial amount of time
 @test "Test retrieving the lastest debian kernel" {
-	skip
+	#skip
 	run test_get_latest_debian_kernal latest
 	assert_success
 }
