@@ -5,7 +5,8 @@
 ## Descriptions
 
 ### Compile a Debian kernel from source: `compile_linux_kernel.sh`
-Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file. This is intended explicitly for **Debian** systems.
+Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.    
+This script is intended explicitly for **Debian** systems.
 
 **Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
@@ -13,7 +14,8 @@ The configuration routine will pull the current machine's configuration in to th
 ----
 ### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
-It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided. This is intended explicitly for **Ubuntu** and derivatives like **linuxMint**.
+It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.    
+This is intended explicitly for **Ubuntu** and derivatives like **linuxMint**.
 
 ----
 ### Remove all inactive kernels: `remove_old_kernels.sh`
@@ -58,6 +60,7 @@ To remove ALL non-active kernels
 > Internal: Gitlab & Gitlab CI    
 > External: Github & Travis CI    
 > [BATS](https://github.com/sstephenson/bats)
->### TIP
->For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
+>### TIPS
+>- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
+>- For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
 >If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
