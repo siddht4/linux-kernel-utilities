@@ -52,13 +52,12 @@ To remove ALL non-active kernels
 
 ## Notes
 > Do not run the scripts with `sudo`. They will prompt for elevated priviledges if necessary.
-
+>
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.    
-## CI & Unit Testing
+>### CI & Unit Testing
 > Internal: Gitlab & Gitlab CI    
 > External: Github & Travis CI    
 > [BATS](https://github.com/sstephenson/bats)
-
-## TIP
-For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
-If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
+>### TIP
+>For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system.    
+>If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
