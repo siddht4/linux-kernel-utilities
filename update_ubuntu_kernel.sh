@@ -16,8 +16,6 @@ if [ "$#" -gt 1 ]; then
 	usage
 elif [ "$1" = "latest" ]; then
 	USE_LATEST=1
-else
-	usage
 fi
 
 echo -e "${PLUS} Checking OS"
