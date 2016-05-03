@@ -4,9 +4,9 @@
 clear
 
 # Source terminal colors
-. ./colors.sh
+. ./colors
 # Source functions
-. ./ubu_functions.sh
+. ./ubu_functions
 
 # Ensure root privledges
 SUDO=''
