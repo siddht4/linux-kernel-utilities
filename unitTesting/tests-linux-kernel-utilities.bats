@@ -3,6 +3,11 @@
 load tests-helper
 load tests-functions
 
+source ${BATS_TEST_DIRNAME}/../error_trap
+source ${BATS_TEST_DIRNAME}/../colors
+source ${BATS_TEST_DIRNAME}/../functions
+source ${BATS_TEST_DIRNAME}/../variables
+
 ## Test to ensure BATS itself is working
 
 @test "Confirm BATS is working properly" {
@@ -33,27 +38,27 @@ load tests-functions
 }
 
 @test "Test detect architecture" {
-	run test_get_arch
+	run get_arch
 	assert_success
 }
 
 @test "Test request exit" {
-	run test_reqexit
+	run reqexit
 	assert_success
 }
 
 @test "Test check dependencies" {
-	run test_checkdeps
+	run check_deps
 	assert_success
 }
 
 @test "Test retrieving debian kernel archives list" {
-	run test_print_kernels_debian
+	run print_kernels debian
 	assert_success
 }
 
 @test "Test retrieving ubuntu precompiled kernel list" {
-	run test_print_kernels_ubuntu
+	run print_kernels ubuntu
 	assert_success
 }
 
@@ -75,11 +80,11 @@ load tests-functions
 }
 
 @test "Test countdown timer" {
-	run test_countdown
+	run countdown TestMessage 5
 	assert_success
 }
 
 @test "Test direct call to update function" {
-	run test_update
+	run update
 	assert_success
 }
