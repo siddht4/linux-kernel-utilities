@@ -11,6 +11,8 @@ This script is intended explicitly for **Debian** systems.
 **Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
 
+[See it on Youtube](https://www.youtube.com/watch?v=HgS6j4_IgeU)
+
 ----
 ### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
