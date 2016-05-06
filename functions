@@ -246,10 +246,18 @@ spinner(){
 update(){
 	echo -e "${PLUS} Dependencies"
 	printf "%-20s" " \_ Updating APT"
-	$SUDO apt-get update 1>/dev/null 2>/dev/null
+	#$SUDO apt-get update 1>/dev/null 2>/dev/null
+	#echo -e "${Green}Complete${Reg}"
+	#printf "%-20s" " \_ Installing"
+	#$SUDO apt-get -y -qq install $DEPENDENCIES
+	#echo -e "${Green}Complete${Reg}\n"
+	
+	$SUDO sudobg apt-get update
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing"
-	$SUDO apt-get -y -qq install $DEPENDENCIES
+	$SUDO sudobg apt-get -y -qq install $DEPENDENCIES
+	spinner $BGPID
+	wait $BGPID
 	echo -e "${Green}Complete${Reg}\n"
 }
 
