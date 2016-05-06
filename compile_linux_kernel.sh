@@ -42,9 +42,7 @@ echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detec
 if ! check_qt; then \
 	echo -e ""
 	echo -e "${Yellow}[!]${Reg} As ${Yellow}QT${Reg} wasn't detected. Installing the QT5-default package."
-	($SUDO apt-get install -qq qt5-default > /dev/null)
-	spinner $!
-	wait $!
+	$SUDO apt-get install -qq qt5-default > /dev/null
 fi
 
 echo -e "${PLUS} Checking Balance of Dependencies"
