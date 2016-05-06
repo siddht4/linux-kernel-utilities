@@ -38,6 +38,9 @@ else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
 fi
 
+echo -e "${PLUS} Checking Dependencies"
+check_deps
+
 echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
 if ! check_qt; then \
 	echo -e ""
@@ -48,9 +51,6 @@ if ! check_qt; then \
 	wait $BGPID
 	sleep 10
 fi
-
-echo -e "${PLUS} Checking Balance of Dependencies"
-check_deps
 
 print_kernels
 
