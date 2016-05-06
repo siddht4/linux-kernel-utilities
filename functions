@@ -243,7 +243,7 @@ update(){
 	$SUDO apt-get update 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing"
-	$SUDO apt-get install -y -qq $DEPENDENCIES
+	$SUDO apt-get -y -qq install $DEPENDENCIES
 	echo -e "${Green}Complete${Reg}\n"
 }
 
