@@ -3,11 +3,11 @@
 # Requires `colors` - sourced in `functions`
 
 chk_sudoer(){
-	$SUDO grep $USER /etc/sudoers > /dev/null 2>&1
+	grep 'sudo' /etc/group | grep $USER > /dev/null 2>&1
 	EXIT_STAT=$?
 	if [ $EXIT_STAT -ne 0 ]
 	then
-		error "Sudoers: Not found" "The user was not found in the sudoers group. Cannot continue with this account." 1 
+		error "Sudo: Not found" "The user was not found in the sudo group. Cannot continue." 1 
 	fi
 	
 }
