@@ -252,10 +252,10 @@ update(){
 	#$SUDO apt-get -y -qq install $DEPENDENCIES
 	#echo -e "${Green}Complete${Reg}\n"
 	
-	$SUDO sudobg apt-get update
+	sudobg apt-get update
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing"
-	$SUDO sudobg apt-get -y -qq install $DEPENDENCIES
+	sudobg apt-get -y -qq install $DEPENDENCIES
 	spinner $BGPID
 	wait $BGPID
 	echo -e "${Green}Complete${Reg}\n"
