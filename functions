@@ -16,11 +16,11 @@ reqexit(){
 check_deps(){
 	for dep in $(echo ${DEPENDENCIES} | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
-		if [ `dpkg-query -W -f='${Status}\n' $dep | head -n1 | awk '{print $3;}'` = "installed" ]; then
-			echo -e "${Green}Found${Reg}"
-		else
+		if [[ -z `dpkg -l | grep "^ii  $dep"` ]]; then
 			echo -e "${Red}Not Found${Reg}"
 			UPDATENEEDED=1
+		else
+			echo -e "${Green}Found${Reg}"
 		fi
 	done
 	echo ""
@@ -208,7 +208,7 @@ get_kernel_archive(){
 }
 
 install_key(){
-    gpg --recv-keys $CHK_ID
+    gpg --keyserver pgp.mit.edu --recv-keys $CHK_ID --keyserver
 }
 
 update(){
