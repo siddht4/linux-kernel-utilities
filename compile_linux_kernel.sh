@@ -41,7 +41,7 @@ fi
 echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
 if ! check_qt; then \
 	echo -e ""
-	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package."
+	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
 	#$SUDO apt-get install -qq qt5-default > /dev/null
 	sudobg apt-get -qq install qt5-default
 	MSG="Installing QT5 default package"
