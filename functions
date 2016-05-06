@@ -255,6 +255,7 @@ update(){
 	sudobg apt-get update
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing"
+	export DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get -q -y -o "Dpkg::Options::=--force-confdef" -o "Dpkg::Options::=--force-confold"
 	sudobg apt-get -y -qq install $DEPENDENCIES
 	spinner $BGPID
 	wait $BGPID
