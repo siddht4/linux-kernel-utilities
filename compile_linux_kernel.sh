@@ -83,7 +83,7 @@ pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
 echo -e "${PLUS} Launching configuratino GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
 
-echo -ne "${PLUS} Cleaning the source tree and reseting kernel-package parameters . . . "
+echo -ne "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
 	fakeroot make-kpkg clean 1>/dev/null 2>/dev/null || error ${LINENO} "Error occurred while running \"make-kpkg clean\"." 1
 echo -e "\n \_ ${Green}Cleaned${Reg}\n"
 
