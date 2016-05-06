@@ -45,7 +45,7 @@ if ! check_qt; then \
 	#$SUDO apt-get install -qq qt5-default > /dev/null
 	sudobg apt-get -qq install qt5-default
 	MSG="Installing QT5"
-	spinner $BGPID $MSG
+	spinner $BGPID "$MSG"
 	wait $BGPID
 fi
 
