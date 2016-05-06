@@ -104,8 +104,16 @@ else
 	echo -e " -- ${Yellow}Starting Compilation${Reg} -- "
 	echo -e "--------------------------------------------------------------------------------------------------\n\n"
 	
+	shopt -s nocasematch
+	if [[ "$OS" == "debian" ]]; then
+
 	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers \
-		|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
+			|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
+	elif [[ "$OS" == "ubuntu" ]]; then
+		echo "Not yet implemented"
+	fi
+	
+	
 fi
 
 # Provide a user notification 
