@@ -111,6 +111,7 @@ else
 			|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
 	elif [[ "$OS" == "ubuntu" ]]; then
 		echo "Not yet implemented"
+		exit 0
 	fi
 	
 	
