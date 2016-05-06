@@ -231,7 +231,8 @@ update(){
 	$SUDO apt-get update 1>/dev/null 2>/dev/null
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing"
-	$SUDO apt-get install -y -qq $DEPENDENCIES 1>/dev/null 2>/dev/null &
+	#$SUDO apt-get install -y -qq $DEPENDENCIES 1>/dev/null 2>/dev/null &
+	$SUDO bash -c 'apt-get -y -qq install $DEPENDENCIES >/dev/null 2>&1 & disown'
 	spinner $!
 	# Check for successful extraction
 	wait $!
