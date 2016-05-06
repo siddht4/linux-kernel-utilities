@@ -38,6 +38,24 @@ else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
 fi
 
+echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
+if ! check_qt; then \
+	echo -e ""
+	echo -e "${Yellow}[!]${Reg} As ${Yellow}QT${Reg} wasn't detected I'll launch your browser to their download page."
+	echo -e ""
+	echo -e "    Follow the instructions provided to you, which should be a ${Green}Download Now${Reg} button."
+	echo -e "    Download and execute the online installer ${Yellow}.run${Reg} script."
+	echo -e "    Once completed, run this script again."
+	echo -e ""
+	echo -e "Press [Enter] to launch your browser and exit."
+	read INPUT
+	xdg-open $QT_URL
+	exit 0
+fi
+
+echo -e "${PLUS} Checking Dependencies"
+check_deps
+
 print_kernels
 
 select_kernel
@@ -45,9 +63,6 @@ select_kernel
 get_kernel_archive
 
 check_sign
-
-echo -e "${PLUS} Checking Dependencies"
-check_deps
 
 echo -e "${PLUS} Creating a directory to build your kernel from source."
 mkdir $CMP_FLDR 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1

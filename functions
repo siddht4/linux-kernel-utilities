@@ -13,6 +13,18 @@ reqexit(){
 	exit 0
 }
 
+check_qt(){
+	
+	printf '\t%-24s' "QT4 or QT5"
+	if pkg-config --exists Qt5Core || pkg-config --exists QtCore; then \
+		echo -e "${Green}Found${Reg}"; \
+		return 0; \
+	else \
+		echo -e "${Red}Not Found${Reg}"; \
+		return 1; \
+	fi
+}
+
 check_deps(){
 	for dep in $(echo ${DEPENDENCIES} | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
@@ -295,5 +307,3 @@ usage(){
 	echo -e "\n TO DO: Create usage feedback"
 	exit 0
 }
-
-
