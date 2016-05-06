@@ -245,19 +245,17 @@ spinner(){
 
 update(){
 	echo -e "${PLUS} Dependencies"
-	printf "%-20s" " \_ Updating APT"
-	#$SUDO apt-get update 1>/dev/null 2>/dev/null
-	#echo -e "${Green}Complete${Reg}"
-	#printf "%-20s" " \_ Installing"
-	#$SUDO apt-get -y -qq install $DEPENDENCIES
-	#echo -e "${Green}Complete${Reg}\n"
-	
-	sudobg apt-get update
-	echo -e "${Green}Complete${Reg}"
-	printf "%-20s" " \_ Installing"
-	sudobg apt-get -qq install $DEPENDENCIES
+	sudobg apt-get update > /dev/null 2>&1
+	MSG="Working . . . "
 	spinner $BGPID
 	wait $BGPID
+	printf "%-20s" " \_ Updating APT"
+	echo -e "${Green}Complete${Reg}"
+	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" -qq install $DEPENDENCIES > /dev/null 2>&1
+	MSG="Working, this one may take a while . . ."
+	spinner $BGPID "$MSG"
+	wait $BGPID
+	printf "%-20s" " \_ Installing"
 	echo -e "${Green}Complete${Reg}\n"
 }
 
@@ -273,7 +271,7 @@ countdown(){
 
 sudobg() {
 	sudo echo ""
-  	$SUDO $@ & 
+  	$SUDO "$@" > /dev/null 2>&1 &
 	BGPID=$!
 }
 
