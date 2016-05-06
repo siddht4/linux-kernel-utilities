@@ -14,7 +14,6 @@ UPDATENEEDED=0
 OS=$(lsb_release -si)
 PLUS="${Cyan}[+]${Reg}"
 USE_LATEST=0
-QT_URL=https://www.qt.io/download-open-source/
 
 # Compile
 OUTPUT="kernel_$NOW.tar.xz"
