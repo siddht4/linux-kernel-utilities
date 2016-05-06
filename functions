@@ -224,17 +224,23 @@ install_key(){
 }
 
 spinner(){
-    local pid=$1
-    local delay=0.25
-    local spinstr='|/-\'
-    while [ "$(ps | awk '{print $1}' | grep $pid)" ]; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        local spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    printf "    \b\b\b\b"
+	local pid=$1
+	local delay=0.175
+	local spinstr='|/-\'
+	tput civis;
+	local infotext=$2
+	while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+		local temp=${spinstr#?}
+		printf " [%c] %s" "$spinstr" "$infotext"
+		local spinstr=$temp${spinstr%"$temp"}
+		sleep $delay
+		printf "\b\b\b\b\b\b"
+		for i in $(seq 1 ${#infotext}); do
+			printf "\b"
+		done
+	done
+	printf " \b\b\b\b"
+	tput cnorm;
 }
 
 update(){
@@ -255,6 +261,12 @@ countdown(){
 	sleep 1
 	: $((secs--))
 	done
+}
+
+sudobg() {
+	#sudo echo ""
+  	$SUDO $@ 1>/dev/null 2>/dev/null & 
+	BGPID=$!
 }
 
 # TRAPS
