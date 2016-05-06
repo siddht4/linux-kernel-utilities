@@ -211,26 +211,6 @@ install_key(){
     gpg --keyserver pgp.mit.edu --recv-keys $CHK_ID --keyserver
 }
 
-update(){
-	echo -e "${PLUS} Dependencies"
-	printf "%-20s" " \_ Updating APT"
-	$SUDO apt-get update 1>/dev/null 2>/dev/null
-	echo -e "${Green}Complete${Reg}"
-	printf "%-20s" " \_ Installing"
-	$SUDO apt-get install -y $DEPENDENCIES 1>/dev/null 2>/dev/null
-	echo -e "${Green}Complete${Reg}\n"
-}
-
-countdown(){
-	local txt=$1
-	local secs=$2
-	while [ $secs -gt 0 ]; do
-	echo -ne "$txt $secs\033[0K\r"
-	sleep 1
-	: $((secs--))
-	done
-}
-
 spinner(){
     local pid=$1
     local delay=0.25
@@ -243,6 +223,29 @@ spinner(){
         printf "\b\b\b\b\b\b"
     done
     printf "    \b\b\b\b"
+}
+
+update(){
+	echo -e "${PLUS} Dependencies"
+	printf "%-20s" " \_ Updating APT"
+	$SUDO apt-get update 1>/dev/null 2>/dev/null
+	echo -e "${Green}Complete${Reg}"
+	printf "%-20s" " \_ Installing"
+	$SUDO apt-get install -y -qq $DEPENDENCIES 1>/dev/null 2>/dev/null &
+	spinner $!
+	# Check for successful extraction
+	wait $!
+	echo -e "${Green}Complete${Reg}\n"
+}
+
+countdown(){
+	local txt=$1
+	local secs=$2
+	while [ $secs -gt 0 ]; do
+	echo -ne "$txt $secs\033[0K\r"
+	sleep 1
+	: $((secs--))
+	done
 }
 
 # TRAPS
