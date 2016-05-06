@@ -43,8 +43,8 @@ if ! check_qt; then \
 	echo -e ""
 	echo -e "${Yellow}[!]${Reg} As ${Yellow}QT${Reg} wasn't detected. Installing the QT5-default package."
 	#$SUDO apt-get install -qq qt5-default > /dev/null
-	sudobg apt-get -qq installqt5-default
-	MSG=Installing QT5
+	sudobg apt-get -qq install qt5-default
+	MSG="Installing QT5"
 	spinner $BGPID $MSG
 	wait $BGPID
 fi
