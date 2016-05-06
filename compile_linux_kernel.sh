@@ -14,7 +14,7 @@ clear
 
 # Set overlap variables
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
-						build-essential pkg-config qt5-qmake libnotify-bin gnupg"
+						build-essential pkg-config qt5-qmake libnotify-bin gnupg libssl-dev"
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
@@ -42,7 +42,6 @@ echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detec
 if ! check_qt; then \
 	echo -e ""
 	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
-	#$SUDO apt-get install -qq qt5-default > /dev/null
 	sudobg apt-get -qq install qt5-default
 	MSG="Installing QT5 default package"
 	spinner $BGPID "$MSG"
@@ -65,10 +64,9 @@ echo -e "${PLUS} Creating a directory to build your kernel from source."
 mkdir $CMP_FLDR 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
 echo -e " \_ Directory Created:\t${Cyan}${CMP_FLDR}${Reg}\n"
 
-echo -ne "${PLUS} Extracting your kernel . . . "
+MSG="Extracting your kernel . . . "
 tar xf $OUTPUT -C ./$CMP_FLDR &
-spinner $!
-
+spinner $! $MSG
 # Check for successful extraction
 wait $!
 EXIT_STAT=$?
@@ -112,6 +110,7 @@ else
 	elif [[ "$OS" == "ubuntu" ]]; then
 		echo "Not yet implemented"
 		exit 0
+		fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" fakefoot make -j8
 	fi
 	
 	
