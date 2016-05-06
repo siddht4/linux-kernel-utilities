@@ -273,7 +273,7 @@ countdown(){
 }
 
 sudobg() {
-	$SUDO echo "\n"
+	$SUDO echo ""
   	$SUDO "$@" > /dev/null 2>&1 &
 	BGPID=$!
 }
