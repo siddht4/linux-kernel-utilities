@@ -91,6 +91,7 @@ get_ubuntu_list(){
 }
 
 print_kernels(){
+	echo
 	TOTAL1=""
 	TOTAL2=""
 	COUNT=0
