@@ -4,9 +4,9 @@
 # Linux Kernel Utilities
 ## Descriptions
 
-### Compile a Debian kernel from source: `compile_linux_kernel.sh`
+### Compile a kernel from source: `compile_linux_kernel.sh`
+#### For use with Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)
 Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.    
-This script is intended explicitly for **Debian** systems.
 
 **Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
@@ -17,6 +17,7 @@ The configuration routine will pull the current machine's configuration in to th
 ### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
 It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.    
+
 This is intended explicitly for **Ubuntu** and derivatives like **linuxMint**.
 
 ----
@@ -33,7 +34,7 @@ Download and enable scripts
     cd linux-kernel-utilities
     chmod 550 compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
-### Debian
+### Compile
 To compile a kernel with manual version selection
 
     ./compile_linux_kernel.sh
@@ -46,7 +47,7 @@ To compile a kernel from a local archive file
 
     ./compile_linux_kernel.sh linux-4.5.2.tar.xz
 
-### Ubuntu
+### Pre-compiled Ubuntu (and derivatives)
 To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 
     ./update_ubuntu_kernel.sh
@@ -55,13 +56,13 @@ To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu
 
     ./update_ubuntu_kernel.sh latest
 
-### General
+### Removal of inactive kernels
 To remove ALL non-active kernels
 
     ./remove_old_kernels.sh
 
 ## Notes
-> Do not run the scripts with `sudo`. They will prompt for elevated priviledges if necessary.
+> Do not run the scripts with `sudo`. They will prompt for elevated priviledges if necessary. The user must be a **member of the sudo group** however.
 >
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.    
 >### CI & Unit Testing
@@ -70,4 +71,6 @@ To remove ALL non-active kernels
 > [BATS](https://github.com/sstephenson/bats)
 >### TIPS
 >- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
->- For multicore compiling the user is free to set `CONCURRENCY_LEVEL` to a number they determine suitable for their system. If you are unfamiliar with this setting, [Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
+>- Multicore compiling is set automatically with `CONCURRENCY_LEVEL` to a number determined for the system. This can be manually adjusted in the [variables](./variables) file.
+>
+>[Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
