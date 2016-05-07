@@ -62,7 +62,11 @@ cleanup(){
 }
 
 get_debian_list(){
-	for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
+	local FILES=($(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
+	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
+	#for ver in $(grep -v $RC_FILTER `curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1`); do
+	#for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
+	for ver in ${FILTERED_FILES[@]}; do
 		TOTAL="${TOTAL}\nhttps://$ver"
 	done
 	echo -ne "\n"

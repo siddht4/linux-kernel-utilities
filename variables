@@ -15,6 +15,9 @@ OS=$(lsb_release -si)
 PLUS="${Cyan}[+]${Reg}"
 USE_LATEST=0
 
+# Uncomment to filter out Release Candidates
+RC_FILTER="-rc"
+
 # Compile
 OUTPUT="kernel_$NOW.tar.xz"
 CMP_FLDR="Build_$NOW"
@@ -23,17 +26,3 @@ CMP_FLDR="Build_$NOW"
 TMP_FLDR="/tmp"
 MINVER=4
 FIELD=7
-
-# whiptail message
-w_title_one="Compile Debian Based Linux Kernel"
-w_msg_one="Welcome. This script is intended to help simplify compiling a Linux Kernel.\n\n"
-w_msg_one+="There is no magic here, all the commands are standard and you are \n"
-w_msg_one+="encouraged to have a look at the code. Powerusers will likely find this \n"
-w_msg_one+="script less than useful as there is some bloat and compilation can be \n"
-w_msg_one+="done efficiently at the command line with a few instructions. The target \n"
-w_msg_one+="audience here is those less comfortable within a termal and explains the \n"
-w_msg_one+="use of whiptail. Hopefully it will take some of the fear away from first \n"
-w_msg_one+="timers. \n\n"
-w_msg_one+="In short the script will update and / or install the necessary components \n"
-w_msg_one+="to compile a *.deb file set, compile same, and then prompt for installation.\n"
-w_msg_one+="The *deb files can then be managed in standard package amangers."

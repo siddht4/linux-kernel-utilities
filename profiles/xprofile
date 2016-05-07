@@ -3,13 +3,13 @@ xprofile(){
 	$SUDO echo
     chk_sudoer
     check_deps 1>/dev/null 2>/dev/null &
-    spinner $! "Checking dependencies"
+    spinner $! "Managing dependencies . . ."
     wait $!
     clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
         sudobg apt-get -qq install qt5-default
-        spinner $BGPID "Installing QT5 default package"
+        spinner $BGPID "Installing QT5 default package . . ."
         wait $BGPID
     fi
 
@@ -22,29 +22,29 @@ xprofile(){
     #clearline
     
     check_sign add #1>/dev/null 2>/dev/null &
-    spinner $! "Validating"
+    spinner $! "Validating . . ."
     wait $!
     clearline
     
     mkdir $CMP_FLDR
     tar xf $OUTPUT -C ./$CMP_FLDR &
-    spinner $! "Extracting"
+    spinner $! "Extracting . . ."
     wait $!
     clearline
     
     pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
 	make $KRNL_CONFIG 1>/dev/null 2>/dev/null &
-    spinner $! "Configuring"
+    spinner $! "Configuring . . ."
     wait $!
     clearline
     
     fakeroot make-kpkg clean 1>/dev/null 2>/dev/null &
-    spinner $! "Cleaning"
+    spinner $! "Cleaning . . ."
     wait $!
     clearline
     
     fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers 1>/dev/null 2>/dev/null &
-    spinner $! "Compiling"
+    spinner $! "Compiling . . ."
     wait $!
     clearline
     

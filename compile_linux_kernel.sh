@@ -11,6 +11,8 @@ clear
 . ./variables
 # Source functions
 . ./functions
+# Source whiptail messages
+. ./messages
 
 # Set overlap variables
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
