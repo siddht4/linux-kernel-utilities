@@ -1,6 +1,6 @@
 
 xprofile(){
-    
+	$SUDO echo
     chk_sudoer
     check_deps 1>/dev/null 2>/dev/null &
     spinner $! "Checking dependencies"
