@@ -12,11 +12,6 @@ clear
 # Source functions
 . ./functions
 
-# Enable for parallel processor compilation
-export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
-
-chk_sudoer
-
 # Set overlap variables
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
 						build-essential pkg-config qt5-qmake libnotify-bin \
@@ -27,14 +22,25 @@ if [ "$#" -gt 1 ]; then
 	usage
 fi
 
+# Enable for parallel processor compilation
+export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
+
 if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
 		if [[ "$1" = "latest" ]]; then
 			USE_LATEST=1
-		elif [[ "$1" = "-h" || "$1" = "--help" ]]; then
+		elif [[ "$1" = "-h" || "$1" = "--help" || "$1" = "usage" ]]; then
 			usage
 		else
-			error ${LINENO} "$1 is not a file or does not exist." 1
+			shopt -s nullglob
+			PROFILES=(profiles/*)	
+			for FILE in ${PROFILES[@]}; do
+				if [[ "profiles/$1" == "${FILE}" ]]; then 
+					. profiles/$1
+					$1
+				fi
+			done
+			error ${LINENO} "$1 is not a file or the profile does not exist." 1
 		fi
 	else
 		OUTPUT=$1
@@ -43,6 +49,10 @@ if [ "$#" -eq 1 ]; then
 else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
 fi
+
+whip_msg  "${w_title_one}" "${w_msg_one}"
+
+chk_sudoer
 
 echo -e "${PLUS} Checking Dependencies"
 check_deps
@@ -55,7 +65,6 @@ if ! check_qt; then \
 	MSG="Installing QT5 default package"
 	spinner $BGPID "$MSG"
 	wait $BGPID
-	sleep 10
 fi
 
 print_kernels

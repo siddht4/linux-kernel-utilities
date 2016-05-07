@@ -1,0 +1,55 @@
+
+xprofile(){
+    
+    chk_sudoer
+    check_deps 1>/dev/null 2>/dev/null &
+    spinner $! "Checking dependencies"
+    wait $!
+    clearline
+  
+    if ! check_qt 1>/dev/null 2>/dev/null; then \
+        sudobg apt-get -qq install qt5-default
+        spinner $BGPID "Installing QT5 default package"
+        wait $BGPID
+    fi
+
+    print_kernels
+    select_kernel 
+    
+    get_kernel_archive #1>/dev/null 2>/dev/null &
+    #spinner $! "Downloading"
+    #wait $!
+    #clearline
+    
+    check_sign add #1>/dev/null 2>/dev/null &
+    spinner $! "Validating"
+    wait $!
+    clearline
+    
+    mkdir $CMP_FLDR
+    tar xf $OUTPUT -C ./$CMP_FLDR &
+    spinner $! "Extracting"
+    wait $!
+    clearline
+    
+    pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
+	make defconfig 1>/dev/null 2>/dev/null &
+    spinner $! "Configuring"
+    wait $!
+    clearline
+    
+    fakeroot make-kpkg clean 1>/dev/null 2>/dev/null &
+    spinner $! "Cleaning"
+    wait $!
+    clearline
+    
+    fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers 1>/dev/null 2>/dev/null &
+    spinner $! "Compiling"
+    wait $!
+    clearline
+    
+    echo -e $'\a' && notify-send -i emblem-default "Kernel compliation completed."
+
+    exit 0
+    
+}

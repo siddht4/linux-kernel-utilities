@@ -1,0 +1,8 @@
+. ./profiles/xprofile
+
+zeus(){
+    USE_LATEST=1
+
+    xprofile
+}
+
