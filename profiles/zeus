@@ -2,6 +2,7 @@
 
 zeus(){
     USE_LATEST=1
+	KRNL_CONFIG=olddefconfig
 
     xprofile
 }

@@ -33,7 +33,7 @@ xprofile(){
     clearline
     
     pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
-	make defconfig 1>/dev/null 2>/dev/null &
+	make $KRNL_CONFIG 1>/dev/null 2>/dev/null &
     spinner $! "Configuring"
     wait $!
     clearline
