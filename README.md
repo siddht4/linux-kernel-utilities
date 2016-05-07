@@ -39,7 +39,7 @@ To compile a kernel with manual version selection
 
     ./compile_linux_kernel.sh
 
-To compile the latest kernel available (includes release candidates)
+To compile the latest kernel available
 
     ./compile_linux_kernel.sh latest
 
@@ -52,7 +52,7 @@ To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](htt
 
     ./update_ubuntu_kernel.sh
 
-To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com) (includes release candidates)
+To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 
     ./update_ubuntu_kernel.sh latest
 
@@ -70,6 +70,7 @@ To remove ALL non-active kernels
 > External: Github & Travis CI    
 > [BATS](https://github.com/sstephenson/bats)
 >### TIPS
+>- You can set RC_FILTER to control whether Release Candidates are offered as a choice.
 >- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
 >- Multicore compiling is set automatically with `CONCURRENCY_LEVEL` to a number determined for the system. This can be manually adjusted in the [variables](./variables) file.
 >

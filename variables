@@ -18,7 +18,7 @@ USE_LATEST=0
 # To filter out Release Candidates replace "null" with "-rc"
 # Revert change to allow RC's. Do not use "" or " ". 
 # The variable must be set!
-RC_FILTER="null"
+RC_FILTER="-rc"
 
 # Compile
 OUTPUT="kernel_$NOW.tar.xz"

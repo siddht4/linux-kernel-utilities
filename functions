@@ -78,7 +78,10 @@ get_debian_list(){
 }
 
 get_ubuntu_list(){
-	for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
+	local FILES=($(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'))
+	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
+	#for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
+	for ver in ${FILTERED_FILES[@]}; do
 		TOTAL="${TOTAL}\n$ver"
 		DOWN="${DOWN}\n$ver"
 	done
