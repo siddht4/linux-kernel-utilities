@@ -13,7 +13,7 @@ clear
 . ./functions
 
 # Enable for parallel processor compilation
-# export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
+export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
 
 chk_sudoer
 
