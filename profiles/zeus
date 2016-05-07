@@ -1,9 +1,9 @@
 . ./profiles/xprofile
 
 zeus(){
-    USE_LATEST=1
+	USE_LATEST=1
 	KRNL_CONFIG=olddefconfig
 
-    xprofile
+	xprofile
 }
 
