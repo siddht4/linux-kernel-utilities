@@ -70,7 +70,7 @@ To remove ALL non-active kernels
 > External: Github & Travis CI    
 > [BATS](https://github.com/sstephenson/bats)
 >### TIPS
->- You can set RC_FILTER to control whether Release Candidates are offered as a choice.
+>- You can set `RC_FILTER` to control whether Release Candidates are offered as a choice.
 >- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
 >- Multicore compiling is set automatically with `CONCURRENCY_LEVEL` to a number determined for the system. This can be manually adjusted in the [variables](./variables) file.
 >
