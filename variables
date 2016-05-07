@@ -8,23 +8,22 @@ if (( $EUID != 0 )); then
 fi
 
 # Shared variables
-NOW=$(date +%h%d_%H-%m-%S)
-VERAPPEND=$(date +.%y%m%d)
+USE_LATEST=0
 UPDATENEEDED=0
 OS=$(lsb_release -si)
 PLUS="${Cyan}[+]${Reg}"
-USE_LATEST=0
-
+NOW=$(date +%h%d_%H-%m-%S)
+VERAPPEND=$(date +.%y%m%d)
 # To filter out Release Candidates replace "null" with "-rc"
 # Revert change to allow RC's. Do not use "" or " ". 
 # The variable must be set!
 RC_FILTER="-rc"
 
 # Compile
-OUTPUT="kernel_$NOW.tar.xz"
 CMP_FLDR="Build_$NOW"
+OUTPUT="kernel_$NOW.tar.xz"
 
 # Precompiled
-TMP_FLDR="/tmp"
-MINVER=4
 FIELD=7
+MINVER=4
+TMP_FLDR="/tmp"
