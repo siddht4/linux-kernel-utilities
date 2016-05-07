@@ -12,6 +12,9 @@ clear
 # Source functions
 . ./functions
 
+# Enable for parallel processor compilation
+# export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
+
 chk_sudoer
 
 # Set overlap variables
@@ -104,24 +107,9 @@ else
 	countdown 'Compilation will begin in ' 10
 	echo -e " -- ${Yellow}Starting Compilation${Reg} -- "
 	echo -e "--------------------------------------------------------------------------------------------------\n\n"
-	
-	#shopt -s nocasematch
-	#if [[ "$OS" == "debian" ]]; then
 
 	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers \
 			|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
-	#elif [[ "$OS" == "ubuntu" ]]; then
-	#	echo "Not yet implemented"
-	#	exit 0
-	#	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" fakefoot make -j8
-		
-	#	make-kpkg clean
-	#fakeroot make-kpkg --initrd --append-to-version=-custom kernel_image kernel_headers
-	make modules
-	make modules_install
-
-	#fi
-	
 	
 fi
 
