@@ -46,6 +46,10 @@ To compile the latest kernel available
 To compile a kernel from a local archive file
 
     ./compile_linux_kernel.sh linux-4.5.2.tar.xz
+    
+To compile the latest kernel *automagically* using a profile
+
+    ./compile_linux_kernel.sh zeus
 
 ### Pre-compiled Ubuntu (and derivatives)
 To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
