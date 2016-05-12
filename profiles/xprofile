@@ -3,10 +3,10 @@ xprofile(){
     echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
-    check_deps 1>/dev/null 2>/dev/null &
-    spinner $! "Managing dependencies . . ."
-    wait $!
-    clearline
+    check_deps 1>/dev/null 2>/dev/null 
+    #spinner $! "Managing dependencies . . ."
+    #wait $!
+    #clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
         sudobg apt-get -qq install qt5-default
