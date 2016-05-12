@@ -5,9 +5,9 @@ xprofile(){
     chk_sudoer
     #sudobg check_deps #1>/dev/null 2>/dev/null 
     sudobg check_deps
-    #echo "BGPID ${BGPID}"
-    #spinner $BGPID  "Managing dependencies . . ."
-    #wait $BGPID
+    echo "BGPID ${BGPID}"
+    spinner ${BGPID} "Managing dependencies . . ."
+    wait ${BGPID}
 
     clearline
   
