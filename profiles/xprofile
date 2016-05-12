@@ -13,13 +13,8 @@ xprofile(){
         spinner $BGPID "Installing QT5 default package . . ."
         wait $BGPID
     fi
-
-    #print_kernels
-    #select_kernel 
     
     select_kernel_deb
-    
-    #get_kernel_archive #1>/dev/null 2>/dev/null &
     get_kernel_archive
     
     check_sign add #1>/dev/null 2>/dev/null &
