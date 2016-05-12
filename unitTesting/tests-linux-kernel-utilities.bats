@@ -53,12 +53,12 @@ source ${BATS_TEST_DIRNAME}/../variables
 }
 
 @test "Test retrieving debian kernel archives list" {
-	run print_kernels debian
+	run get_debian_list
 	assert_success
 }
 
 @test "Test retrieving ubuntu precompiled kernel list" {
-	run print_kernels ubuntu
+	run print_kernels_ubu
 	assert_success
 }
 

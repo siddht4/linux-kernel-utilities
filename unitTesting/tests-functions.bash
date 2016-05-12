@@ -11,7 +11,8 @@ test_select_latest_kernel() {
 		USE_LATEST=1
 	fi
 	USE_LATEST=1
-	select_kernel
+	select_kernel_deb
+	select_kernel_ubu
 }
 
 test_get_latest_debian_kernal() {
