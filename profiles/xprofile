@@ -4,8 +4,8 @@ xprofile(){
 	$SUDO echo
     chk_sudoer
     sudobg check_deps #1>/dev/null 2>/dev/null 
-    spinner $! "Managing dependencies . . ."
-    wait $!
+    spinner $BGPID  "Managing dependencies . . ."
+    wait $BGPID
 
     clearline
   
@@ -19,8 +19,8 @@ xprofile(){
     get_kernel_archive
     
     check_sign add #1>/dev/null 2>/dev/null &
-    spinner $! "Validating . . ."
-    wait $!
+    #spinner $! "Validating . . ."
+    #wait $!
     clearline
     
     mkdir $CMP_FLDR
