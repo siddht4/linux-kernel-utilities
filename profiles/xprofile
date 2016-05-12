@@ -19,8 +19,6 @@ xprofile(){
     get_kernel_archive
     
     check_sign add #1>/dev/null 2>/dev/null &
-    #spinner $! "Validating . . ."
-    #wait $!
     clearline
     
     mkdir $CMP_FLDR
@@ -30,7 +28,6 @@ xprofile(){
     clearline
     
     pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
-    #make $KRNL_CONFIG 1>/dev/null 2>/dev/null &
     sudobg make $KRNL_CONFIG
     spinner $BGPID "Configuring . . ."
     wait $BGPID
