@@ -128,13 +128,7 @@ select_kernel_deb(){
 	# Override if using 'LATEST' else whiptail menu
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
-		#if [ "`basename "$0"`" = "compile_linux_kernel.sh" ]; then
-			OPTION="${ARR_LIST}"
-		#elif [ "`basename "$0"`" = "bats-exec-test" ]; then
-		#	INPUT=1
-		#else
-		#	error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
-		#fi
+		OPTION="${ARR_LIST}"
 	else
 		OPTION=$(whiptail --title "Available Kernels" --backtitle "${BACKTITLE}" --menu "Select kernel arhive to download" 20 80 ${ARR_END} "${ARR_LIST[@]}" 3>&1 1>&2 2>&3)
 	fi
