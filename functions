@@ -257,6 +257,9 @@ install_key(){
     gpg --keyserver pgp.mit.edu --recv-keys $CHK_ID --keyserver
 }
 
+######
+# Spinner that watches a background process
+######
 spinner(){
 	local pid=$1
 	local delay=0.175
@@ -373,7 +376,8 @@ usage(){
 
 
 #####
-
+# Spinner for foreground processes
+#####
 function _spinner() {
 
     case $1 in

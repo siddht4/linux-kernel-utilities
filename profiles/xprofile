@@ -3,18 +3,14 @@ xprofile(){
     echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
-    #DO NOT BACKGROUND - IT CALLS update FUNCTION 
-    start_spinner "Managing dependencies . . ."
+    #Do not background dependency check - it calls sudobg 
+    start_spinner "Managing dependencies. This can take a while . . ."
     check_deps 1>/dev/null 2>/dev/null 
     stop_spinner
-    #echo "BGPID ${BGPID}"
-    #spinner ${BGPID} "Managing dependencies . . ."
-    #wait ${BGPID}
-
-    #clearline
+    clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
-        sudobg apt-get -qq install qt5-default
+        sudobg apt-get -qq -y install qt5-default
         spinner $BGPID "Installing QT5 default package . . ."
         wait $BGPID
     fi
