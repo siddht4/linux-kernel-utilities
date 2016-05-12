@@ -16,7 +16,7 @@ test_get_latest_debian_kernal() {
 	USE_LATEST=1
 	select_kernel_deb
 	get_kernel_archive
-	cleanupfiles
+	#cleanupfiles
 }
 
 test_get_latest_ubuntu_precompiled_packages() {
@@ -24,7 +24,7 @@ test_get_latest_ubuntu_precompiled_packages() {
 	print_kernels_ubu
 	select_kernel_ubu
 	get_precompiled_ubu_kernel	
-	cleanupfiles
+	#cleanupfiles
 }
 
 test_spinner() {
