@@ -449,10 +449,6 @@ function _spinner() {
     esac
 }
 
-function myspin(){
-	
-}
-
 function start_spinner {
     # $1 : msg to display
     _spinner "start" "${1}" &
