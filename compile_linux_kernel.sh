@@ -63,10 +63,9 @@ echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detec
 if ! check_qt; then \
 	echo -e ""
 	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
-	pid=sudobg apt-get -qq install qt5-default
-	MSG="Installing QT5 default package"
-	spinner ${pid} "$MSG"
-	wait ${pid}
+	sudobg apt-get -qq install qt5-default
+	spinner ${BGPID} "Installing QT5 default package"
+	wait ${BGPID}
 fi
 
 select_kernel_deb

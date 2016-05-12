@@ -279,18 +279,16 @@ spinner(){
 
 update(){
 	echo -e "${PLUS} Dependencies"
-	pid=sudobg apt-get update #> /dev/null 2>&1
-	MSG="Working . . . "
-	spinner ${pid} "$MSG"
-	wait ${pid}
+	sudobg apt-get update #> /dev/null 2>&1
+	spinner ${BGPID} "Working . . . "
+	wait ${BGPID}
 	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
-	pid=sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install $DEPENDENCIES
-	MSG="Working, this one may take a while . . ."
-	spinner ${pid} "$MSG"
-	wait ${pid}
+	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install $DEPENDENCIES
+	spinner ${BGPID} "Working, this one may take a while . . ."
+	wait ${BGPID}
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
@@ -311,8 +309,7 @@ countdown(){
 sudobg() {
 	$SUDO echo ""
   	$SUDO "$@" > /dev/null 2>&1 &
-	local BGPID=$!
-	return ${BGPID}
+	BGPID=$!
 }
 
 # TRAPS

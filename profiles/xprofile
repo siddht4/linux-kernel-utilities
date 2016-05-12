@@ -3,19 +3,16 @@ xprofile(){
     echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
-    pid=sudobg check_deps 1>/dev/null 2>/dev/null 
-    #spinner $! "Managing dependencies . . ."
-    #wait $!
-    spinner ${pid}
-    wait ${pid}
+    sudobg check_deps 1>/dev/null 2>/dev/null 
+    spinner $! "Managing dependencies . . ."
+    wait $!
+
     clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
-        pid=sudobg apt-get -qq install qt5-default
-        #spinner $BGPID "Installing QT5 default package . . ."
-        #wait $BGPID
-        spinner ${pid} "Installing QT5 default package . . ."
-		wait ${pid}
+        sudobg apt-get -qq install qt5-default
+        spinner $BGPID "Installing QT5 default package . . ."
+        wait $BGPID
     fi
     
     select_kernel_deb
