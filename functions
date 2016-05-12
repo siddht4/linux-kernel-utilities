@@ -53,6 +53,8 @@ check_deps(){
 	if [ $UPDATENEEDED -eq 1 ]; then
 		update
 	fi
+	
+	echo "HEY: ${UPDATENEEDED}"
 }
 
 cleanup(){
