@@ -11,9 +11,11 @@ xprofile(){
     clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
-        sudobg apt-get -qq install qt5-default
-        spinner $BGPID "Installing QT5 default package . . ."
-        wait $BGPID
+        pid=sudobg apt-get -qq install qt5-default
+        #spinner $BGPID "Installing QT5 default package . . ."
+        #wait $BGPID
+        spinner ${pid} "Installing QT5 default package . . ."
+		wait ${pid}
     fi
     
     select_kernel_deb
