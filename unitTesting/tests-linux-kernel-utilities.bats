@@ -74,15 +74,15 @@ source ${BATS_TEST_DIRNAME}/../variables
 
 #This will download and delete an archive which can be a substantial amount of time
 @test "Test retrieving the lastest debian kernel & signature file" {
-	#skip
-	run test_get_latest_debian_kernal
+	skip
+	run test_get_latest_debian_kernel
 	assert_success
 }
 
 #This will download and delete the latest precompiled packages which can be a substantial amount of time
 #This can also fail if the packages aren't available from Canonical
 @test "Test retrieving the latest precompiled kernel packages" {
-	#skip
+	skip
 	run test_get_latest_ubuntu_precompiled_packages
 	assert_success
 }

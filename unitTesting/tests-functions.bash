@@ -12,7 +12,7 @@ test_select_latest_kernel() {
 	select_kernel_ubu
 }
 
-test_get_latest_debian_kernal() {
+test_get_latest_debian_kernel() {
 	USE_LATEST=1
 	select_kernel_deb
 	get_kernel_archive
