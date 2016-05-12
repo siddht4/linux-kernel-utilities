@@ -7,12 +7,12 @@ xprofile(){
     start_spinner "Managing dependencies. This can take a while . . ."
     check_deps 1>/dev/null 2>/dev/null 
     stop_spinner 0
-    clearline
   
     if ! check_qt 1>/dev/null 2>/dev/null; then \
         sudobg apt-get -qq -y install qt5-default
         spinner $BGPID "Installing QT5 default package . . ."
         wait $BGPID
+        clearline
     fi
     
     select_kernel_deb
@@ -30,9 +30,10 @@ xprofile(){
     clearline
     
     pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
-	make $KRNL_CONFIG 1>/dev/null 2>/dev/null &
-    spinner $! "Configuring . . ."
-    wait $!
+    #make $KRNL_CONFIG 1>/dev/null 2>/dev/null &
+    sudobg make $KRNL_CONFIG
+    spinner $BGPID "Configuring . . ."
+    wait $BGPID
     clearline
     
     fakeroot make-kpkg clean 1>/dev/null 2>/dev/null &
