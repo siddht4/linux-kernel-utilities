@@ -3,7 +3,7 @@ xprofile(){
     echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
-    pid=sudobg check_deps #1>/dev/null 2>/dev/null 
+    pid=sudobg check_deps 1>/dev/null 2>/dev/null 
     #spinner $! "Managing dependencies . . ."
     #wait $!
     spinner ${pid}
