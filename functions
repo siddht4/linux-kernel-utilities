@@ -406,6 +406,7 @@ function _spinner() {
             #    printf "\b${sp:i++%${#sp}:1}"
             #    sleep $delay
             #done
+            echo ${_sp_pid} ${2}
             spinner ${_sp_pid} ${2}
             
             ;;
