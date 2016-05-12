@@ -11,9 +11,11 @@ clear
 . ./variables
 # Source functions
 . ./functions
+# Source whiptail messages
+. ./messages
 
 # Set overlap variables
-DEPENDENCIES="lynx curl"
+DEPENDENCIES="lynx wget curl"
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
 if [ "$#" -gt 1 ]; then
@@ -22,16 +24,13 @@ elif [ "$1" = "latest" ]; then
 	USE_LATEST=1
 fi
 
-echo -e "${PLUS} Checking OS"
+#echo -e "${PLUS} Checking OS"
 shopt -s nocasematch
 if [[ "$OS" != "ubuntu" ]]; then
-	echo -n -e "[?] ${Red}This script is intended to update an Ubuntu distro. ${Cyan}${OS}${Red} detected ... continue anyway? (y/N) ${Reg}"
-	read INPUT
-	if [[ ! $INPUT  =~ ^[Yy]$ ]]; then
-		echo -e "\_ Exiting kernel installation."
+	UPOS=${OS^^}
+	if ! (whiptail --yesno --defaultno --title "Precompiled Ubuntu Kernel Updater" "This script is intended to update an Ubuntu distro.\n\nYour distro detected as [${UPOS}] ... continue anyway?" 20 80); then
+		whip_msg  "Non-Ubuntu Distro Cancel" "Exiting and cleaning up."
 		exit 0
-	else
-		echo -e "\_ ${Yellow}Continuing to install kernel . . .${Reg}\n"
 	fi
 fi
 
@@ -49,9 +48,10 @@ fi
 echo -e "${Cyan} \_ Done${Reg}\n"
 
 echo -e "${PLUS} Retrieving available kernel choices . . ."
-print_kernels
 
-select_kernel
+print_kernels_ubu
+
+select_kernel_ubu
 
 echo -e "${PLUS} Processing selection"
 get_precompiled_ubu_kernel

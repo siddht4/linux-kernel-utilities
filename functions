@@ -5,7 +5,7 @@
 whip_msg(){
 	local title="$1"
 	local msg="$2"
-	whiptail --title "${title}" --msgbox "${msg}" 20 80
+	whiptail --title "${title}" --msgbox "${msg}" --backtitle "${BACKTITLE}" 20 80
 }
 
 chk_sudoer(){
@@ -15,7 +15,6 @@ chk_sudoer(){
 	then
 		error "Sudo: Not found" "The user was not found in the sudo group. Cannot continue." 1 
 	fi
-	
 }
 
 get_arch(){
@@ -30,7 +29,6 @@ reqexit(){
 }
 
 check_qt(){
-	
 	printf '\t%-24s' "QT4 or QT5"
 	if pkg-config --exists Qt5Core || pkg-config --exists QtCore; then \
 		echo -e "${Green}Found${Reg}"; \
@@ -61,77 +59,119 @@ cleanup(){
 	fakeroot rm $OUTPUT -f
 }
 
-get_debian_list(){
-	local FILES=($(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
-	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
-	#for ver in $(grep -v $RC_FILTER `curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1`); do
-	#for ver in $(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1); do
-	for ver in ${FILTERED_FILES[@]}; do
-		TOTAL="${TOTAL}\nhttps://$ver"
-	done
-	echo -ne "\n"
-	for ver in $(echo -e $TOTAL); do
-		((COUNT++))
-		printf ' %-3s Linux %-15s' "${COUNT})" "`echo ${ver##*'/'}|cut -d - -f 2- | sed 's/.tar.xz//g'`"
-		[ $((COUNT%3)) -eq 0 ] && echo -e -n '\n'
-	done
-}
-
 get_ubuntu_list(){
 	local FILES=($(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'))
 	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
-	#for ver in $(curl -s ${BASEURL} | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'); do
-	for ver in ${FILTERED_FILES[@]}; do
-		TOTAL="${TOTAL}\n$ver"
-		DOWN="${DOWN}\n$ver"
+	
+	NUMEL=${#FILTERED_FILES[@]}
+	
+	for (( i=${NUMEL}; i>=0; i-- )); 
+	do
+		TOTAL="${TOTAL}\n${FILTERED_FILES[i]}"
+		DOWN="${DOWN}\n${FILTERED_FILES[i]}"
 	done
+	
 	echo -ne "\n"
 	for ver in $(echo -e $TOTAL); do
 		((COUNT++))
 		printf ' %-3s Linux %-20s' "${COUNT})" "`echo ${ver##*'/'}|cut -d '>' -f 7 | sed 's/-$//'`"
 		[ $((COUNT%4)) -eq 0 ] && echo -e -n '\n'
 	done
-}
-
-print_kernels(){
-	echo
-	TOTAL1=""
-	TOTAL2=""
-	COUNT=0
-	if [ "`basename "$0"`" = "compile_linux_kernel.sh" ]; then
-		echo -e "Kernels Available from https://www.kernel.org:"
-		get_debian_list
-	elif [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
-		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
-		get_ubuntu_list
-	elif [ "`basename "$0"`" = "bats-exec-test" ]; then
-		if [ "$1" = "debian" ]; then
-			get_debian_list
-		elif [ "$1" = "ubuntu" ]; then
-			get_ubuntu_list
-		fi
-	else
-		error "Func: Print_kernel" "Logic error in parsing latest kernel. Exiting." 1 
-	fi
 	
 	NUMOPTS=$COUNT
 	COUNT=0
 }
 
+print_kernels_ubu(){
+	echo
+	if [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
+		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
+		get_ubuntu_list
+	elif [ "`basename "$0"`" = "bats-exec-test" ]; then
+		get_ubuntu_list
+	else
+		error "Func: Print_kernel" "Logic error in parsing latest kernel. Exiting." 1 
+	fi
+}
 
+get_debian_list(){
+	local FILES=($(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
+	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
 
-select_kernel(){
+	for ver in ${FILTERED_FILES[@]}; do
+		TOTAL="${TOTAL} https://$ver"
+	done
+
+	# Has full URL file names
+	TOTAL=(${TOTAL[@]})
+
+	for ver in ${TOTAL[@]}; do
+		LIST="${LIST} `echo ${ver##*'/'}`"
+	done
+
+	ARR_LIST=(${LIST[@]})
+	ARR_END=${#ARR_LIST[@]}
+	NEW_ARR_END=$((${ARR_END}*2-1))
+
+	for (( i=${NEW_ARR_END}; i>0; i=i-2 ))
+	do
+		iOLD=$(((i-1)/2))
+		ARR_LIST[i]=" "
+		ARR_LIST[i-1]=${ARR_LIST[$iOLD]}
+	done
+}
+
+# Not using whiptail for Ubuntu - too many selection choices
+select_kernel_deb(){
+	get_debian_list
+	
+	# Override if using 'LATEST' else whiptail menu
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
 		if [ "`basename "$0"`" = "compile_linux_kernel.sh" ]; then
-			INPUT=1
-		elif [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
-			INPUT=$NUMOPTS
+			OPTION="${ARR_LIST}"
 		elif [ "`basename "$0"`" = "bats-exec-test" ]; then
 			INPUT=1
 		else
 			error "Func: Select_kernel" "Logic error in parsing latest kernel. Exiting." 1 
 		fi
+	else
+		OPTION=$(whiptail --title "Available Kernels" --backtitle "${BACKTITLE}" --menu "Select kernel arhive to download" 20 80 ${ARR_END} "${ARR_LIST[@]}" 3>&1 1>&2 2>&3)
+	fi
+
+	if [[ -n ${OPTION} ]]; then 
+		TGTFILE=`printf "%s\n" "${TOTAL[@]}" | grep "${OPTION}"`; 
+	else
+		whip_msg  "Select Kernel Cancel" "No kernel was selected.\nExiting and cleaning up."
+		exit 0
+	fi
+}
+
+get_kernel_archive(){
+	TEMPFILES+=( "${OUTPUT}" )
+	eval wget -O "${OUTPUT}" "${TGTFILE}" 2>&1 | \
+	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
+	whiptail --title "Download Kernel Archive" --backtitle "${BACKTITLE}" --gauge "Downloading kernel archive . . ." 7 70 0
+	
+	err=$?
+	if [ $err -ne 0 ]
+	then
+		error "Func: print_kernels" "Download source failure." $err
+	fi
+			
+	SIGNurl=`sed 's/.xz/.sign/g' <<< ${TGTFILE}`
+	SIGNfile=`sed 's/.xz/.xz.sign/g' <<< ${OPTION}`
+
+	TEMPFILES+=( "${SIGNfile}" )
+	wget -O "${SIGNfile}" "${SIGNurl}" 2>&1 | \
+	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
+	whiptail --title "Download Kernel Archive" --backtitle "${BACKTITLE}" --gauge "Downloading signature file . . ." 7 70 0
+}
+
+select_kernel_ubu(){
+	if [[ $USE_LATEST -eq 1 ]] ; then
+		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection to latest kernel."
+		INPUT=1
 	else
 		echo -n -e "\n\nSelect your desired kernel: "
 		read INPUT
@@ -158,8 +198,7 @@ select_kernel(){
 		esac
 
 		echo ""
-	fi
-	
+	fi	
 }
 
 get_precompiled_ubu_kernel(){
@@ -171,16 +210,22 @@ get_precompiled_ubu_kernel(){
 				((COUNTD++))
 				if [ $COUNTD -eq $INPUT ]; then
 					# Download Kernel
-					if [ "$lowlatency" == "0" ]; then
-						echo -e "${Cyan} \_ Locating source of ${ver} generic kernel packages.${Reg}"
+					if [ ${lowlatency} -eq 0 ]; then
+						KTYPE="generic"
+					else
+						KTYPE="lowlatency"
+					fi
+					echo -e "${Cyan} \_ Locating source of ${ver} ${KTYPE} kernel packages.${Reg}"
+					
+					RSLT=`lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep "$1" | grep "$2" | grep "$arch" | grep -v "BUILD.LOG" | cut -d " " -f 4`
+			
+					if [[ -z ${RSLT} ]]; then
+						whip_msg "${w_title_two}" "${w_msg_two}"
+						exit
+					else
 						get_ubu_shared_header
-						get_ubu_files generic header
-						get_ubu_files generic image
-					elif [ "$lowlatency" == "1" ]; then
-						echo -e "${Cyan} \_ Locating source of ${ver} lowlatency kernel packages.${Reg}"
-						get_ubu_shared_header
-						get_ubu_files lowlatency header
-						get_ubu_files lowlatency image
+						get_ubu_files ${KTYPE} header
+						get_ubu_files ${KTYPE} image
 					fi
 				fi				
 			done
@@ -190,57 +235,26 @@ get_precompiled_ubu_kernel(){
 }
 
 get_ubu_shared_header(){
-	echo -e "${Cyan} \_ Getting ${ver} shared header . . .${Reg}"
-	eval curl -# -O $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep all | cut -d ' ' -f 4)
+	eval wget $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep all | cut -d ' ' -f 4) 2>&1 | \
+	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
+	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} shared header . . ." 7 70 0
 	err=$?
 	if [ $err -ne 0 ]
 	then
-	    echo -e "Download package failure. Error code $err"
-	    exit $err
+		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
 	fi
 }
 
 get_ubu_files() {
-	echo -e "${Cyan} \_ Getting ${ver} ${1} ${2}. . .${Reg}"
-	eval curl -# -O $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep "$1" | grep "$2" | grep "$arch" | cut -d ' ' -f 4)
+	eval wget $(lynx -dump -listonly -dont-wrap-pre ${BASEURL}${ver} | grep "$1" | grep "$2" | grep "$arch" | cut -d ' ' -f 4) 2>&1 | \
+	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
+	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} ${1} ${2} . . ." 7 70 0
+
 	err=$?
 	if [ $err -ne 0 ]
 	then
-	    echo -e "Download package failure. Error code $err"
-	    exit $err
+		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
 	fi
-}
-
-get_kernel_archive(){
-	echo ""
-	for ver in $(echo -e $TOTAL); do
-		((COUNT++))
-		if [ $COUNT -eq $INPUT ]; then
-			echo -e "${PLUS} Downloading Kernel"
-			echo -e " \_ Saving as ${Cyan}${OUTPUT}${Reg}"
-			echo -e "\nURL: ${ver}     Output: ${OUTPUT}\n"
-			TEMPFILES+=( "$OUTPUT" )
-			eval curl -# $ver -o "$OUTPUT"
-			err=$?
-			if [ $err -ne 0 ]
-			then
-				error "Func: print_kernels" "Download source failure." $err
-			fi
-			
-			SIGNurl=`sed 's/.xz/.sign/g' <<< ${ver}`
-            SIGNfile=`sed 's/.xz/.sign/g' <<< ${OUTPUT}`
-            TEMPFILES+=( "$SIGNfile" )
-            echo -e "${PLUS} Downloading Signature"
-			echo -e " \_ Saving as ${Cyan}${SIGNfile}${Reg}"
-			echo -e "\nURL: ${SIGNurl}     Output: ${SIGNfile}\n"
-            eval curl -# $SIGNurl -o "$SIGNfile"
-			err=$?
-			if [ $err -ne 0 ]
-			then
-				error "Func: print_kernels" "Download signature file failed." $err
-			fi
-		fi
-	done
 }
 
 install_key(){

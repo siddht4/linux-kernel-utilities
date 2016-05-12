@@ -1,5 +1,6 @@
 
 xprofile(){
+    echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
     check_deps 1>/dev/null 2>/dev/null &
@@ -13,10 +14,13 @@ xprofile(){
         wait $BGPID
     fi
 
-    print_kernels
-    select_kernel 
+    #print_kernels
+    #select_kernel 
     
-    get_kernel_archive #1>/dev/null 2>/dev/null &
+    select_kernel_new
+    
+    #get_kernel_archive #1>/dev/null 2>/dev/null &
+    get_kernel_archive_new
     
     check_sign add #1>/dev/null 2>/dev/null &
     spinner $! "Validating . . ."
@@ -45,6 +49,9 @@ xprofile(){
     wait $!
     clearline
     
+    cleanup
+    popd 1>/dev/null 2>/dev/null
+
     echo -e $'\a' && notify-send -i emblem-default "Kernel compliation completed."
     echo -e "Compilation finished"
 

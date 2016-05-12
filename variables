@@ -14,6 +14,7 @@ OS=$(lsb_release -si)
 PLUS="${Cyan}[+]${Reg}"
 NOW=$(date +%h%d_%H-%m-%S)
 VERAPPEND=$(date +.%y%m%d)
+BACKTITLE="SCRIPT SOURCE: https://github.com/mtompkins/linux-kernel-utilities"
 # To filter out Release Candidates replace "null" with "-rc"
 # Revert change to allow RC's. Do not use "" or " ". 
 # The variable must be set!

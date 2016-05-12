@@ -17,7 +17,7 @@ clear
 # Set overlap variables
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
 						build-essential pkg-config qt5-qmake libnotify-bin \
-						sudo gnupg libssl-dev curl"
+						sudo gnupg libssl-dev wget curl"
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
@@ -69,9 +69,7 @@ if ! check_qt; then \
 	wait $BGPID
 fi
 
-print_kernels
-
-select_kernel
+select_kernel_deb
 
 get_kernel_archive
 
@@ -97,7 +95,7 @@ echo -e "\n \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
 
 pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
 
-echo -e "${PLUS} Launching configuratino GUI \"make -s xconfig\"."
+echo -e "${PLUS} Launching configuration GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
 
 echo -ne "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
