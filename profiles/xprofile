@@ -3,10 +3,11 @@ xprofile(){
     echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
 	$SUDO echo
     chk_sudoer
-    sudobg check_deps #1>/dev/null 2>/dev/null 
-    echo "BGPID ${BGPID}"
-    spinner $BGPID  "Managing dependencies . . ."
-    wait $BGPID
+    #sudobg check_deps #1>/dev/null 2>/dev/null 
+    check_deps
+    #echo "BGPID ${BGPID}"
+    #spinner $BGPID  "Managing dependencies . . ."
+    #wait $BGPID
 
     clearline
   
