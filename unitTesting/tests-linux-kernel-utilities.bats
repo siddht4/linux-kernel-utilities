@@ -52,25 +52,38 @@ source ${BATS_TEST_DIRNAME}/../variables
 	assert_success
 }
 
+@test "Test retrieving ubuntu precompiled kernels list" {
+	run get_ubuntu_list
+	assert_success
+}
+
 @test "Test retrieving debian kernel archives list" {
 	run get_debian_list
 	assert_success
 }
 
-@test "Test retrieving ubuntu precompiled kernel list" {
+@test "Test listing ubuntu precompiled kernels" {
 	run print_kernels_ubu
 	assert_success
 }
 
-@test "Test selecting latest kernel option" {
-	run test_select_latest_kernel latest
+@test "Test selecting latest kernel option for compilation and precompiled" {
+	run test_select_latest_kernel
 	assert_success
 }
 
 #This will download and delete an archive which can be a substantial amount of time
-@test "Test retrieving the lastest debian kernel" {
+@test "Test retrieving the lastest debian kernel & signature file" {
 	#skip
-	run test_get_latest_debian_kernal latest
+	run test_get_latest_debian_kernal
+	assert_success
+}
+
+#This will download and delete the latest precompiled packages which can be a substantial amount of time
+#This can also fail if the packages aren't available from Canonical
+@test "Test retrieving the latest precompiled kernel packages" {
+	#skip
+	run test_get_latest_ubuntu_precompiled_packages
 	assert_success
 }
 

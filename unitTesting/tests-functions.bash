@@ -7,19 +7,24 @@ test_write_permission() {
 }
 
 test_select_latest_kernel() {
-	if [ "$1" = "latest" ]; then
-		USE_LATEST=1
-	fi
 	USE_LATEST=1
 	select_kernel_deb
 	select_kernel_ubu
 }
 
 test_get_latest_debian_kernal() {
-	print_kernels debian
 	USE_LATEST=1
-	select_kernel
+	select_kernel_deb
 	get_kernel_archive
+	cleanupfiles
+}
+
+test_get_latest_ubuntu_precompiled_packages() {
+	USE_LATEST=1
+	print_kernels_ubu
+	select_kernel_ubu
+	get_precompiled_ubu_kernel	
+	cleanupfiles
 }
 
 test_spinner() {
