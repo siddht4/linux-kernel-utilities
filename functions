@@ -312,6 +312,7 @@ sudobg() {
 	$SUDO echo ""
   	$SUDO "$@" > /dev/null 2>&1 &
 	BGPID=$!
+	return ${BGPID}
 }
 
 # TRAPS
