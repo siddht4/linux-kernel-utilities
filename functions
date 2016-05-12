@@ -281,7 +281,7 @@ spinner(){
 
 update(){
 	echo -e "${PLUS} Dependencies"
-	sudobg apt-get update > /dev/null 2>&1
+	sudobg apt-get update #> /dev/null 2>&1
 	MSG="Working . . . "
 	spinner $BGPID "$MSG"
 	wait $BGPID
@@ -289,13 +289,14 @@ update(){
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
-	sudobg "DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y --force-yes install $DEPENDENCIES" > /dev/null 2>&1
+	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install $DEPENDENCIES > /dev/null 2>&1
 	MSG="Working, this one may take a while . . ."
 	spinner $BGPID "$MSG"
 	wait $BGPID
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
+	check_deps
 }
 
 countdown(){
