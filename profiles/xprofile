@@ -4,7 +4,6 @@ xprofile(){
 	$SUDO echo
     chk_sudoer
     #DO NOT BACKGROUND - IT CALLS update FUNCTION 
-    echo -e "${PLUS} Managing dependencies"
     start_spinner "Managing dependencies . . ."
     check_deps 1>/dev/null 2>/dev/null 
     stop_spinner
