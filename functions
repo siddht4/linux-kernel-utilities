@@ -332,7 +332,7 @@ check_sign(){
 
     if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
 		echo "HERE ${1}"
-		if [[ ${1} = "add" ]]; then
+		if [[ "${1}" == "add" ]]; then
 			INSTALL_ID="y"
 		else
 			echo -e "\n[!] The public key for this file was not found in your PGP store."
