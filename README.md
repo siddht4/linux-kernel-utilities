@@ -11,8 +11,6 @@ Bash script that will poll http://www.kernel.org for available kernels and prese
 **Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
 
-[See it on Youtube](https://www.youtube.com/watch?v=-6d9RJbR6_U)
-
 ----
 ### Download precompiled Ubuntu kernel: `update_ubuntu_kernel.sh`
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
@@ -56,7 +54,7 @@ To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](htt
 
     ./update_ubuntu_kernel.sh
 
-To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com) 
+To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
 <a href="https://www.youtube.com/watch?v=CokrHUykkUQ" target="_blank"><img src="https://git.marktompkins.me/mtompkins/linux-kernel-utilities/raw/12d49a47d19e3a3fab4a72b3c58759952a14fe52/img/youtube.png" /></a>
 
     ./update_ubuntu_kernel.sh latest
