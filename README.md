@@ -56,7 +56,7 @@ To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](htt
 
     ./update_ubuntu_kernel.sh
 
-To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com) [![See It on Youtube](https://github.com/mtompkins/linux-kernel-utilities/blob/master/img/youtube.png)](https://www.youtube.com/watch?v=CokrHUykkUQ)
+To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com) [![See It on Youtube](https://git.marktompkins.me/mtompkins/linux-kernel-utilities/blob/master/img/youtube.png)](https://www.youtube.com/watch?v=CokrHUykkUQ)
 
     ./update_ubuntu_kernel.sh latest
 
