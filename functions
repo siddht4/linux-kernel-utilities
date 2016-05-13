@@ -296,6 +296,7 @@ update(){
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
 	UPDATENEEDED=0
+	clear
 	check_deps
 }
 
