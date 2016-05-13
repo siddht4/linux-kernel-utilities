@@ -18,7 +18,7 @@ xprofile(){
     select_kernel_deb
     get_kernel_archive
     
-    check_sign "add"
+    check_sign ${unknown_key_handler}
     clearline
     
     mkdir $CMP_FLDR

@@ -3,6 +3,7 @@
 zeus(){
 	USE_LATEST=1
 	KRNL_CONFIG=olddefconfig
+	unknown_key_handler=add
 
 	xprofile
 }
