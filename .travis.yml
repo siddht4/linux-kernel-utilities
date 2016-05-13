@@ -1,13 +1,15 @@
+sudo: required
+dist: trusty
+
 before_install:
   - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
   - sudo apt-get install -qq bats 
-  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-add-repository -y ppa:beineri/opt-qt542
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install qt54tools qt54svg qt54webkit qt54script
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg
+  - sudo apt-get -qq install qt55tools qt55svg qt55webkit qt55script
 script:
   - bats ./unitTesting/tests-linux-kernel-utilities.bats 
+  - source /opt/qt55/bin/qt55-env.sh
