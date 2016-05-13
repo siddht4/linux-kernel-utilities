@@ -38,6 +38,7 @@ To compile a kernel with manual version selection
     ./compile_linux_kernel.sh
 
 To compile the latest kernel available
+<a href="https://www.youtube.com/watch?v=Us88qzNL3oI" target="_blank"><img src="https://git.marktompkins.me/mtompkins/linux-kernel-utilities/raw/12d49a47d19e3a3fab4a72b3c58759952a14fe52/img/youtube.png" /></a>
 
     ./compile_linux_kernel.sh latest
 
@@ -46,7 +47,6 @@ To compile a kernel from a local archive file
     ./compile_linux_kernel.sh linux-4.5.2.tar.xz
 
 To compile the latest kernel *automagically* using a profile
-<a href="https://www.youtube.com/watch?v=Us88qzNL3oI" target="_blank"><img src="https://git.marktompkins.me/mtompkins/linux-kernel-utilities/raw/12d49a47d19e3a3fab4a72b3c58759952a14fe52/img/youtube.png" /></a>
 
     ./compile_linux_kernel.sh zeus
 
