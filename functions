@@ -331,7 +331,7 @@ check_sign(){
     CHK_ID=`grep -Po -- 'RSA key ID \K\w*' <<< "$CHK_SIGN"`
 
     if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
-		if [[ "$1" = "add" ]]; then
+		if [[ "$1" == "add" ]]; then
 			INSTALL_ID="y"
 		else
 			echo -e "\n[!] The public key for this file was not found in your PGP store."
