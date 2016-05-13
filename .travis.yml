@@ -9,7 +9,7 @@ before_install:
   - sudo apt-add-repository -y ppa:beineri/opt-qt56-trusty
   - sudo apt-get update -qq
   - sudo apt-get install -qq gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg
-  - sudo apt-get -qq install qt56tools qt56svg qt56webkit qt56script
+  - sudo apt-get -qq install qt56tools qt56svg qt56script
 script:
   - bats ./unitTesting/tests-linux-kernel-utilities.bats 
   - source /opt/qt56/bin/qt56-env.sh
