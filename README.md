@@ -1,6 +1,6 @@
 ![Project Status: Active](https://img.shields.io/badge/project-active-green.svg)
 [![Internal Build Status](https://git.marktompkins.me/mtompkins/linux-kernel-utilities/badges/master/build.svg)](https://git.marktompkins.me/mtompkins/linux-kernel-utilities) [![External Build Status](https://travis-ci.org/mtompkins/linux-kernel-utilities.svg?branch=master)](https://travis-ci.org/mtompkins/linux-kernel-utilities)
-<img align="right" src="https://www.kernel.org/theme/images/logos/tux.png" alt="Linux Logo" title="Tux">
+<img align="right" src="img/tux.png" alt="Linux Logo" title="Tux">
 # Linux Kernel Utilities
 ## Descriptions
 
@@ -38,7 +38,7 @@ To compile a kernel with manual version selection
     ./compile_linux_kernel.sh
 
 To compile the latest kernel available
-<a href="https://www.youtube.com/watch?v=Us88qzNL3oI" target="_blank"><img src="https://git.marktompkins.me/mtompkins/linux-kernel-utilities/raw/12d49a47d19e3a3fab4a72b3c58759952a14fe52/img/youtube.png" /></a>
+<a href="https://www.youtube.com/watch?v=Us88qzNL3oI" target="_blank"><img src="img/youtube.png" /></a>
 
     ./compile_linux_kernel.sh latest
 
@@ -56,7 +56,7 @@ To download and install a precompiled Ubuntu kernel from [kernel.ubuntu.com](htt
     ./update_ubuntu_kernel.sh
 
 To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu.com](https://kernel.ubuntu.com)
-<a href="https://www.youtube.com/watch?v=CokrHUykkUQ" target="_blank"><img src="https://git.marktompkins.me/mtompkins/linux-kernel-utilities/raw/12d49a47d19e3a3fab4a72b3c58759952a14fe52/img/youtube.png" /></a>
+<a href="https://www.youtube.com/watch?v=CokrHUykkUQ" target="_blank"><img src="img/youtube.png" /></a>
 
     ./update_ubuntu_kernel.sh latest
 
