@@ -1,3 +1,5 @@
+imagte: ubuntu
+
 bats:
   script:
     - bats ./unitTesting/tests-linux-kernel-utilities.bats 
