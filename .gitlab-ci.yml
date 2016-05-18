@@ -19,8 +19,8 @@ test:debian:
   script:
     - add-apt-repository -y ppa:duggan/bats
     - ls -lha /etc/apt/sources.list.d/
-    - cat /etc/apt/sources.list.d/duggan-ubuntu-bats-xenial.list
-    - sed -i 's/debian-stretch/xenial/g' /etc/apt/sources.list.d/duggan-ubuntu-bats-xenial.list
+    - cat /etc/apt/sources.list.d/duggan-ubuntu-bats-jessie.list
+    - sed -i 's/debian-stretch/wily/g' /etc/apt/sources.list.d/duggan-ubuntu-bats-jessie.list
     - apt-get -qq update
     - apt-get -qq install bats
     - bats --version
