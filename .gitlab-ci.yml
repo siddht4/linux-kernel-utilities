@@ -2,7 +2,7 @@ image: ubuntu
 
 before_script:
   - apt-get -qq update
-  - apt-get -qq make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin sudo gnupg libssl-dev wget curl
+  - apt-get -qq install make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin sudo gnupg libssl-dev wget curl
 bats:
   script:
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
