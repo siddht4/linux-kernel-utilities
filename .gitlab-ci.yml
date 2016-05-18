@@ -1,6 +1,7 @@
 image: ubuntu
 
 before_script:
+  - apt-get -qq update
   - apt-get install software-properties-common
   - add-apt-repository -y ppa:duggan/bats
   - apt-add-repository -y ppa:ubuntu-toolchain-r/test
