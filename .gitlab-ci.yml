@@ -6,7 +6,7 @@ before_script:
 test:ubuntu:
   image: ubuntu:15.10
   script:
-    - add-apt-repository -qq -y ppa:duggan/bats
+    - add-apt-repository -y ppa:duggan/bats
     - apt-get -qq update
     - apt-get -qq install bats
     - bats --version
@@ -17,7 +17,7 @@ test:debian:
   script:
     # We are accepting the use of PPA's to simplify the install of BATS
     # for unit testing.
-    - add-apt-repository -qq -y ppa:duggan/bats
+    - add-apt-repository -y ppa:duggan/bats
     - sed -i 's/jessie/wily/g' /etc/apt/sources.list.d/duggan-bats-jessie.list
     - apt-get -qq update
     - apt-get -qq install bats
