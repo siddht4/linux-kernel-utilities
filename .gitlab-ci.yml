@@ -10,7 +10,7 @@ test:ubuntu:
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
     
-test:debian
+test:debian:
   image: debian
   script:
     - bats --version
