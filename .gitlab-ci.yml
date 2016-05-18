@@ -2,8 +2,10 @@ image: ubuntu
 
 before_script:
   - apt-get -qq update
-  - apt-get -qq install make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin sudo gnupg libssl-dev wget curl
-bats:
+  - apt-get -qq install software-properties-common
+  - add-apt-repository -y ppa:duggan/bats
+
+# We should be able to start with a new image
+all-tests:
   script:
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
-    - source /opt/qt56/bin/qt56-env.sh
