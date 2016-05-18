@@ -1,12 +1,17 @@
-image: ubuntu
-
 before_script:
   - apt-get -qq update
   - apt-get -qq install software-properties-common
   - add-apt-repository -y ppa:duggan/bats
-  - apt-get -qq install bats
+  - apt-get -qq install bats bc
 
-# We should be able to start with a new image
-all-tests:
+test:ubuntu:
+  image: ubuntu
   script:
+    - bats --version
+    - bats ./unitTesting/tests-linux-kernel-utilities.bats
+    
+test:debian
+  image: debian
+  script:
+    - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
