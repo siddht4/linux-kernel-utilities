@@ -1,11 +1,11 @@
 before_script:
   - apt-get -qq update
-  - apt-get -qq install software-properties-common
   - apt-get -qq install bc
 
 test:ubuntu:
   image: ubuntu:15.10
   script:
+    - apt-get -qq install software-properties-common
     - add-apt-repository -y ppa:duggan/bats
     - apt-get -qq update
     - apt-get -qq install bats
@@ -17,9 +17,13 @@ test:debian:
   script:
     # We are accepting the use of PPA's to simplify the install of BATS
     # for unit testing.
-    - add-apt-repository -y ppa:duggan/bats
-    - sed -i 's/jessie/wily/g' /etc/apt/sources.list.d/duggan-bats-jessie.list
-    - apt-get -qq update
-    - apt-get -qq install bats
+    - git clone https://github.com/sstephenson/bats.git /tmp/bats
+    - mkdir -p /tmp/local
+    - bash /tmp/bats/install.sh /tmp/local
+    - export PATH=$PATH:/tmp/local/bin
+    #- add-apt-repository -y ppa:duggan/bats
+    #- sed -i 's/jessie/wily/g' /etc/apt/sources.list.d/duggan-bats-jessie.list
+    #- apt-get -qq update
+    #- apt-get -qq install bats
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
