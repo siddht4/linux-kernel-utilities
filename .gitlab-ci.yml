@@ -2,13 +2,7 @@ image: ubuntu
 
 before_script:
   - apt-get -qq update
-  - apt-get -qq install software-properties-common
-  - add-apt-repository -y ppa:duggan/bats
-  - apt-add-repository -y ppa:ubuntu-toolchain-r/test
-  - apt-add-repository -y ppa:beineri/opt-qt56-trusty
-  - apt-get -qq update
-  - apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
-
+  - apt-get -qq make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config qt5-qmake libnotify-bin sudo gnupg libssl-dev wget curl
 bats:
   script:
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
