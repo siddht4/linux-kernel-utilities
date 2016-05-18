@@ -6,7 +6,7 @@ before_script:
   - apt-get -qq install bc
 
 test:ubuntu:
-  image: ubuntu
+  image: ubuntu 15.10
   script:
     - apt-get -qq install bats
     - bats --version
