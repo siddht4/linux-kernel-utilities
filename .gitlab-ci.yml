@@ -1,4 +1,4 @@
-imagte: ubuntu
+image: ubuntu
 
 bats:
   script:
