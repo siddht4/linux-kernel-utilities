@@ -1,13 +1,13 @@
 before_script:
   - apt-get -qq update
   - apt-get -qq install software-properties-common
-  - add-apt-repository -y ppa:duggan/bats
-  - apt-get -qq update
   - apt-get -qq install bc
 
 test:ubuntu:
-  image: ubuntu 15.10
+  image: ubuntu:15.10
   script:
+    - add-apt-repository -y ppa:duggan/bats
+    - apt-get -qq update
     - apt-get -qq install bats
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
@@ -17,9 +17,11 @@ test:ubuntu:
 test:debian:
   image: debian
   script:
+    - add-apt-repository -y ppa:duggan/bats
     - ls -lha /etc/apt/sources.list.d/
     - cat /etc/apt/sources.list.d/duggan-ubuntu-bats-xenial.list
     - sed -i 's/debian-stretch/xenial/g' /etc/apt/sources.list.d/duggan-ubuntu-bats-xenial.list
+    - apt-get -qq update
     - apt-get -qq install bats
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
