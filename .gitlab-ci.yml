@@ -4,6 +4,7 @@ before_script:
   - apt-get -qq update
   - apt-get -qq install software-properties-common
   - add-apt-repository -y ppa:duggan/bats
+  - apt-get -qq install bats
 
 # We should be able to start with a new image
 all-tests:
