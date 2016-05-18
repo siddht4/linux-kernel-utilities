@@ -6,20 +6,18 @@ before_script:
 test:ubuntu:
   image: ubuntu:15.10
   script:
-    - add-apt-repository -y ppa:duggan/bats
+    - add-apt-repository -qq -y ppa:duggan/bats
     - apt-get -qq update
     - apt-get -qq install bats
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
 
-# We are accepting the use of PPA's to simplify the install of BATS
-# for unit testing.
 test:debian:
   image: debian
   script:
-    - add-apt-repository -y ppa:duggan/bats
-    - ls -lha /etc/apt/sources.list.d/
-    - cat /etc/apt/sources.list.d/duggan-bats-jessie.list
+    # We are accepting the use of PPA's to simplify the install of BATS
+    # for unit testing.
+    - add-apt-repository -qq -y ppa:duggan/bats
     - sed -i 's/jessie/wily/g' /etc/apt/sources.list.d/duggan-bats-jessie.list
     - apt-get -qq update
     - apt-get -qq install bats
