@@ -4,15 +4,16 @@ before_script:
   - git clone https://github.com/sstephenson/bats.git /tmp/bats
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
+  - export PATH=$PATH:/tmp/local/bin
 
 test:ubuntu:
   image: ubuntu:15.10
   script:
-    - /tmp/local/bin/bats --version
-    - /tmp/local/bin/bats ./unitTesting/tests-linux-kernel-utilities.bats
+    - bats --version
+    - bats ./unitTesting/tests-linux-kernel-utilities.bats
 
 test:debian:
   image: debian
   script:
-    - /tmp/local/bin/bats --version
+    - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
