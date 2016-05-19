@@ -92,21 +92,21 @@ fi
 EXTRACTED=$(ls $CMP_FLDR/)
 echo -e "\n \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
 
-pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
+pushd $CMP_FLDR/linux* &>/dev/null
 
 echo -e "${PLUS} Launching configuration GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
 
 echo -ne "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
-	fakeroot make-kpkg clean 1>/dev/null 2>/dev/null || error ${LINENO} "Error occurred while running \"make-kpkg clean\"." 1
+	fakeroot make-kpkg clean &>/dev/null || error ${LINENO} "Error occurred while running \"make-kpkg clean\"." 1
 echo -e "\n \_ ${Green}Cleaned${Reg}\n"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	echo -e "\n\nYou can build it later with:\n   ${Yellow}fakeroot make-kpkg -rootcmd --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers${Reg}"
+	echo -e "\n\nYou can build it later with:\n   ${Yellow}fakeroot make-kpkg -rootcmd --initrd --append-to-version=$(date +.%y%m%d) kernel_image kernel_headers kernel_source modules_image${Reg}"
 	cleanup
 	echo -e "\n\n${Green}[%] Exiting without compilation.${Reg}\n\n"
-	popd 1>/dev/null 2>/dev/null
+	popd &>/dev/null
 	exit 0
 else
 	echo -e "\n\n${PLUS} Compiling your kernel!"
@@ -115,8 +115,8 @@ else
 	countdown 'Compilation will begin in ' 10
 	echo -e " -- ${Yellow}Starting Compilation${Reg} -- "
 	echo -e "--------------------------------------------------------------------------------------------------\n\n"
-
-	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers \
+			
+	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers kernel_source modules_image \
 			|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
 	
 fi
@@ -136,6 +136,6 @@ else
 fi
 
 cleanup
-popd 1>/dev/null 2>/dev/null
+popd &>/dev/null
 
 echo -e "${Green}[%] Complete${Reg}"
