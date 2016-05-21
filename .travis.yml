@@ -10,3 +10,6 @@ before_install:
 script:
   - bats ./unitTesting/tests-linux-kernel-utilities.bats 
   - source /opt/qt56/bin/qt56-env.sh
+addons:
+    code_climate:
+        repo_token: af81e68f1d0e98adef124a52b75c13fff35e8da804b9276e3086e1a837685541
