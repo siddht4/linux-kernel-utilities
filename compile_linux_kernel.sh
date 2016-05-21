@@ -17,7 +17,7 @@ clear
 # Set overlap variables
 DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
 						build-essential pkg-config qt5-qmake libnotify-bin \
-						sudo gnupg libssl-dev wget curl"
+						sudo gnupg libssl-dev wget curl whiptail"
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
