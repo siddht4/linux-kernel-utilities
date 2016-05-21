@@ -1,4 +1,22 @@
 # linux-kernel-utilities Changelog
+## v1.0.0 (May 19, 2016)
+NEW FEATURES
+- Added ability to compile by profile for fully automatic compiling.
+
+IMPROVEMENTS
+- CI now tests on both Ubuntu and Debian
+
+FIXES
+- Update CHANGELOG.md `FIXES` not to conflict with CodeClimate scans
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+
 ## v0.1.0 (May 1, 2016)
 NEW FEATURES
 - Added ability to automate selecting most recent kernel with `./compile_linux_kernel.sh latest`
@@ -8,7 +26,7 @@ IMPROVEMENTS
 - Additional README.md instructions
 - BATS unit testing
 
-BUG FIXES
+FIXES
 - none
 
 DEPRECATED
