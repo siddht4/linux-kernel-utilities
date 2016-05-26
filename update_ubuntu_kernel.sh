@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Clear the terminal so we can see things
 clear

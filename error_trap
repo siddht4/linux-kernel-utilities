@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Error trap is isolated to allow unit tests to properly manage order of loading variables and functions
 # This is necessary because there is a string comparison for dynamically assigning dependencies with an error trap
