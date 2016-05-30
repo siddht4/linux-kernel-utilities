@@ -1,20 +1,22 @@
 #!/bin/bash
-Black=$(tput setaf 0)
-Red=$(tput setaf 1)
-Green=$(tput setaf 2)
-Yellow=$(tput setaf 3)
-LimeYellow=$(tput setaf 190)
-PowderBlue=$(tput setaf 153)
-Blue=$(tput setaf 4)
-Magenta=$(tput setaf 5)
-Cyan=$(tput setaf 6)
-White=$(tput setaf 7)
-Bright=$(tput bold)
-Normal=$(tput sgr0)
-Blink=$(tput blink)
-Reverse=$(tput smso)
-Underline=$(tput smul)
-Reg=$(tput sgr0)
+if [[ $- == *i* ]]; then
+        Black=$(tput setaf 0)
+        Red=$(tput setaf 1)
+        Green=$(tput setaf 2)
+        Yellow=$(tput setaf 3)
+        LimeYellow=$(tput setaf 190)
+        PowderBlue=$(tput setaf 153)
+        Blue=$(tput setaf 4)
+        Magenta=$(tput setaf 5)
+        Cyan=$(tput setaf 6)
+        White=$(tput setaf 7)
+        Bright=$(tput bold)
+        Normal=$(tput sgr0)
+        Blink=$(tput blink)
+        Reverse=$(tput smso)
+        Underline=$(tput smul)
+        Reg=$(tput sgr0)
+fi
 
 colors256() {
         local c i j

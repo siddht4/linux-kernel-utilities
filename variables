@@ -19,7 +19,9 @@ BACKTITLE="SCRIPT SOURCE: https://github.com/mtompkins/linux-kernel-utilities"
 # Revert change to allow RC's. Do not use "" or " ". 
 # The variable must be set!
 RC_FILTER="-rc"
-COLUMNS=$(tput cols)
+if [[ $- == *i* ]]; then
+	COLUMNS=$(tput cols)
+fi
 
 # Compile
 CMP_FLDR="Build_$NOW"
