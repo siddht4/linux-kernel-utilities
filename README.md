@@ -75,7 +75,7 @@ To remove ALL non-active kernels
 > [BATS](https://github.com/sstephenson/bats)
 >### TIPS
 >- You can set `RC_FILTER` to control whether Release Candidates are offered as a choice.
->- Enlarge your terminal window prior to executing the scripts to ensure proper formatting of available choices.    
->- Multicore compiling is set automatically with `CONCURRENCY_LEVEL` to a number determined for the system. This can be manually adjusted in the [variables](./variables) file.
+>- Enlarge your terminal window before executing the scripts to make sure proper formatting of available choices.    
+>- Multicore thread compiling is set automatically to twice the amount of detected cores.
 >
 >[Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
