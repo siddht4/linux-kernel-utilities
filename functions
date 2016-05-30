@@ -127,7 +127,9 @@ select_kernel_deb(){
 	
 	# Override if using 'LATEST' else whiptail menu
 	if [[ $USE_LATEST -eq 1 ]] ; then
-		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
+		if [[ $1 != "quiet" ]]; then
+			echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
+		fi
 		OPTION="${ARR_LIST}"
 	else
 		OPTION=$(whiptail --title "Available Kernels" --backtitle "${BACKTITLE}" --menu "Select kernel arhive to download" 20 80 ${ARR_END} "${ARR_LIST[@]}" 3>&1 1>&2 2>&3)
@@ -282,16 +284,14 @@ spinner(){
 
 update(){
 	echo -e "${PLUS} Dependencies"
-	sudobg apt-get update #> /dev/null 2>&1
+	sudobg apt-get update 
 	spinner ${BGPID} "Working . . . "
 	wait ${BGPID}
 	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
-	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install $DEPENDENCIES
-	spinner ${BGPID} "Working, this one may take a while . . ."
-	wait ${BGPID}
+	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install ${DEPENDENCIES}
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
@@ -324,14 +324,16 @@ cleanupfiles() {
 trap cleanupfiles 0
 
 check_sign(){
-    echo -e "\n${PLUS} Checking archive signature"
-    CHK_SIGN=`unxz -c ${OUTPUT} | gpg --verify ${SIGNfile} - 2>&1`
-    CHK_SIGN_MISS_SIG=`grep -o 'public key not found' <<<$CHK_SIGN`
-
-    CHK_ID=`grep -Po -- 'RSA key ID \K\w*' <<< "$CHK_SIGN"`
-
+	start_spinner "Checking archive signature . . ."
+    	CHK_SIGN=`unxz -c ${OUTPUT} | gpg --verify ${SIGNfile} - 2>&1`
+    	CHK_SIGN_MISS_SIG=`grep -o 'public key not found' <<<$CHK_SIGN`
+    	CHK_ID=`grep -Po -- 'RSA key ID \K\w*' <<< "$CHK_SIGN"`
+	stop_spinner 0
+	clearline
+	echo -en "\e[1A"
+	echo -e "\n${PLUS} Checking archive signature . . ."
+	
     if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
-		echo "HERE ${1}"
 		if [[ "${1}" == "add" ]]; then
 			INSTALL_ID="y"
 		else
@@ -403,7 +405,8 @@ function _spinner() {
 			tput cnorm;        
             ;;
         stop)
-            kill $3 > /dev/null 2>&1
+            kill $3
+			wait $3 2>/dev/null
             ;;
         *)
             echo "invalid argument, try {start/stop}"
@@ -412,16 +415,43 @@ function _spinner() {
     esac
 }
 
-function start_spinner {
+function start_spinner() {
     # $1 : msg to display
     _spinner "start" "${1}" &
     # set global spinner pid
     _sp_pid=$!
-    
 }
 
-function stop_spinner {
+function stop_spinner() {
     # $1 : command exit status
-    _spinner "stop" $1 $_sp_pid
+    _spinner "stop" "${1}" ${_sp_pid}
     unset _sp_pid
+}
+
+function center-text() {
+	function get_width () {
+    	echo "$(wc -L <<< "$1")"
+	}
+	function multi_space() {
+		num=$1
+		if [ $num -le 0 ]; then
+			echo ""
+			return
+		fi
+		v=$(printf "%-${num}s" " ")
+		echo "$v"
+	}
+
+	columns="$(tput cols)"
+
+	for line in "$@"
+	do
+		width=$(get_width "$line")
+		left_padding=$(( (columns-width) / 2))
+		if [ $left_padding -lt 0 ]; then
+			left_padding=0
+		fi
+		spaces=$(multi_space "$left_padding")
+		printf "%s%s\n" "$spaces" "$line"
+	done
 }

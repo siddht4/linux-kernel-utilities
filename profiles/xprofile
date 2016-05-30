@@ -1,54 +1,131 @@
+#!/bin/bash
 
 xprofile(){
-    echo -e "${Yellow}Automatic kernel compilation by profile started${Reg}"
-	$SUDO echo
+	MSG="-- Automatic kernel compilation by profile started --"
+    center-text "${LimeYellow}" "${MSG}" "${Reg}"
+
+    $SUDO echo
     chk_sudoer
     #Do not background dependency check - it calls sudobg 
     start_spinner "Managing dependencies. This can take a while . . ."
-    check_deps 1>/dev/null 2>/dev/null 
+        check_deps &>/dev/null 
     stop_spinner 0
-  
-    if ! check_qt 1>/dev/null 2>/dev/null; then \
+    clearline
+    
+    if ! check_qt &>/dev/null; then \
         sudobg apt-get -qq -y install qt5-default
         spinner $BGPID "Installing QT5 default package . . ."
         wait $BGPID
         clearline
     fi
     
-    select_kernel_deb
+    start_spinner "Getting kernel . . ."
+        select_kernel_deb quiet
+    stop_spinner 0
+
     get_kernel_archive
-    
-    check_sign ${unknown_key_handler}
     clearline
+
+    check_sign ${KEY_HANDLER} 
     
     mkdir $CMP_FLDR
     tar xf $OUTPUT -C ./$CMP_FLDR &
-    spinner $! "Extracting . . ."
+    spinner $! "Extracting archive . . ."
     wait $!
     clearline
     
-    pushd $CMP_FLDR/linux* 1>/dev/null 2>/dev/null
-    sudobg make $KRNL_CONFIG
-    spinner $BGPID "Configuring . . ."
-    wait $BGPID
+    pushd $CMP_FLDR/linux* &>/dev/null
+    
+    make mrproper &>/dev/null
+    
+    spinner $! "Preparing the kernel tree . . ."
+    wait $!
+    EXIT_STAT=$?
+    if [ $EXIT_STAT -ne 0 ]
+    then
+        popd &>/dev/null
+	    error ${LINENO} "An error occured while preparing the kernel tree." $EXIT_STAT
+    fi
     clearline
     
-    fakeroot make-kpkg clean 1>/dev/null 2>/dev/null &
-    spinner $! "Cleaning . . ."
+    echo -e "Configuring the kernel build . . .\n"
+    
+    make $KRNL_CONFIG &
     wait $!
+    EXIT_STAT=$?
+    if [ $EXIT_STAT -ne 0 ]
+    then
+        popd &>/dev/null
+	    error ${LINENO} "An error occured while configuring the kernel." $EXIT_STAT
+    fi
+    
+    echo
+    
+    # Disable debug build
+    scripts/config --disable DEBUG_INFO &>/dev/null || error ${LINENO} "Error occurred while disabling DEBUG INFO." $?
+    
+    
+    make clean &>/dev/null &
+    spinner $! "Cleaning the kernel tree . . ."
+    wait $!
+    EXIT_STAT=$?
+    if [ $EXIT_STAT -ne 0 ]
+    then
+        popd &>/dev/null
+	    error ${LINENO} "An error occured while cleaning the kernel tree." $EXIT_STAT
+    fi
     clearline
     
-    make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers 1>/dev/null 2>/dev/null &
-    spinner $! "Compiling . . ."
-    wait $!
+    MSG="-- Started compiling packages at $(date +%H:%M:%S) --"
+    center-text "${Cyan}" "${MSG}" "${Reg}"
+    
+    make -j${NUMTHREADS} deb-pkg LOCALVERSION=-${VERAPPEND} &>/dev/null &
+    PID=$!
+    spinner $PID "Compiling Kernel . . ."
+    wait $PID
+    EXIT_STAT=$?
     clearline
+    
+    if [ $EXIT_STAT -ne 0 ]
+	then
+        popd &>/dev/null
+		error ${LINENO} "An error occured while compiling the kernel." $EXIT_STAT
+	else
+        echo -en "\e[1A"
+	    echo -e "\n${PLUS} Compiling Kernel . . ."
+        echo -e " \_ ${Green}Done${Reg}\n"
+    fi
+    
+    make -j${NUMTHREADS} modules LOCALVERSION=-${VERAPPEND} &>/dev/null &
+    PID=$!
+    spinner $PID "Compiling Modules . . ."
+    wait $PID
+    EXIT_STAT=$?
+    clearline
+    
+	if [ $EXIT_STAT -ne 0 ]
+	then
+        popd &>/dev/null
+		error ${LINENO} "An error occured while compiling modules." $EXIT_STAT
+	else
+		echo -e $'\a' && notify-send -i emblem-default "Kernel and modules compliations completed."
+		echo -en "\e[1A"
+	    echo -e "\n${PLUS} Compiling Modules . . ."
+        echo -e " \_ ${Green}Done${Reg}\n"
+	fi
+    
+    echo -ne "You can install the deb packages with:\n"
+    MSG="sudo dpkg -i ../*.deb"
+    center-text "${LimeYellow}" "${MSG}" "${Reg}"
+    
+    echo -ne "You can install the modules with:\n"
+    MSG="sudo modules_install"
+    center-text "${LimeYellow}" "${MSG}" "${Reg}"
+
+    echo -e "${Green}[%] Complete${Reg}"
     
     cleanup
-    popd 1>/dev/null 2>/dev/null
-
-    echo -e $'\a' && notify-send -i emblem-default "Kernel compliation completed."
-    echo -e "Compilation finished"
-
-    exit 0
+    popd &>/dev/null
     
+    exit 0
 }

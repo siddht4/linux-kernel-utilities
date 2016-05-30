@@ -1,10 +1,9 @@
 . ./profiles/xprofile
 
-zeus(){
+aio(){
 	USE_LATEST=1
 	KRNL_CONFIG=olddefconfig
 	KEY_HANDLER=add
 
 	xprofile
 }
-

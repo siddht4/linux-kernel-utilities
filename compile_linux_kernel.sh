@@ -14,18 +14,16 @@ clear
 # Source whiptail messages
 . ./messages
 
-# Set overlap variables
-DEPENDENCIES="gcc make fakeroot libncurses5 libncurses5-dev kernel-package \
-						build-essential pkg-config qt5-qmake libnotify-bin \
-						sudo gnupg libssl-dev wget curl whiptail"
+# Set overlap variables						
+DEPENDENCIES="gcc make libncurses5 libncurses5-dev kernel-package build-essential \
+						pkg-config qt5-qmake libnotify-bin sudo gnupg libssl-dev \
+						wget curl whiptail time"
+						
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
 	usage
 fi
-
-# Enable for parallel processor compilation
-export CONCURRENCY_LEVEL=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-` 
 
 if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
@@ -46,6 +44,7 @@ if [ "$#" -eq 1 ]; then
 		fi
 	else
 		OUTPUT=$1
+		LOCALFILE=1
 	fi
 	
 else
@@ -68,11 +67,11 @@ if ! check_qt; then \
 	wait ${BGPID}
 fi
 
-select_kernel_deb
-
-get_kernel_archive
-
-check_sign
+if ! [ $LOCALFILE ]; then
+	select_kernel_deb
+	get_kernel_archive
+	check_sign
+fi
 
 echo -e "${PLUS} Creating a directory to build your kernel from source."
 mkdir $CMP_FLDR 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
@@ -80,7 +79,7 @@ echo -e " \_ Directory Created:\t${Cyan}${CMP_FLDR}${Reg}\n"
 
 MSG="Extracting your kernel . . . "
 tar xf $OUTPUT -C ./$CMP_FLDR &
-spinner $! $MSG
+spinner $! "${MSG}"
 # Check for successful extraction
 wait $!
 EXIT_STAT=$?
@@ -89,21 +88,35 @@ then
 	error ${LINENO} "An error occured while extracting the archive." $EXIT_STAT
 fi
 
+clearline
+echo -e "${PLUS} Extracting your kernel . . ."
 EXTRACTED=$(ls $CMP_FLDR/)
-echo -e "\n \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
+echo -e " \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
 
 pushd $CMP_FLDR/linux* &>/dev/null
+
+echo -e "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
+	make mrproper &>/dev/null || error ${LINENO} "Error occurred while running \"make mrproper\"." 1
+
+echo -e " \_ ${Green}Done${Reg}\n"
 
 echo -e "${PLUS} Launching configuration GUI \"make -s xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
 
-echo -ne "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
-	fakeroot make-kpkg clean &>/dev/null || error ${LINENO} "Error occurred while running \"make-kpkg clean\"." 1
-echo -e "\n \_ ${Green}Cleaned${Reg}\n"
+echo -e "\n${PLUS} Disabling DEBUG INFO . . . "
+scripts/config --disable DEBUG_INFO || error ${LINENO} "Error occurred while disabling DEBUG INFO." $?
+echo -e " \_ ${Green}Done${Reg}\n"
+	
+echo -e "${PLUS} Cleaning the workspace after configuration . . . "
+	make clean &>/dev/null || error ${LINENO} "Error occurred while running \"make clean clean\"." 1
+	
+echo -e " \_ ${Green}Cleaned${Reg}\n"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	echo -e "\n\nYou can build it later with:\n   ${Yellow}fakeroot make-kpkg -rootcmd --initrd --append-to-version=$(date +.%y%m%d) kernel_image kernel_headers kernel_source modules_image${Reg}"
+	echo -e "\n\nYou can build it later with:"
+	MSG="make -j${NUMTHREADS} deb-pkg LOCALVERSION=-${VERAPPEND}${Reg}"
+    center-text "${LimeYellow}" "${MSG}" "${Reg}"
 	cleanup
 	echo -e "\n\n${Green}[%] Exiting without compilation.${Reg}\n\n"
 	popd &>/dev/null
@@ -115,9 +128,12 @@ else
 	countdown 'Compilation will begin in ' 10
 	echo -e " -- ${Yellow}Starting Compilation${Reg} -- "
 	echo -e "--------------------------------------------------------------------------------------------------\n\n"
+					
+	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j${NUMTHREADS} deb-pkg LOCALVERSION=-${VERAPPEND} \
+			|| error ${LINENO} "Something happened during the kernel compilation process, but I can't help you." 1
 			
-	fakeroot time -f "\n\n\tTime Elapsed: %E\n\n" make-kpkg --rootcmd fakeroot --initrd --append-to-version=$VERAPPEND kernel_image kernel_headers kernel_source modules_image \
-			|| error ${LINENO} "Something happened during the compilation process, but I can't help you." 1
+	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j${NUMTHREADS} modules LOCALVERSION=-${VERAPPEND} \
+			|| error ${LINENO} "Something happened during the modules compilation process, but I can't help you." 1
 	
 fi
 
@@ -128,11 +144,13 @@ read -p "[?] Kernel compiled successfully. Would you like to install? (y/N)" -n 
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 	dir=`pwd`
 	pDir="$(dirname "$dir")"
-	echo -e "\n\nYou can manually install the kernel with:\nsudo dpkg -i $pDir/*.deb"
-	echo -e "\n \_ Skipping kernel installation . . ."
+	echo -e "\n\nYou can manually install the kernel with:\n${Yellow}sudo dpkg -i $pDir/*.deb${Reg}"
+	echo -e "\nYou will still have to handle the installation of modules from the source directory with:\n${Yellow}sudo modules_install${Reg}"
+	echo -e "\n \_ Skipping kernel and modules installation . . ."
 else
-	echo -e "\n \_ ${Green}Installing kernel . . .${Reg}"
+	echo -e "\n \_ ${Green}Installing kernel and modules . . .${Reg}"
 	$SUDO dpkg -i ../*.deb
+	$SUDO make modules_install
 fi
 
 cleanup

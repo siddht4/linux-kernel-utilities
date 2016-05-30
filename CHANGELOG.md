@@ -1,4 +1,28 @@
 # linux-kernel-utilities Changelog
+
+## v1.0.1 (May 29, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- Addition of CodeClimate
+- Use of tput colors
+
+FIXES
+- Migration from older `make-kpkg` to `make deb-pkg`
+- Proper handling of locally passed kernel archive file
+- Suppress background spinner stop feedback
+
+DEPRECATED
+- Use of `make-kpkg`
+- ANSI colors
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.0 (May 19, 2016)
 NEW FEATURES
 - Added ability to compile by profile for fully automatic compiling.

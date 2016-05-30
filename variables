@@ -12,17 +12,21 @@ USE_LATEST=0
 UPDATENEEDED=0
 OS=$(lsb_release -si)
 PLUS="${Cyan}[+]${Reg}"
-NOW=$(date +%h%d_%H-%m-%S)
-VERAPPEND=$(date +.%y%m%d)
+NOW=$(date +%h%d_%H-%M-%S)
+VERAPPEND=$(date +%y.%m.%d.%H.%M)
 BACKTITLE="SCRIPT SOURCE: https://github.com/mtompkins/linux-kernel-utilities"
 # To filter out Release Candidates replace "null" with "-rc"
 # Revert change to allow RC's. Do not use "" or " ". 
 # The variable must be set!
 RC_FILTER="-rc"
+COLUMNS=$(tput cols)
 
 # Compile
 CMP_FLDR="Build_$NOW"
 OUTPUT="kernel_$NOW.tar.xz"
+KRNL_CONFIG=olddefconfig
+NUMCPUS=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-`
+NUMTHREADS=$(( ${NUMCPUS}*2 ))
 
 # Precompiled
 FIELD=7

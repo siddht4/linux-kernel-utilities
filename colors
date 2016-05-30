@@ -1,12 +1,42 @@
 #!/bin/bash
+Black=$(tput setaf 0)
+Red=$(tput setaf 1)
+Green=$(tput setaf 2)
+Yellow=$(tput setaf 3)
+LimeYellow=$(tput setaf 190)
+PowderBlue=$(tput setaf 153)
+Blue=$(tput setaf 4)
+Magenta=$(tput setaf 5)
+Cyan=$(tput setaf 6)
+White=$(tput setaf 7)
+Bright=$(tput bold)
+Normal=$(tput sgr0)
+Blink=$(tput blink)
+Reverse=$(tput smso)
+Underline=$(tput smul)
+Reg=$(tput sgr0)
 
-# Reset
-Reg='\e[0m'		# Text Reset
-Black='\e[0;30m'	# Black
-Red='\e[0;31m'		# Red
-Green='\e[0;32m'	# Green
-Yellow='\e[0;33m'	# Yellow
-Blue='\e[0;34m'		# Blue
-Purple='\e[0;35m'	# Purple
-Cyan='\e[0;36m'		# Cyan
-White='\e[0;37m'	# White
+colors256() {
+        local c i j
+
+        printf "Standard 16 colors\n"
+        for ((c = 0; c < 17; c++)); do
+                printf "|%s%3d%s" "$(tput setaf "$c")" "$c" "$(tput sgr0)"
+        done
+        printf "|\n\n"
+
+        printf "Colors 16 to 231 for 256 colors\n"
+        for ((c = 16, i = j = 0; c < 232; c++, i++)); do
+                printf "|"
+                ((i > 5 && (i = 0, ++j))) && printf " |"
+                ((j > 5 && (j = 0, 1)))   && printf "\b \n|"
+                printf "%s%3d%s" "$(tput setaf "$c")" "$c" "$(tput sgr0)"
+        done
+        printf "|\n\n"
+
+        printf "Greyscale 232 to 255 for 256 colors\n"
+        for ((; c < 256; c++)); do
+                printf "|%s%3d%s" "$(tput setaf "$c")" "$c" "$(tput sgr0)"
+        done
+        printf "|\n"
+}

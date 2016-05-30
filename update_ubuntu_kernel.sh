@@ -24,7 +24,6 @@ elif [ "$1" = "latest" ]; then
 	USE_LATEST=1
 fi
 
-#echo -e "${PLUS} Checking OS"
 shopt -s nocasematch
 if [[ "$OS" != "ubuntu" ]]; then
 	UPOS=${OS^^}
