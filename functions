@@ -83,7 +83,6 @@ get_ubuntu_list(){
 }
 
 print_kernels_ubu(){
-	echo
 	if [ "`basename "$0"`" = "update_ubuntu_kernel.sh" ]; then
 		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
 		get_ubuntu_list
