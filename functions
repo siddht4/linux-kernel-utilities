@@ -282,7 +282,7 @@ spinner(){
 	tput cnorm;
 }
 
-update(){
+function update(){
 	echo -e "${PLUS} Dependencies"
 	sudobg apt-get update 
 	spinner ${BGPID} "Working . . . "
@@ -291,7 +291,7 @@ update(){
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
-	sudobg DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confnew -qq -y install ${DEPENDENCIES}
+	sudobg apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install -qq -y ${DEPENDENCIES}
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
