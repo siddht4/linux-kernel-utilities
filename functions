@@ -285,13 +285,16 @@ spinner(){
 function update(){
 	echo -e "${PLUS} Dependencies"
 	sudobg apt-get update 
-	spinner ${BGPID} "Working . . . "
-	wait ${BGPID}
+	spinner $! "Working . . . "
+	wait $!
 	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
 	sudobg apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install -qq -y ${DEPENDENCIES}
+	spinner $! "Working . . . "
+	wait $!
+	clearline
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
 	echo -e "${Green}Complete${Reg}\n"
