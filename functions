@@ -289,7 +289,7 @@ function update(){
 	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	#start_spinner "Installing dependencies . . ."
-		$SUDO apt-get -qq -y install ${DEPENDENCIES}
+		$SUDO apt-get -qq -y install "${DEPENDENCIES}"
 	#stop_spinner 0
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
