@@ -283,10 +283,11 @@ spinner(){
 
 function update(){
 	echo -e "${PLUS} Dependencies"
+	echo -e " \_ Elevating permissions as necessary . . ."
+	$SUDO echo -e " \_ Done"
 	start_spinner "Updating package cache . . ."
 		$SUDO apt-get update &>/dev/null 
 	stop_spinner 0
-	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	#start_spinner "Installing dependencies . . ."
 	#$SUDO apt-get -qq -y install "${DEPENDENCIES}"
