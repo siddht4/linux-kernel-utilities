@@ -45,6 +45,7 @@ check_deps(){
 		if [[ -z `dpkg -l | grep "^ii  $dep"` ]]; then
 			echo -e "${Red}Not Found${Reg}"
 			UPDATENEEDED=1
+			TOINSTALL+=" ${dep}"
 		else
 			echo -e "${Green}Found${Reg}"
 		fi
@@ -295,7 +296,9 @@ function update(){
 	#$SUDO apt-get -qq -y install "${DEPENDENCIES}"
 	#$SUDO apt-get -qq -y install ${DEPENDENCIES}
 	
-	for dep in ${DEPENDENCIES}
+	#TOINSTALL
+	#for dep in ${DEPENDENCIES}
+	for dep in ${TOINSTALL}
 	do
 		start_spinner "Installing ${dep} . . ."
 		$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${dep} &>/dev/null
@@ -304,7 +307,7 @@ function update(){
 	done
 	exit
 	
-	$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${DEPENDENCIES}
+	#$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${DEPENDENCIES}
 	#stop_spinner 0
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
