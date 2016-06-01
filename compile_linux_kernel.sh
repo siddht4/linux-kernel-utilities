@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clear the terminal so we can see things
-clear
+tput clear
 
 # Source terminal colors
 . ./colors
