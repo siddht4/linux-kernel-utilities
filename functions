@@ -45,7 +45,7 @@ check_deps(){
 		if [[ -z `dpkg -l | grep "^ii  $dep"` ]]; then
 			echo -e "${Red}Not Found${Reg}"
 			UPDATENEEDED=1
-			TOINSTALL+=" ${dep}"
+			TOINSTALL+="${dep} "
 		else
 			echo -e "${Green}Found${Reg}"
 		fi
@@ -57,7 +57,7 @@ check_deps(){
 }
 
 cleanup(){
-	fakeroot rm $OUTPUT -f
+	rm $OUTPUT -f
 }
 
 get_ubuntu_list(){
@@ -291,6 +291,11 @@ function update(){
 	echo -e "${PLUS} Dependencies"
 	echo -e " \_Elevating permissions as necessary . . ."
 	$SUDO echo -e "[%] ${Green}Elevated${Reg}\n"
+	EXIT_STAT=$?
+	if [ $EXIT_STAT -ne 0 ]
+	then
+		error ${LINENO} "An error occured while elevating permissions." $EXIT_STAT
+	fi
 	start_spinner "Updating package cache . . ."
 		$SUDO apt-get update &>/dev/null 
 	stop_spinner 0
