@@ -290,7 +290,7 @@ function update(){
 	echo -e "${Green}Complete${Reg}"
 	printf "%-20s" " \_ Installing dependencies"
 	echo
-	sudobg apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install -qq -y ${DEPENDENCIES}
+	sudobg apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -qq -y install ${DEPENDENCIES}
 	spinner $! "Working . . . "
 	wait $!
 	clearline
