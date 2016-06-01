@@ -3,20 +3,23 @@
 xprofile(){
 	MSG="-- Automatic kernel compilation by profile started --"
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
-    echo -e "Caching elevated permissions in advance in case of missing dependencies."
+    echo -e "Caching elevated permissions in case of missing dependencies."
     $SUDO echo
     chk_sudoer
     #Do not background dependency check - it calls sudobg 
-    start_spinner "Managing dependencies. This can take a while . . ."
-        check_deps &>/dev/null 
-    stop_spinner 0
-    clearline
+    #start_spinner "Managing dependencies. This can take a while . . ."
+    echo -e "${PLUS} Checking Dependencies"
+        check_deps #&>/dev/null 
+    #stop_spinner 0
+    #clearline
     
     if ! check_qt &>/dev/null; then \
         sudobg apt-get -qq -y install qt5-default
-        spinner $BGPID "Installing QT5 default package . . ."
-        wait $BGPID
-        clearline
+        spinner $! "Installing QT5 default package . . ."
+	    wait $!
+	    clearline
+	    echo -e "${PLUS} Installing QT5 default package"
+	    echo -e " \_${Green}Complete${Reg}\n"
     fi
     
     start_spinner "Getting kernel . . ."
