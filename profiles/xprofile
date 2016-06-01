@@ -36,10 +36,8 @@ xprofile(){
     
     pushd $CMP_FLDR/linux* &>/dev/null
     
+    echo -e "${PLUS} Preparing the kernel tree . . .\n"
     make mrproper &>/dev/null
-    
-    spinner $! "Preparing the kernel tree . . ."
-    wait $!
     EXIT_STAT=$?
     if [ $EXIT_STAT -ne 0 ]
     then
