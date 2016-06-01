@@ -295,8 +295,12 @@ function update(){
 	#$SUDO apt-get -qq -y install "${DEPENDENCIES}"
 	#$SUDO apt-get -qq -y install ${DEPENDENCIES}
 	
-	for each dep in ${DEPENDENCIES}; do
-		echo ${dep}
+	for each dep in ${DEPENDENCIES}
+	do
+		start_spinner "Installing ${dep} . . ."
+		$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${dep} &>/dev/null
+		stop_spinner 0
+		clearline
 	done
 	exit
 	
