@@ -283,34 +283,28 @@ spinner(){
 }
 
 function update(){
+	MSG="-- Installing Missing dependencies --"
+    center-text "${Cyan}" "${MSG}" "${Reg}"
+	echo -e "\n{Yellow}[!]${Reg} The first time this script is run missing dependencies will be installed."
+	echo -e "  For compiling a kernel this may take a bit of time. Some feedback will be provided."
+	echo
 	echo -e "${PLUS} Dependencies"
-	echo -e " \_ Elevating permissions as necessary . . ."
-	$SUDO echo -e " \_ Done"
+	echo -e " \_Elevating permissions as necessary . . ."
+	$SUDO echo -e "[%] ${Green}Done${Reg}\n"
 	start_spinner "Updating package cache . . ."
 		$SUDO apt-get update &>/dev/null 
 	stop_spinner 0
 	clearline
 	echo -e "${PLUS} Updating package cache . . ."
 	echo -e " \_${Green}Complete${Reg}"
-	#start_spinner "Installing dependencies . . ."
-	#$SUDO apt-get -qq -y install "${DEPENDENCIES}"
-	#$SUDO apt-get -qq -y install ${DEPENDENCIES}
-	
-	#TOINSTALL
-	#for dep in ${DEPENDENCIES}
 	for dep in ${TOINSTALL}
 	do
 		start_spinner "Installing ${dep} . . ."
-		$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${dep} &>/dev/null
+			$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${dep} &>/dev/null
 		stop_spinner 0
 		clearline
 	done
-	exit
-	
-	#$SUDO DEBIAN_FRONTEND=noninteractive apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${DEPENDENCIES}
-	#stop_spinner 0
-	echo -ne "\033[2K" ; printf "\r"
-	printf "%-20s" " \_ Installation"
+	unset TOINSTALL
 	echo -e "${Green}Complete${Reg}\n"
 	UPDATENEEDED=0
 	clear
