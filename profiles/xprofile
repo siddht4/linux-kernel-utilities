@@ -8,7 +8,7 @@ xprofile(){
     chk_sudoer
     #Do not background dependency check - it calls sudobg 
     echo -e "${PLUS} Checking Dependencies"
-        check_deps #&>/dev/null 
+        check_deps
     echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}"
     
@@ -24,6 +24,7 @@ xprofile(){
     echo -e "\n${PLUS} Getting kernel archive . . ."
     select_kernel_deb quiet
     get_kernel_archive
+    echo -e " \_${Green}Complete${Reg}"
 
     check_sign ${KEY_HANDLER} 
     
