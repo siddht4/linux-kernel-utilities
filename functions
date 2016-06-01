@@ -283,11 +283,15 @@ spinner(){
 
 function update(){
 	echo -e "${PLUS} Dependencies"
-	$SUDO apt-get update &>/dev/null 
+	start_spinner "Updating package cache . . ."
+		$SUDO apt-get update &>/dev/null 
+	stop_spinner 0
 	printf "%-20s" " \_ Updating APT"
 	echo -e "${Green}Complete${Reg}"
 	#start_spinner "Installing dependencies . . ."
-	$SUDO apt-get -qq -y install "${DEPENDENCIES}"
+	#$SUDO apt-get -qq -y install "${DEPENDENCIES}"
+	#$SUDO apt-get -qq -y install ${DEPENDENCIES}
+	$SUDO apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${DEPENDENCIES}
 	#stop_spinner 0
 	echo -ne "\033[2K" ; printf "\r"
 	printf "%-20s" " \_ Installation"
