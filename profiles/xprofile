@@ -7,12 +7,12 @@ xprofile(){
     $SUDO echo
     chk_sudoer
     #Do not background dependency check - it calls sudobg 
-    start_spinner "Checking dependencies. This can take a while . . ."
+    start_spinner "Managing dependencies. This can take a while . . ."
     #echo -e "${PLUS} Checking Dependencies"
         check_deps &>/dev/null 
     stop_spinner 0
     clearline
-    echo -e "${PLUS} Checking dependencies"
+    echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}\n"
     
     if ! check_qt &>/dev/null; then \
