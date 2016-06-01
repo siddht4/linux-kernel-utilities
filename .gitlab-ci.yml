@@ -5,11 +5,11 @@ before_script:
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
+  - export TERM=xterm-256color
 
 test:ubuntu:
   image: ubuntu:15.10
   script:
-    - echo Terminal is $-
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
 
