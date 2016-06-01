@@ -5,8 +5,8 @@ NEW FEATURES
 - none
 
 IMPROVEMENTS
-- Modify update function to give improved feedback
-- Limit update function to install missing packages instead of all dependencies
+- Improve feedback of update function
+- Limit update function to missing packages instead of all dependencies
 
 FIXES
 - Set TERM environment on gitlab-ci

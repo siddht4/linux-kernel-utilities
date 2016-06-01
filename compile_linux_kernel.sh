@@ -67,7 +67,7 @@ if ! check_qt; then \
 	wait ${BGPID}
 	clearline
 	echo -e "${PLUS} Installing QT5 default package"
-	echo -e " \_${Green}Complete${Reg}\n"
+	echo -e " \_${Green}Complete${Reg}"
 fi
 
 if ! [ $LOCALFILE ]; then
