@@ -66,9 +66,11 @@ To remove ALL non-active kernels
     ./remove_old_kernels.sh
 
 ## Notes
-> Do not run the scripts with `sudo`. They will prompt for elevated priviledges if necessary. The user must be a **member of the sudo group** however.
+> Do not run the scripts with `sudo`. They will prompt for elevated privileges if necessary.     
 >
-> Some older kernels (e.g. 3.x) require earlier versions of QT. If errors are thrown during the kernel configuration process, look for errors indicating a version of QT is not installed. If so, manually install the required version and rerun the script.    
+> Some older kernels (e.g. 3.x) require earlier versions of QT. If you are building v3.x kernels you should manually install QT4 before compiling. The script is set to install QT5 if missing.
+>### Kernel Source Preservation
+> When installing a compiled kernel, links are created to the kernel source so that `DKMS` will function correctly. Therefore, you should take care not to delete the `Build_xxxx` folders after installation. If you compile a newer release and remove an older kernel using `dpkg -r`, it is then safe to delete the entire directory of the removed kernel version.
 >### CI & Unit Testing
 > Internal: Gitlab & Gitlab CI    
 > External: Github & Travis CI    
