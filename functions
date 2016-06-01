@@ -313,7 +313,7 @@ function update(){
 	unset TOINSTALL
 	echo -e " \_${Green}Complete${Reg}\n"
 	UPDATENEEDED=0
-	clear
+	tput clear
 	check_deps
 }
 
@@ -366,13 +366,13 @@ check_sign(){
     
         case $INSTALL_ID in
             [Nn]*) 
-                echo -e "No"
+                echo -e "NO - Exiting"
                 exit 0;
                 ;;
             [Ss]*) 
-                echo -e "Skip"
+                echo -e "SKIP - Skipping GPG signature check."
                 ;;
-            *) echo -e "Yes"
+            *) echo -e "YES - Installing new GPG key and checking archive."
                 install_key
                 check_sign
         esac
