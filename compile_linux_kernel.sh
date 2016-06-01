@@ -63,8 +63,11 @@ if ! check_qt; then \
 	echo -e ""
 	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
 	sudobg apt-get -qq install qt5-default
-	spinner ${BGPID} "Installing QT5 default package"
+	spinner ${BGPID} "Installing QT5 default package . . ."
 	wait ${BGPID}
+	clearline
+	echo -e "${PLUS} Installing QT5 default package"
+	echo -e " \_${Green}Complete${Reg}\n"
 fi
 
 if ! [ $LOCALFILE ]; then

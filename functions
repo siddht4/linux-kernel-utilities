@@ -286,17 +286,17 @@ function update(){
 	MSG="-- Installing Dependencies --"
     center-text "${Cyan}" "${MSG}" "${Reg}"
 	echo -e "\n${Yellow}[!]${Reg} The first time this script is run missing dependencies will be installed."
-	echo -e "    For compiling a kernel this may take a bit of time. Some feedback will be provided."
+	echo -e "    For compiling a kernel this may take a bit of time. Feedback will be provided."
 	echo
 	echo -e "${PLUS} Dependencies"
 	echo -e " \_Elevating permissions as necessary . . ."
-	$SUDO echo -e "[%] ${Green}Done${Reg}\n"
+	$SUDO echo -e "[%] ${Green}Elevated${Reg}\n"
 	start_spinner "Updating package cache . . ."
 		$SUDO apt-get update &>/dev/null 
 	stop_spinner 0
 	clearline
 	echo -e "${PLUS} Updating package cache . . ."
-	echo -e " \_${Green}Complete${Reg}"
+	echo -e " \_${Green}Complete${Reg}\n"
 	for dep in ${TOINSTALL}
 	do
 		start_spinner "Installing ${dep} . . ."
@@ -304,8 +304,9 @@ function update(){
 		stop_spinner 0
 		clearline
 	done
+	echo -e "${PLUS} Installing dependencies . . ."
 	unset TOINSTALL
-	echo -e "${Green}Complete${Reg}\n"
+	echo -e " \_${Green}Complete${Reg}\n"
 	UPDATENEEDED=0
 	clear
 	check_deps

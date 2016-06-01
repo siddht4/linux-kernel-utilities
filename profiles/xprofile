@@ -3,7 +3,7 @@
 xprofile(){
 	MSG="-- Automatic kernel compilation by profile started --"
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
-
+    echo -e "Caching elevated permissions in advance in case of missing dependencies."
     $SUDO echo
     chk_sudoer
     #Do not background dependency check - it calls sudobg 

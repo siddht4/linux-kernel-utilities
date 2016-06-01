@@ -1,5 +1,25 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.2 (Jun 1, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- Modify update function to give improved feedback
+- Limit update function to install missing packages instead of all dependencies
+
+FIXES
+- Set TERM environment on gitlab-ci
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.1 (May 29, 2016)
 NEW FEATURES
 - none
