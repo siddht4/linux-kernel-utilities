@@ -79,5 +79,3 @@ To remove ALL non-active kernels
 >- You can set `RC_FILTER` to control whether Release Candidates are offered as a choice.
 >- Enlarge your terminal window before executing the scripts to make sure proper formatting of available choices.    
 >- Multicore thread compiling is set automatically to twice the amount of detected cores.
->
->[Google](https://www.google.com/?gws_rd=ssl#q=concurrency%20level%20make-kpkg) is your friend.
