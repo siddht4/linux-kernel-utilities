@@ -13,7 +13,7 @@ xprofile(){
     #stop_spinner 0
     #clearline
     echo -e "${PLUS} Managing dependencies"
-    echo -e " \_${Green}Complete${Reg}\n"
+    echo -e " \_${Green}Complete${Reg}"
     
     if ! check_qt &>/dev/null; then \
         sudobg apt-get -qq -y install qt5-default
