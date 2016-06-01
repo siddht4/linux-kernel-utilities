@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Test for a terminal!
-fd=0   # stdin
-if [[ -t "$fd" || -p /dev/stdin ]]; then
+if [[ $- == *i* ]]; then
         Black=$(tput setaf 0)
         Red=$(tput setaf 1)
         Green=$(tput setaf 2)

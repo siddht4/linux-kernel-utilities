@@ -9,6 +9,7 @@ before_script:
 test:ubuntu:
   image: ubuntu:15.10
   script:
+    - echo Terminal is $-
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
 
