@@ -7,11 +7,8 @@ xprofile(){
     $SUDO echo
     chk_sudoer
     #Do not background dependency check - it calls sudobg 
-    #start_spinner "Managing dependencies. This can take a while . . ."
     echo -e "${PLUS} Checking Dependencies"
         check_deps #&>/dev/null 
-    #stop_spinner 0
-    #clearline
     echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}"
     
@@ -24,12 +21,9 @@ xprofile(){
 	    echo -e " \_${Green}Complete${Reg}\n"
     fi
     
-    start_spinner "Getting kernel . . ."
-        select_kernel_deb quiet
-    stop_spinner 0
-
+    echo -e "\n${PLUS} Getting kernel archive . . ."
+    select_kernel_deb quiet
     get_kernel_archive
-    clearline
 
     check_sign ${KEY_HANDLER} 
     
