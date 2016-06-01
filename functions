@@ -283,10 +283,10 @@ spinner(){
 }
 
 function update(){
-	MSG="-- Installing Missing dependencies --"
+	MSG="-- Installing Dependencies --"
     center-text "${Cyan}" "${MSG}" "${Reg}"
-	echo -e "\n{Yellow}[!]${Reg} The first time this script is run missing dependencies will be installed."
-	echo -e "  For compiling a kernel this may take a bit of time. Some feedback will be provided."
+	echo -e "\n${Yellow}[!]${Reg} The first time this script is run missing dependencies will be installed."
+	echo -e "    For compiling a kernel this may take a bit of time. Some feedback will be provided."
 	echo
 	echo -e "${PLUS} Dependencies"
 	echo -e " \_Elevating permissions as necessary . . ."
