@@ -44,7 +44,6 @@ xprofile(){
         popd &>/dev/null
 	    error ${LINENO} "An error occured while preparing the kernel tree." $EXIT_STAT
     fi
-    clearline
     
     echo -e "Configuring the kernel build . . .\n"
     
