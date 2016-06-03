@@ -12,13 +12,8 @@ xprofile(){
     echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}"
     
-    if ! check_qt &>/dev/null; then \
-        sudobg apt-get -qq -y install qt5-default
-        spinner $! "Installing QT5 default package . . ."
-	    wait $!
-	    clearline
-	    echo -e "${PLUS} Installing QT5 default package"
-	    echo -e " \_${Green}Complete${Reg}\n"
+    if [[ QT5CHECK ]]; then
+        check_qt5
     fi
     
     echo -e "\n${PLUS} Getting kernel archive . . ."

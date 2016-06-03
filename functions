@@ -62,6 +62,19 @@ check_deps(){
 	fi
 }
 
+check_qt5(){
+	if ! check_qt &>/dev/null; then \
+		echo -e ""
+		echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
+		sudobg apt-get -qq -y install qt5-default
+		spinner $! "Installing QT5 default package . . ."
+		wait $!
+		clearline
+		echo -e "${PLUS} Installing QT5 default package"
+		echo -e " \_${Green}Complete${Reg}\n"
+	fi
+}
+
 cleanup(){
 	rm $OUTPUT -f
 }

@@ -8,6 +8,7 @@ if (( $EUID != 0 )); then
 fi
 
 # Shared variables
+QT5CHECK=1
 DEPENDENCIES="curl wget whiptail "
 USE_LATEST=0
 UPDATENEEDED=0

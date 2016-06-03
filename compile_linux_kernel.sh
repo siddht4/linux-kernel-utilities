@@ -67,16 +67,7 @@ DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake "
 check_deps
 
 echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
-if ! check_qt; then \
-	echo -e ""
-	echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
-	sudobg apt-get -qq install qt5-default
-	spinner ${BGPID} "Installing QT5 default package . . ."
-	wait ${BGPID}
-	clearline
-	echo -e "${PLUS} Installing QT5 default package"
-	echo -e " \_${Green}Complete${Reg}\n"
-fi
+check_qt5
 
 if ! [ $LOCALFILE ]; then
 	select_kernel_deb

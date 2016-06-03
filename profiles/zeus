@@ -4,6 +4,7 @@ zeus(){
 	USE_LATEST=1
 	KRNL_CONFIG=olddefconfig
 	KEY_HANDLER=add
+	QT5CHECK=0
 
 	xprofile
 }
