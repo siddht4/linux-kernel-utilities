@@ -1,5 +1,24 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.3 (Jun 3, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Correct update function - remove noninteractive environment setting
+
+DEPRECATED
+- Remove make-kpkg dependencies 
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.2 (Jun 1, 2016)
 NEW FEATURES
 - none

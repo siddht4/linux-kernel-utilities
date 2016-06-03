@@ -308,11 +308,10 @@ function update(){
 	clearline
 	echo -e "${PLUS} Updating package cache . . ."
 	echo -e " \_${Green}Complete${Reg}\n"
-	export DEBIAN_FRONTEND=noninteractive 
 	for dep in ${TOINSTALL}
 	do
 		start_spinner "Installing ${dep} . . ."
-			$SUDO apt-get -qq -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install ${dep} &>/dev/null
+			$SUDO apt-get -qq -y install ${dep} &>/dev/null
 		stop_spinner 0
 		clearline
 	done

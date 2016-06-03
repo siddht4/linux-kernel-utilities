@@ -15,8 +15,8 @@ tput clear
 . ./messages
 
 # Set overlap variables						
-DEPENDENCIES="build-essential curl dkms gcc gnupg kernel-package libncurses5 libncurses5-dev \
-				libnotify-bin libssl-dev make pkg-config qt5-qmake sudo time wget whiptail"
+DEPENDENCIES="build-essential curl dkms gnupg libncurses5 libncurses5-dev libnotify-bin \
+				libssl-dev pkg-config qt5-qmake sudo time wget whiptail"
 						
 BASEURL=kernel.org
 
