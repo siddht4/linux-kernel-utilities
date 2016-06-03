@@ -12,7 +12,7 @@ xprofile(){
     echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}"
     
-    if [[ QT5CHECK ]]; then
+    if [[ QT5CHECK -eq 1 ]]; then
         check_qt5
     fi
     
