@@ -8,6 +8,12 @@ whip_msg(){
 	whiptail --title "${title}" --msgbox "${msg}" --backtitle "${BACKTITLE}" 20 80
 }
 
+chk_root(){
+	if [[ $EUID -eq 0 ]]; then
+		whip_msg  "${w_title_three}" "${w_msg_three}"
+	fi
+}
+
 chk_sudoer(){
 	grep 'sudo' /etc/group | grep $USER > /dev/null 2>&1
 	EXIT_STAT=$?

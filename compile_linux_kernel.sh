@@ -52,7 +52,13 @@ fi
 
 whip_msg  "${w_title_one}" "${w_msg_one}"
 
-chk_sudoer
+# Check if launched as root user
+chk_root
+
+# If not root, check member os sudo
+if [[ $EUID -ne 0 ]]; then
+	chk_sudoer
+fi
 
 echo -e "${PLUS} Checking Dependencies"
 check_deps
