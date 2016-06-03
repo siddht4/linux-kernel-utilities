@@ -63,7 +63,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo -e "${PLUS} Checking Dependencies"
-DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake"
+DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake "
 check_deps
 
 echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
