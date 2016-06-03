@@ -15,7 +15,7 @@ tput clear
 . ./messages
 
 # Set overlap variables
-DEPENDENCIES="lynx wget curl whiptail"
+DEPENDENCIES+="lynx "
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
 if [ "$#" -gt 1 ]; then

@@ -15,9 +15,11 @@ tput clear
 . ./messages
 
 # Set overlap variables						
-DEPENDENCIES="build-essential curl dkms gnupg libncurses5 libncurses5-dev libnotify-bin \
-				libssl-dev pkg-config qt5-qmake sudo time wget whiptail"
-						
+#DEPENDENCIES+="build-essential dkms gnupg libncurses5 libncurses5-dev libnotify-bin \
+#				libssl-dev pkg-config qt5-qmake sudo time "
+DEPENDENCIES+="build-essential dkms gnupg libnotify-bin libssl-dev pkg-config \
+				sudo time "
+									
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
@@ -61,6 +63,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 echo -e "${PLUS} Checking Dependencies"
+DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake"
 check_deps
 
 echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."

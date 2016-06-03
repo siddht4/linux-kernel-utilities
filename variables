@@ -8,6 +8,7 @@ if (( $EUID != 0 )); then
 fi
 
 # Shared variables
+DEPENDENCIES="curl wget whiptail "
 USE_LATEST=0
 UPDATENEEDED=0
 OS=$(lsb_release -si)
