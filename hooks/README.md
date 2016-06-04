@@ -1,0 +1,1 @@
+Folder for housing git hooks to be symlinked
