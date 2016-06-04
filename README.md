@@ -1,5 +1,5 @@
 ![Project Status: Active](https://img.shields.io/badge/project-active-green.svg)
-[![Internal Build Status](https://git.marktompkins.me/mtompkins/linux-kernel-utilities/badges/master/build.svg)](https://git.marktompkins.me/mtompkins/linux-kernel-utilities) [![External Build Status](https://travis-ci.org/mtompkins/linux-kernel-utilities.svg?branch=master)](https://travis-ci.org/mtompkins/linux-kernel-utilities) [![Issue Count](https://codeclimate.com/github/mtompkins/linux-kernel-utilities/badges/issue_count.svg)](https://codeclimate.com/github/mtompkins/linux-kernel-utilities)
+[![Internal Build Status](https://git.marktompkins.me/mtompkins/linux-kernel-utilities/badges/master/build.svg)](https://git.marktompkins.me/mtompkins/linux-kernel-utilities) [![External Build Status](https://travis-ci.org/mtompkins/linux-kernel-utilities.svg?branch=master)](https://travis-ci.org/mtompkins/linux-kernel-utilities) [![Issue Count](https://codeclimate.com/github/mtompkins/linux-kernel-utilities/badges/issue_count.svg)](https://codeclimate.com/github/mtompkins/linux-kernel-utilities) [![PayPal](https://img.shields.io/badge/%24-PayPal-blue.svg)](paypal.me/metsdev)
 <img align="right" src="img/tux.png" alt="Linux Logo" title="Tux">
 # Linux Kernel Utilities
 ## Descriptions
@@ -98,4 +98,4 @@ sudo mount --bind /sys /mnt/sys
 >       - They must be removed in a non-dependency order, so just take your time.
 >       - `dpkg --list | grep "ii[[:space:]][[:space:]]linux-[f,h,i,l]"`   
            will help list your installs
->   - Buy me a beer through PayPal
+>   - Buy me a beer through [PayPal](https://www.paypal.me/metsdev)
