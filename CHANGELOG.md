@@ -1,5 +1,25 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.4 (Jun 4, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- Add `post-commit` created `version` file to aid user in determining current status against repo
+- Update `README.md` with baseline process of removing a defective kernel
+
+FIXES
+- none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.3 (Jun 3, 2016)
 NEW FEATURES
 - none
