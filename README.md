@@ -83,10 +83,10 @@ To remove ALL non-active kernels
 
 ## CRISIS - cannot boot properly after new kernel is installed
 >- If all else fails and a new kernel prevents you from booting you can:
->   - Boot to a linux based LiveCD (e.g. gparted on a USB)
+>   - Boot to a linux based LiveCD (e.g. [GParted](http://gparted.org/download.php) on a USB)
 >   - Open Terminal
 >   - Mount the partition: `sudo mount /dev/sdXY /mnt`     
->       **sdXY** is likely your `sda1`
+>       where **sdXY** is likely your `sda1`
 >   -   Mount some special partitions:
 ``` 
 sudo mount --bind /dev /mnt/dev
