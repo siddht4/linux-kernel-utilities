@@ -96,6 +96,6 @@ sudo mount --bind /sys /mnt/sys
 >   - Chroot into the /mnt: `sudo chroot /mnt`
 >   - Remove the kernel packages you just installed with `dpkg -r yourRecentKernels`
 >       - They must be removed in a non-dependency order, so just take your time.
->       - `sudo dpkg --list | grep "ii[[:space:]][[:space:]]linux-[f,h,i,l]"`   
+>       - `dpkg --list | grep "ii[[:space:]][[:space:]]linux-[f,h,i,l]"`   
            will help list your installs
 >   - Buy me a beer through PayPal
