@@ -9,7 +9,7 @@ fi
 
 # Shared variables
 QT5CHECK=1
-DEPENDENCIES="curl wget whiptail "
+DEPENDENCIES="curl dkms wget whiptail "
 USE_LATEST=0
 UPDATENEEDED=0
 OS=$(lsb_release -si)

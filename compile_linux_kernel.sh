@@ -17,7 +17,7 @@ tput clear
 # Set overlap variables						
 #DEPENDENCIES+="build-essential dkms gnupg libncurses5 libncurses5-dev libnotify-bin \
 #				libssl-dev pkg-config qt5-qmake sudo time "
-DEPENDENCIES+="build-essential dkms gnupg libnotify-bin libssl-dev pkg-config \
+DEPENDENCIES+="build-essential gnupg libnotify-bin libssl-dev pkg-config \
 				sudo time "
 									
 BASEURL=kernel.org
