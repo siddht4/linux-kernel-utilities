@@ -504,3 +504,16 @@ get_script_dir () {
      DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
      echo "$DIR"
 }
+
+chk_version (){
+	CURVER=$(wget -O- -q https://raw.github.com/mtompkins/linux-kernel-utilities/master/version)
+	LOCVER=$(cat "version")
+	if [[ "${CURVER}" != "${LOCVER}" ]]; then
+		if ! (whiptail --yesno --defaultno --title "${w_title_four}" "${w_msg_four}" 20 80); then
+			whip_msg  "Exiting for update" "Exiting and cleaning up."
+			exit 0
+		fi
+	fi
+	
+
+}

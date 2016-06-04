@@ -26,3 +26,7 @@ w_msg_three+="other than \`root\` which is a member of the \`sudo\` group.\n\n"
 w_msg_three+="You will be prompted for elevated privleges only when necessary."
 w_msg_three+="\n\nWhen compiling using a profile, credentials will be cached so that the script "
 w_msg_three+="can continue in a fully unattended manner."
+
+w_title_four="Outdated Scripts Detected"
+w_msg_four="Your local scripts are not current with the repository.\nIt is recommended "
+w_msg_four+="that you exit now and update with:\n\n                                 git pull\n\nthen rerun this script... continue anyway?"

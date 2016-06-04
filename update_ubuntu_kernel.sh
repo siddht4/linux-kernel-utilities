@@ -14,6 +14,8 @@ tput clear
 # Source whiptail messages
 . ./messages
 
+chk_version
+
 # Set overlap variables
 DEPENDENCIES+="lynx "
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
