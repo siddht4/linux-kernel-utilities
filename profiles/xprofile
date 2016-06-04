@@ -107,11 +107,14 @@ xprofile(){
 	fi
     
     echo -ne "You can install the deb packages with:\n"
-    MSG="sudo dpkg -i ../*.deb"
+    SCRIPTDIR=$(get_script_dir)
+    PARENTDIR="$(dirname "$SCRIPTDIR")"
+    MSG="sudo dpkg -i ${PARENTDIR}/*.deb"
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
     
     echo -ne "You can install the modules with:\n"
-    MSG="sudo modules_install"
+    #MSG="cd ${SCRIPTDIR}/${CMP_FLDR}/$(basename "$TGTFILE") && sudo make modules_install"
+    MSG="cd ${SCRIPTDIR} && sudo make modules_install"
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
 
     echo -e "${Green}[%] Complete${Reg}"

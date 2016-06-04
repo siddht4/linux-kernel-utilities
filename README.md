@@ -79,3 +79,23 @@ To remove ALL non-active kernels
 >- You can set `RC_FILTER` to control whether Release Candidates are offered as a choice.
 >- Enlarge your terminal window before executing the scripts to make sure proper formatting of available choices.    
 >- Multicore thread compiling is set automatically to twice the amount of detected cores.
+>- Consider temporarily increasing `grub` menu timeouts and / or unhiding in case the new kernel is problematic.
+
+## CRISIS - cannot boot properly after new kernel is installed
+>- If all else fails and a new kernel prevents you from booting you can:
+>   - Boot to a linux based LiveCD (e.g. gparted on a USB)
+>   - Open Terminal
+>   - Mount the partition: `sudo mount /dev/sdXY /mnt`     
+>       **sdXY** is likely your `sda1`
+>   -   Mount some special partitions:
+``` 
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+```
+>   - Chroot into the /mnt: `sudo chroot /mnt`
+>   - Remove the kernel packages you just installed with `dpkg -r yourRecentKernels`
+>       - They must be removed in a non-dependency order, so just take your time.
+>       - `sudo dpkg --list | grep "ii[[:space:]][[:space:]]linux-[f,h,i,l]"`   
+           will help list your installs
+>   - Buy me a beer through PayPal

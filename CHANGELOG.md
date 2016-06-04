@@ -8,10 +8,12 @@ IMPROVEMENTS
 - none
 
 FIXES
-- Correct update function - remove noninteractive environment setting
+- Correct update function 
+    - remove noninteractive environment setting
+- Correct compilation by profile install feedback
 
 DEPRECATED
-- Remove make-kpkg dependencies 
+- Remove `make-kpkg` dependencies 
 
 WORK IN PROCESS
 - none
