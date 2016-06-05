@@ -5,7 +5,10 @@ xprofile(){
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
     echo -e "Caching elevated permissions in case of missing dependencies."
     $SUDO echo
-    chk_sudoer
+    # If not root, check member os sudo
+    if [[ $EUID -ne 0 ]]; then
+        chk_sudoer
+    fi
     #Do not background dependency check - it calls sudobg 
     echo -e "${PLUS} Checking Dependencies"
         check_deps
