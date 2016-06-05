@@ -517,3 +517,9 @@ chk_version (){
 	
 
 }
+
+show_version (){
+	revisioncount=`git log --oneline | wc -l`
+	projectversion=`git describe --tags --long`
+	echo "Version: $projectversion-$revisioncount"
+}

@@ -24,6 +24,9 @@ if [ "$#" -gt 1 ]; then
 	usage
 elif [ "$1" = "latest" ]; then
 	USE_LATEST=1
+elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
+		show_version
+		exit 0
 fi
 
 shopt -s nocasematch

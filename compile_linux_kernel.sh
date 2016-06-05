@@ -30,8 +30,11 @@ if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
 		if [[ "$1" = "latest" ]]; then
 			USE_LATEST=1
-		elif [[ "$1" = "-h" || "$1" = "--help" || "$1" = "usage" ]]; then
+		elif [[ "$1" == "-h" || "$1" == "--help" || "$1" == "usage" ]]; then
 			usage
+		elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
+			show_version
+			exit 0
 		else
 			shopt -s nullglob
 			PROFILES=(profiles/*)	

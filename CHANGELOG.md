@@ -3,6 +3,7 @@
 ## v1.0.4 (Jun 4, 2016)
 NEW FEATURES
 - Add version check
+- Add version function for feedback (-v or --version)
 
 IMPROVEMENTS
 - Add `post-commit` created `version` file to aid user in determining current status against repo
