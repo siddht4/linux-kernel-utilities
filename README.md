@@ -6,7 +6,7 @@
 
 ### Compile a kernel from source: `compile_linux_kernel.sh`
 #### For use with Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)
-Bash script that will poll http://www.kernel.org for available kernels and present the user with an xconfig GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.    
+Bash script that will poll http://www.kernel.org for available kernels and present the user with a GUI for manually selecting options. This script will also check the downloaded archive against the PGP signature file.    
 
 **Note:** The user **MUST** save a configuration from the GUI even if defaults are used.    
 The configuration routine will pull the current machine's configuration in to the utility as a base.
@@ -32,7 +32,7 @@ Download and enable scripts
     cd linux-kernel-utilities
     chmod 750 compile_linux_kernel.sh remove_old_kernels.sh update_ubuntu_kernel.sh
 
-### Compile
+### Compilation
 To compile a kernel with manual version selection
 
     ./compile_linux_kernel.sh
@@ -67,6 +67,8 @@ To remove ALL non-active kernels
 
 ## Notes
 > Do not run the scripts with `sudo`. They will prompt for elevated privileges if necessary.     
+>
+> The script will detect remote usage and execute `QT` or `NCURSES` accordingly.
 >
 > Some older kernels (e.g. 3.x) require earlier versions of QT. If you are building v3.x kernels you should manually install QT4 before compiling. The script is set to install QT5 if missing.
 >### Kernel Source Preservation

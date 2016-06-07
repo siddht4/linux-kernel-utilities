@@ -65,12 +65,31 @@ if [[ $EUID -ne 0 ]]; then
 	chk_sudoer
 fi
 
+# Check if remote session
+isremote
+
 echo -e "${PLUS} Checking Dependencies"
-DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake "
+
+# Configure dependencies basted on local / remote
+if [ -n "$SESSION_TYPE" ]; then
+	DEPENDENCIES+="libncurses5 libncurses5-dev "
+else
+	DEPENDENCIES+="qt5-qmake "
+fi
+
+#DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake "
+
 check_deps
 
-echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
-check_qt5
+# Check if remote session
+if [ -n "$SESSION_TYPE" ]; then
+	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
+	USENCURSES=1
+else
+	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
+	check_qt5
+	unset USENCURSES
+fi
 
 if ! [ $LOCALFILE ]; then
 	select_kernel_deb
@@ -105,8 +124,14 @@ echo -e "${PLUS} Cleaning the source tree and resetting kernel-package parameter
 
 echo -e " \_ ${Green}Done${Reg}\n"
 
-echo -e "${PLUS} Launching configuration GUI \"make -s xconfig\"."
+if [ -n "$USENCURSES" ]; then
+	echo -e "${PLUS} Launching NCURSES configuration \"make nconfig\"."
+	make nconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make nconfig\"." 1
+else
+	echo -e "${PLUS} Launching configuration GUI \"make xconfig\"."
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
+fi
+
 
 echo -e "\n${PLUS} Disabling DEBUG INFO . . . "
 scripts/config --disable DEBUG_INFO || error ${LINENO} "Error occurred while disabling DEBUG INFO." $?

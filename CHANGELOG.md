@@ -1,5 +1,24 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.5 (Jun 7, 2016)
+NEW FEATURES
+- Enable remote compilation using ncurses
+
+IMPROVEMENTS
+- Script will detect a remote session and change to ncurses programmatically
+
+FIXES
+- none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.4 (Jun 4, 2016)
 NEW FEATURES
 - Add version check
