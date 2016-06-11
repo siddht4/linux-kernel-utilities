@@ -357,7 +357,7 @@ countdown(){
 
 sudobg() {
 	$SUDO echo ""
-  	$SUDO "$@" > /dev/null 2>&1 &
+	$SUDO "$@" > /dev/null 2>&1 &
 	# shellcheck disable=SC2034
 	BGPID=$!
 }
@@ -365,7 +365,7 @@ sudobg() {
 # TRAPS
 TEMPFILES=( )
 cleanupfiles() {
-  rm -f "${TEMPFILES[@]}"
+	rm -f "${TEMPFILES[@]}"
 }
 trap cleanupfiles 0
 
@@ -380,7 +380,7 @@ check_sign(){
 	echo -en "\e[1A"
 	echo -e "\n${PLUS} Checking archive signature . . ."
 
-    if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
+	if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
 		if [ $# -ne 0 ] && [[ "${1}" == "add" ]]; then
 			INSTALL_ID="y"
 		else
@@ -394,27 +394,27 @@ check_sign(){
 			read INSTALL_ID
 		fi
 
-        case $INSTALL_ID in
-            [Nn]*)
-                echo -e "NO - Exiting"
-                exit 0;
-                ;;
-            [Ss]*)
-                echo -e "SKIP - Skipping GPG signature check."
-                ;;
-            *) echo -e "YES - Installing new GPG key and checking archive."
-                install_key
+		case $INSTALL_ID in
+			[Nn]*)
+				echo -e "NO - Exiting"
+				exit 0;
+				;;
+			[Ss]*)
+				echo -e "SKIP - Skipping GPG signature check."
+				;;
+			*) echo -e "YES - Installing new GPG key and checking archive."
+				install_key
 				# shellcheck disable=SC2119
-                check_sign
-        esac
-    else
-        CHK_SIGN_VALID=$(grep -Po -- 'Good signature from' <<< "$CHK_SIGN")
-        if [[ "$CHK_SIGN_VALID" == "Good signature from" ]] ; then
-            echo -e " \_ Signature validated: ${Green}$CHK_ID${Reg}\n"
-        else
+				check_sign
+		esac
+	else
+		CHK_SIGN_VALID=$(grep -Po -- 'Good signature from' <<< "$CHK_SIGN")
+		if [[ "$CHK_SIGN_VALID" == "Good signature from" ]] ; then
+			echo -e " \_ Signature validated: ${Green}$CHK_ID${Reg}\n"
+		else
 			error "Func: chk_sign" "Signature invalid. Exiting." 1
-        fi
-    fi
+		fi
+	fi
 }
 
 clearline(){
@@ -432,8 +432,8 @@ usage(){
 #####
 function _spinner() {
 
-    case $1 in
-        start)
+	case $1 in
+		start)
 			local delay=0.175
 			local spinstr="|/-\\"
 			tput civis;
@@ -451,34 +451,34 @@ function _spinner() {
 			done
 			printf " \b\b\b\b"
 			tput cnorm;
-            ;;
-        stop)
-            kill "$3"
+			;;
+		stop)
+			kill "$3"
 			wait "$3" 2>/dev/null
-            ;;
-        *)
-            echo "invalid argument, try {start/stop}"
-            exit 1
-            ;;
-    esac
+			;;
+		*)
+			echo "invalid argument, try {start/stop}"
+			exit 1
+			;;
+	esac
 }
 
 function start_spinner() {
-    # $1 : msg to display
-    _spinner "start" "${1}" &
-    # set global spinner pid
-    _sp_pid=$!
+	# $1 : msg to display
+	_spinner "start" "${1}" &
+	# set global spinner pid
+	_sp_pid=$!
 }
 
 function stop_spinner() {
-    # $1 : command exit status
-    _spinner "stop" "${1}" ${_sp_pid}
-    unset _sp_pid
+	# $1 : command exit status
+	_spinner "stop" "${1}" ${_sp_pid}
+	unset _sp_pid
 }
 
 function center-text() {
 	function get_width () {
-    	wc -L <<< "$1"
+		wc -L <<< "$1"
 	}
 	function multi_space() {
 		num=$1
@@ -505,16 +505,16 @@ function center-text() {
 }
 
 get_script_dir () {
-     SOURCE="${BASH_SOURCE[0]}"
-     # While $SOURCE is a symlink, resolve it
-     while [ -h "$SOURCE" ]; do
-          DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-          SOURCE="$( readlink "$SOURCE" )"
-          # If $SOURCE was a relative symlink (so no "/" as prefix, need to resolve it relative to the symlink base directory
-          [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-     done
-     DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-     echo "$DIR"
+	SOURCE="${BASH_SOURCE[0]}"
+	# While $SOURCE is a symlink, resolve it
+	while [ -h "$SOURCE" ]; do
+		DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+		SOURCE="$( readlink "$SOURCE" )"
+		# If $SOURCE was a relative symlink (so no "/" as prefix, need to resolve it relative to the symlink base directory
+		[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+	done
+	DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+	echo "$DIR"
 }
 
 chk_version (){
@@ -538,12 +538,12 @@ show_version (){
 }
 
 function isremote(){
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        SESSION_TYPE=remote/ssh
-    else
+	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+		SESSION_TYPE=remote/ssh
+	else
 		# shellcheck disable=SC2034
-        case $(ps -o comm= -p $PPID) in
-            sshd|*/sshd) SESSION_TYPE=remote/ssh;;
-        esac
-    fi
+		case $(ps -o comm= -p $PPID) in
+			sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+		esac
+	fi
 }

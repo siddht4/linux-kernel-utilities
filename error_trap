@@ -4,17 +4,15 @@
 # This is necessary because there is a string comparison for dynamically assigning dependencies with an error trap
 
 error() {
-  local parent_lineno="$1"
-  local message="$2"
-  local code="${3:-1}"
-  local exit_msg="Exiting with status code ${code}"
-  if [[ -n "$message" ]] ; then
-    #echo -e "\n${Red}Error on or near line ${parent_lineno}:${Reg} ${message} - exiting with status ${code}"
-    whiptail --title "Error Message" --msgbox "There was an error @ Line: ${parent_lineno}\n\n${message}\n\n${exit_msg}" 20 80
+	local parent_lineno="$1"
+	local message="$2"
+	local code="${3:-1}"
+	local exit_msg="Exiting with status code ${code}"
+	if [[ -n "$message" ]] ; then
+	  whiptail --title "Error Message" --msgbox "There was an error @ Line: ${parent_lineno}\n\n${message}\n\n${exit_msg}" 20 80
   else
-    #echo -e "\n${Red}Error on or near line ${parent_lineno}${Reg} - exiting with status ${code}"
-    whiptail --title "Error Message" --msgbox "There was an error @ Line: ${parent_lineno}\n\nNo further information was provided.\n\n${exit_msg}" 20 80
-  fi
-  exit "${code}"
+	  whiptail --title "Error Message" --msgbox "There was an error @ Line: ${parent_lineno}\n\nNo further information was provided.\n\n${exit_msg}" 20 80
+	fi
+	exit "${code}"
 }
 trap 'error ${LINENO}' ERR
