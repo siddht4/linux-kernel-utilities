@@ -64,5 +64,5 @@ echo -e "${PLUS} Processing selection"
 get_precompiled_ubu_kernel
 
 echo -e "${PLUS} Installing kernel . . ."
-#${SUDO} dpkg -i linux*.deb
+${SUDO} dpkg -i linux*.deb
 echo -e "${Cyan} \_ Done${Reg}\n"
