@@ -18,11 +18,13 @@ chk_version
 
 # Set overlap variables
 DEPENDENCIES+="lynx "
+# shellcheck disable=SC2034
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
 if [ "$#" -gt 1 ]; then
 	usage
 elif [ "$1" = "latest" ]; then
+	# shellcheck disable=SC2034
 	USE_LATEST=1
 elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
 		show_version
@@ -42,7 +44,8 @@ echo -e "${PLUS} Checking Dependencies"
 check_deps
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
-cd $TMP_FLDR 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
+cd "$TMP_FLDR" 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
+# shellcheck disable=SC2154
 echo -e "${Cyan} \_ Temporary directory access granted:\t${Reg}${TMP_FLDR}\n"
 
 echo -e "${PLUS} Removing any conflicting remnants . . ."
@@ -61,5 +64,5 @@ echo -e "${PLUS} Processing selection"
 get_precompiled_ubu_kernel
 
 echo -e "${PLUS} Installing kernel . . ."
-${SUDO} dpkg -i linux*.deb
+#${SUDO} dpkg -i linux*.deb
 echo -e "${Cyan} \_ Done${Reg}\n"

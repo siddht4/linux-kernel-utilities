@@ -16,10 +16,11 @@ tput clear
 
 chk_version
 
-# Set overlap variables						
+# Set overlap variables
 DEPENDENCIES+="build-essential gnupg libnotify-bin libssl-dev pkg-config \
 				sudo time "
-									
+
+# shellcheck disable=SC2034
 BASEURL=kernel.org
 
 if [ "$#" -gt 1 ]; then
@@ -29,6 +30,7 @@ fi
 if [ "$#" -eq 1 ]; then
 	if ! [[ -f "$1" ]]; then
 		if [[ "$1" = "latest" ]]; then
+			# shellcheck disable=SC2034
 			USE_LATEST=1
 		elif [[ "$1" == "-h" || "$1" == "--help" || "$1" == "usage" ]]; then
 			usage
@@ -37,10 +39,10 @@ if [ "$#" -eq 1 ]; then
 			exit 0
 		else
 			shopt -s nullglob
-			PROFILES=(profiles/*)	
-			for FILE in ${PROFILES[@]}; do
-				if [[ "profiles/$1" == "${FILE}" ]]; then 
-					. profiles/$1
+			PROFILES=(profiles/*)
+			for FILE in "${PROFILES[@]}"; do
+				if [[ "profiles/$1" == "${FILE}" ]]; then
+					. profiles/"$1"
 					$1
 				fi
 			done
@@ -50,11 +52,12 @@ if [ "$#" -eq 1 ]; then
 		OUTPUT=$1
 		LOCALFILE=1
 	fi
-	
+
 else
 	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
 fi
 
+# shellcheck disable=SC2154
 whip_msg  "${w_title_one}" "${w_msg_one}"
 
 # Check if launched as root user
@@ -98,11 +101,12 @@ if ! [ $LOCALFILE ]; then
 fi
 
 echo -e "${PLUS} Creating a directory to build your kernel from source."
-mkdir $CMP_FLDR 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
+mkdir "$CMP_FLDR" 2>/dev/null || error ${LINENO} "You cannot create a directory here." 1
+# shellcheck disable=SC2154
 echo -e " \_ Directory Created:\t${Cyan}${CMP_FLDR}${Reg}\n"
 
 MSG="Extracting your kernel . . . "
-tar xf $OUTPUT -C ./$CMP_FLDR &
+tar xf "$OUTPUT" -C ./"$CMP_FLDR" &
 spinner $! "${MSG}"
 # Check for successful extraction
 wait $!
@@ -114,14 +118,15 @@ fi
 
 clearline
 echo -e "${PLUS} Extracting your kernel . . ."
-EXTRACTED=$(ls $CMP_FLDR/)
+EXTRACTED=$(ls "$CMP_FLDR"/)
 echo -e " \_ Extracted Folder:\t${Cyan}${CMP_FLDR}/${EXTRACTED}${Reg}\n"
 
-pushd $CMP_FLDR/linux* &>/dev/null
+pushd "$CMP_FLDR"/linux* &>/dev/null
 
 echo -e "${PLUS} Cleaning the source tree and resetting kernel-package parameters . . . "
 	make mrproper &>/dev/null || error ${LINENO} "Error occurred while running \"make mrproper\"." 1
 
+# shellcheck disable=SC2154
 echo -e " \_ ${Green}Done${Reg}\n"
 
 if [ -n "$USENCURSES" ]; then
@@ -136,16 +141,17 @@ fi
 echo -e "\n${PLUS} Disabling DEBUG INFO . . . "
 scripts/config --disable DEBUG_INFO || error ${LINENO} "Error occurred while disabling DEBUG INFO." $?
 echo -e " \_ ${Green}Done${Reg}\n"
-	
+
 echo -e "${PLUS} Cleaning the workspace after configuration . . . "
 	make clean &>/dev/null || error ${LINENO} "Error occurred while running \"make clean clean\"." 1
-	
+
 echo -e " \_ ${Green}Cleaned${Reg}\n"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
 	echo -e "\n\nYou can build it later with:"
 	MSG="make -j${NUMTHREADS} deb-pkg LOCALVERSION=-${VERAPPEND}${Reg}"
+	# shellcheck disable=SC2154
     center-text "${LimeYellow}" "${MSG}" "${Reg}"
 	cleanup
 	echo -e "\n\n${Green}[%] Exiting without compilation.${Reg}\n\n"
@@ -156,27 +162,32 @@ else
 	echo -e " \_ An alert notification will trigger when complete. Time for a stroll . . .\n\n"
 	echo -e "--------------------------------------------------------------------------------------------------"
 	countdown 'Compilation will begin in ' 10
+	# shellcheck disable=SC2154
 	echo -e " -- ${Yellow}Starting Compilation${Reg} -- "
 	echo -e "--------------------------------------------------------------------------------------------------\n\n"
-					
-	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j${NUMTHREADS} deb-pkg LOCALVERSION=-${VERAPPEND} \
+
+	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j"${NUMTHREADS}" deb-pkg LOCALVERSION=-"${VERAPPEND}" \
 			|| error ${LINENO} "Something happened during the kernel compilation process, but I can't help you." 1
-			
-	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j${NUMTHREADS} modules LOCALVERSION=-${VERAPPEND} \
+
+	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j"${NUMTHREADS}" modules LOCALVERSION=-"${VERAPPEND}" \
 			|| error ${LINENO} "Something happened during the modules compilation process, but I can't help you." 1
-	
+
 fi
 
-# Provide a user notification 
+# Provide a user notification
 echo -e $'\a' && notify-send -i emblem-default "Kernel compliation completed."
 
 read -p "[?] Kernel compiled successfully. Would you like to install? (y/N)" -n 1 -r
 if [[ ! $REPLY  =~ ^[Yy]$ ]]; then
-	dir=`pwd`
+	dir=$(pwd)
 	pDir="$(dirname "$dir")"
-	echo -e "\n\nYou can manually install the kernel with:\n${Yellow}sudo dpkg -i $pDir/*.deb${Reg}"
-	echo -e "\nYou will still have to handle the installation of modules from the source directory with:\n${Yellow}sudo modules_install${Reg}"
-	echo -e "\n \_ Skipping kernel and modules installation . . ."
+	echo -e "\n\nYou can manually install the kernel with:"
+	MSG="sudo dpkg -i $pDir/*.deb"
+	center-text "${Yellow}" "${MSG}" "${Reg}"
+	echo -e "\nYou will still have to handle the installation of modules from the source directory with:"
+	MSG="sudo modules_install"
+	center-text "${Yellow}" "${MSG}" "${Reg}"
+	echo -e "\n${Yellow}[!]${Reg} Skipping kernel and modules installation . . ."
 else
 	echo -e "\n \_ ${Green}Installing kernel and modules . . .${Reg}"
 	$SUDO dpkg -i ../*.deb

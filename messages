@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # whiptail messages
+# shellcheck disable=SC2034
 w_title_one="Compile Debian Based Linux Kernel"
 w_msg_one="Welcome. This script is intended to help simplify compiling a Linux Kernel.\n\n"
 w_msg_one+="There is no magic here, all the commands are standard and you are \n"
@@ -14,11 +15,13 @@ w_msg_one+="In short the script will update and / or install the necessary compo
 w_msg_one+="to compile a *.deb file set, compile same, and then prompt for installation.\n"
 w_msg_one+="The *deb files can then be managed in standard package mangers.\n\n"
 
+# shellcheck disable=SC2034
 w_title_two="Precompiled Package Not Available"
 w_msg_two="The kernel for your detected architecture is not currently available.\n"
 w_msg_two+="This indicates a problem with Canoncial, the makers of Ubuntu and\n"
 w_msg_two+="not on your local system.\n\nIn most cases you should simply try again later.\n\nExiting and cleaning up."
 
+# shellcheck disable=SC2034
 w_title_three="Root User Detected"
 w_msg_three="\nThese scripts only need elevated privleges in order to install missing dependencies "
 w_msg_three+="or when installing the actual payloads. You are encouraged to use an account "
@@ -27,6 +30,7 @@ w_msg_three+="You will be prompted for elevated privleges only when necessary."
 w_msg_three+="\n\nWhen compiling using a profile, credentials will be cached so that the script "
 w_msg_three+="can continue in a fully unattended manner."
 
+# shellcheck disable=SC2034
 w_title_four="Outdated Scripts Detected"
 w_msg_four="Your local scripts are not current with the repository.\nIt is recommended "
 w_msg_four+="that you exit now and update with:\n\n                                 git pull\n\nthen rerun this script... continue anyway?"

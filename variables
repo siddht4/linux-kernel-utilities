@@ -3,36 +3,54 @@
 # Ensure root privledges
 SUDO=''
 
-if (( $EUID != 0 )); then
+if (( EUID != 0 )); then
+	# shellcheck disable=SC2034
 	SUDO='sudo'
 fi
 
 # Shared variables
+# shellcheck disable=SC2034
 QT5CHECK=1
+# shellcheck disable=SC2034
 DEPENDENCIES="curl dkms wget whiptail "
+# shellcheck disable=SC2034
 USE_LATEST=0
+# shellcheck disable=SC2034
 UPDATENEEDED=0
+# shellcheck disable=SC2034
 OS=$(lsb_release -si)
+# shellcheck disable=SC2034
+# shellcheck disable=SC2154
 PLUS="${Cyan}[+]${Reg}"
 NOW=$(date +%h%d_%H-%M-%S)
+# shellcheck disable=SC2034
 VERAPPEND=$(date +%y.%m.%d.%H.%M)
+# shellcheck disable=SC2034
 BACKTITLE="SCRIPT SOURCE: https://github.com/mtompkins/linux-kernel-utilities"
 # To filter out Release Candidates replace "null" with "-rc"
-# Revert change to allow RC's. Do not use "" or " ". 
+# Revert change to allow RC's. Do not use "" or " ".
 # The variable must be set!
+# shellcheck disable=SC2034
 RC_FILTER="-rc"
 if [[ $- == *i* ]]; then
 	COLUMNS=$(tput cols)
 fi
 
 # Compile
+# shellcheck disable=SC2034
 CMP_FLDR="Build_$NOW"
+# shellcheck disable=SC2034
 OUTPUT="kernel_$NOW.tar.xz"
+# shellcheck disable=SC2034
 KRNL_CONFIG=olddefconfig
-NUMCPUS=`cat /proc/cpuinfo | grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-`
-NUMTHREADS=$(( ${NUMCPUS}*2 ))
+NUMCPUS=$(< /proc/cpuinfo grep "cpu cores" | head -1 | cut -d":" -f2 | cut -c2-)
+# shellcheck disable=SC2034
+NUMTHREADS=$(( NUMCPUS*2 ))
 
 # Precompiled
+# shellcheck disable=SC2034
 FIELD=7
+# shellcheck disable=SC2034
 MINVER=4
+# shellcheck disable=SC2034
 TMP_FLDR="/tmp"
