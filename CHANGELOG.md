@@ -1,5 +1,24 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.6 (Jun 21, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Add `bc` to required packages
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.5 (Jun 7, 2016)
 NEW FEATURES
 - Enable remote compilation using ncurses
