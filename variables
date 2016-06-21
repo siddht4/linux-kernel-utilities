@@ -12,7 +12,7 @@ fi
 # shellcheck disable=SC2034
 QT5CHECK=1
 # shellcheck disable=SC2034
-DEPENDENCIES="curl dkms wget whiptail "
+DEPENDENCIES="curl dkms sudo wget whiptail "
 # shellcheck disable=SC2034
 USE_LATEST=0
 # shellcheck disable=SC2034
