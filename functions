@@ -324,7 +324,7 @@ function update(){
 	then
 		error ${LINENO} "An error occured while elevating permissions." $EXIT_STAT
 	fi
-	echo -e "${PLUS} Testing for previous help packages and trying to correct any found."
+	echo -e "${PLUS} Testing for previous held packages and trying to correct any found."
 	$SUDO apt-get -qqf install &>/dev/null
 	EXIT_STAT=$?
 	if [ $EXIT_STAT -ne 0 ]
