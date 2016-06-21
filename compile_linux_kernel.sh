@@ -17,7 +17,7 @@ tput clear
 chk_version
 
 # Set overlap variables
-DEPENDENCIES+="build-essential gnupg libnotify-bin libssl-dev pkg-config \
+DEPENDENCIES+="bc build-essential gnupg libnotify-bin libssl-dev pkg-config \
 				sudo time "
 
 # shellcheck disable=SC2034
