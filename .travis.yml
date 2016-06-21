@@ -4,7 +4,7 @@ dist: trusty
 before_install:
   - sudo add-apt-repository -y ppa:duggan/bats
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-add-repository -y ppa:beineri/opt-qt56-trusty
+  - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
   - sudo apt-get -qq update
   - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
 script:
