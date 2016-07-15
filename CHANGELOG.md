@@ -1,5 +1,24 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.8 (Jul 15, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- Replace `err=$?` with `${PIPESTATUS[0]}` on piped `wget`
+
+FIXES
+- Improve / correct Ubuntu precompiled URL detection
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.7 (Jul 14, 2016)
 NEW FEATURES
 - none

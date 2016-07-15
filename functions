@@ -175,7 +175,7 @@ get_kernel_archive(){
 	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 	whiptail --title "Download Kernel Archive" --backtitle "${BACKTITLE}" --gauge "Downloading kernel archive . . ." 7 70 0
 
-	err=$?
+	err=${PIPESTATUS[0]}
 	if [ $err -ne 0 ]
 	then
 		error "Func: print_kernels" "Download source failure." $err
@@ -189,6 +189,12 @@ get_kernel_archive(){
 	wget -O "${SIGNfile}" "${SIGNurl}" 2>&1 | \
 	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 	whiptail --title "Download Kernel Archive" --backtitle "${BACKTITLE}" --gauge "Downloading signature file . . ." 7 70 0
+
+	err=${PIPESTATUS[0]}
+	if [ $err -ne 0 ]
+	then
+		error "Func: print_kernels" "Download signature file failure." $err
+	fi
 }
 
 select_kernel_ubu(){
@@ -260,7 +266,7 @@ get_ubu_shared_header(){
 	eval wget "$(lynx -dump -listonly -dont-wrap-pre ${BASEURL}/${ver} | grep all | rev | cut -d ' ' -f 1 | rev | uniq)" 2>&1 | \
 	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} shared header . . ." 7 70 0
-	err=$?
+	err=${PIPESTATUS[0]}
 	if [ $err -ne 0 ]
 	then
 		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
@@ -274,7 +280,7 @@ get_ubu_files() {
 	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} ${1} ${2} . . ." 7 70 0
 
-	err=$?
+	err=${PIPESTATUS[0]}
 	if [ $err -ne 0 ]
 	then
 		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
