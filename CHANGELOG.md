@@ -1,5 +1,25 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.7 (Jul 14, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Improve / correct Ubuntu precompiled URL detection
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+- Improve failed download detection
+
 ## v1.0.6 (Jun 21, 2016)
 NEW FEATURES
 - none
@@ -67,12 +87,12 @@ IMPROVEMENTS
 - none
 
 FIXES
-- Correct update function 
+- Correct update function
     - remove noninteractive environment setting
 - Correct compilation by profile install feedback
 
 DEPRECATED
-- Remove `make-kpkg` dependencies 
+- Remove `make-kpkg` dependencies
 
 WORK IN PROCESS
 - none
