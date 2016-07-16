@@ -2,20 +2,20 @@
 
 # Requires `colors` - sourced in `functions`
 
-whip_msg(){
+function whip_msg(){
 	local title="$1"
 	local msg="$2"
 	whiptail --title "${title}" --msgbox "${msg}" --backtitle "${BACKTITLE}" 20 80
 }
 
-chk_root(){
+function chk_root(){
 	if [[ $EUID -eq 0 ]]; then
 		# shellcheck disable=SC2154
 		whip_msg  "${w_title_three}" "${w_msg_three}"
 	fi
 }
 
-chk_sudoer(){
+function chk_sudoer(){
 	grep 'sudo' /etc/group | grep "$USER" > /dev/null 2>&1
 	EXIT_STAT=$?
 	if [ $EXIT_STAT -ne 0 ]
@@ -24,7 +24,7 @@ chk_sudoer(){
 	fi
 }
 
-get_arch(){
+function get_arch(){
 	# shellcheck disable=SC2154
 	echo -en "${Cyan} \_ Determining CPU type: "
 	if [ "$(getconf LONG_BIT)" == "64" ]; then arch=amd64; else arch=i386; fi
@@ -32,13 +32,13 @@ get_arch(){
 	echo -e "${Yellow}${arch}${Reg}"
 }
 
-reqexit(){
+function reqexit(){
 	# shellcheck disable=SC2154
 	echo -e "${Red}Response not in the offered list of options. Interpreted as an exit request. Exiting.${Reg}"
 	exit 0
 }
 
-check_qt(){
+function check_qt(){
 	printf '\t%-24s' "QT4 or QT5"
 	if pkg-config --exists Qt5Core || pkg-config --exists QtCore; then \
 		# shellcheck disable=SC2154
@@ -50,7 +50,7 @@ check_qt(){
 	fi
 }
 
-check_deps(){
+function check_deps(){
 	for dep in $(echo "${DEPENDENCIES}" | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
 		#if [[ -z $(dpkg -l | grep "^ii  $dep") ]]; then
@@ -68,7 +68,7 @@ check_deps(){
 	fi
 }
 
-check_qt5(){
+function check_qt5(){
 	if ! check_qt &>/dev/null; then \
 		echo -e ""
 		echo -e "${Yellow}[!] QT${Reg} wasn't detected. Installing the QT5-default package . . ."
@@ -81,11 +81,11 @@ check_qt5(){
 	fi
 }
 
-cleanup(){
+function cleanup(){
 	rm "$OUTPUT" -f
 }
 
-get_ubuntu_list(){
+function get_ubuntu_list(){
 	local FILES=($(curl -s "${BASEURL}" | grep "v${MINVER}" | cut -d '>' -f 7 | awk '{print substr($0,1, length($0)-4)}'))
 	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
 
@@ -108,7 +108,7 @@ get_ubuntu_list(){
 	COUNT=0
 }
 
-print_kernels_ubu(){
+function print_kernels_ubu(){
 	if [ "$(basename "$0")" = "update_ubuntu_kernel.sh" ]; then
 		echo -e "${Cyan} \_ Precompiled kernels available from ${Yellow}kernel.ubuntu.com:${Reg}"
 		get_ubuntu_list
@@ -119,7 +119,7 @@ print_kernels_ubu(){
 	fi
 }
 
-get_debian_list(){
+function get_debian_list(){
 	local FILES=($(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
 	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
 
@@ -147,7 +147,7 @@ get_debian_list(){
 }
 
 # Not using whiptail for Ubuntu - too many selection choices
-select_kernel_deb(){
+function select_kernel_deb(){
 	get_debian_list
 
 	# Override if using 'LATEST' else whiptail menu
@@ -168,7 +168,7 @@ select_kernel_deb(){
 	fi
 }
 
-get_kernel_archive(){
+function get_kernel_archive(){
 	TEMPFILES+=( "${OUTPUT}" )
 	# shellcheck disable=SC2016
 	eval wget -O "${OUTPUT}" "${TGTFILE}" 2>&1 | \
@@ -197,7 +197,7 @@ get_kernel_archive(){
 	fi
 }
 
-select_kernel_ubu(){
+function select_kernel_ubu(){
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection to latest kernel."
 		INPUT=1
@@ -226,7 +226,7 @@ select_kernel_ubu(){
 	fi
 }
 
-get_precompiled_ubu_kernel(){
+function get_precompiled_ubu_kernel(){
 	get_arch
 	# shellcheck disable=SC2128
 	for ver in $(echo -e "$TOTAL"); do
@@ -260,7 +260,7 @@ get_precompiled_ubu_kernel(){
 	done
 	echo -e "${Cyan} \_ Done${Reg}\n"
 }
-get_ubu_shared_header(){
+function get_ubu_shared_header(){
 	TEMPFILES+=( "${ver}" )
 	# shellcheck disable=SC2016
 	eval wget "$(lynx -dump -listonly -dont-wrap-pre ${BASEURL}/${ver} | grep all | rev | cut -d ' ' -f 1 | rev | uniq)" 2>&1 | \
@@ -273,7 +273,7 @@ get_ubu_shared_header(){
 	fi
 }
 
-get_ubu_files() {
+function get_ubu_files() {
 	TEMPFILES+=( "${ver}" )
 	# shellcheck disable=SC2016
 	eval wget "$(lynx -dump -listonly -dont-wrap-pre ${BASEURL}/${ver} | grep $1 | grep $2 | grep $arch | rev | cut -d ' ' -f 1 | rev | uniq)" 2>&1 | \
@@ -287,14 +287,14 @@ get_ubu_files() {
 	fi
 }
 
-install_key(){
+function install_key(){
     gpg --keyserver pgp.mit.edu --recv-keys "$CHK_ID" --keyserver
 }
 
 ######
 # Spinner that watches a background process
 ######
-spinner(){
+function spinner(){
 	local pid=$1
 	local delay=0.175
 	local spinstr="|/-\\"
@@ -358,7 +358,7 @@ function update(){
 	check_deps
 }
 
-countdown(){
+function countdown(){
 	local txt=$1
 	local secs=$2
 	while [ "$secs" -gt 0 ]; do
@@ -368,7 +368,7 @@ countdown(){
 	done
 }
 
-sudobg() {
+function sudobg() {
 	$SUDO echo ""
 	$SUDO "$@" > /dev/null 2>&1 &
 	# shellcheck disable=SC2034
@@ -377,13 +377,13 @@ sudobg() {
 
 # TRAPS
 TEMPFILES=( )
-cleanupfiles() {
+function cleanupfiles() {
 	rm -f "${TEMPFILES[@]}"
 }
 trap cleanupfiles 0
 
 # shellcheck disable=SC2120
-check_sign(){
+function check_sign(){
 	start_spinner "Checking archive signature . . ."
 	CHK_SIGN=$(unxz -c "${OUTPUT}" | gpg --verify "${SIGNfile}" - 2>&1)
 	CHK_SIGN_MISS_SIG=$(grep -o 'public key not found' <<<$CHK_SIGN)
@@ -430,11 +430,11 @@ check_sign(){
 	fi
 }
 
-clearline(){
+function clearline(){
 	echo -ne "\033[2K" ; printf "\r"
 }
 
-usage(){
+function usage(){
 	echo -e "\n TO DO: Create usage feedback"
 	exit 0
 }
@@ -517,7 +517,7 @@ function center-text() {
 	done
 }
 
-get_script_dir () {
+function get_script_dir () {
 	SOURCE="${BASH_SOURCE[0]}"
 	# While $SOURCE is a symlink, resolve it
 	while [ -h "$SOURCE" ]; do
@@ -530,7 +530,7 @@ get_script_dir () {
 	echo "$DIR"
 }
 
-chk_version (){
+function chk_version (){
 	CURVER=$(wget -O- -q https://raw.github.com/mtompkins/linux-kernel-utilities/master/version)
 	LOCVER=$(cat "version")
 	if [[ "${CURVER}" != "${LOCVER}" ]]; then
@@ -544,7 +544,7 @@ chk_version (){
 
 }
 
-show_version (){
+function show_version (){
 	revisioncount=$(git log --oneline | wc -l)
 	projectversion=$(git describe --tags --long)
 	echo "Version: $projectversion-$revisioncount"
