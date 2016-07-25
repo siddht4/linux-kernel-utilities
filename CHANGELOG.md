@@ -1,5 +1,24 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.9 (pending)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Correct sourcing of colors in remove_old_kernels.sh
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.8 (Jul 15, 2016)
 NEW FEATURES
 - none

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./colors.sh
+. ./colors
 
 # shellcheck disable=SC2154
 echo -e "\n\n${Red}		++++++++++++++++++++++++++++++++"
