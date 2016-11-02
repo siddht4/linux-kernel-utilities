@@ -18,6 +18,11 @@ chk_version
 
 # Set overlap variables
 DEPENDENCIES+="lynx "
+# Check for Broadcom Wifi device and if found add to Dependencies
+if lspci | grep "Network controller: Broadcom Corporation" > /dev/null ; then
+	DEPENDENCIES+="bcmwl-kernel-source "
+fi
+
 # shellcheck disable=SC2034
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
