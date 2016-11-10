@@ -36,6 +36,9 @@ if [[ $- == *i* ]]; then
 	COLUMNS=$(tput cols)
 fi
 
+# AntiVirus management
+AV=0
+
 # Compile
 # shellcheck disable=SC2034
 CMP_FLDR="Build_$NOW"

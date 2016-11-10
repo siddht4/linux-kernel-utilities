@@ -379,6 +379,10 @@ function sudobg() {
 TEMPFILES=( )
 function cleanupfiles() {
 	rm -f "${TEMPFILES[@]}"
+	if [ $AV -eq 1 ]; then
+		echo -e "${PLUS} Restoring AntiVirus"
+		sophosON
+	fi
 }
 trap cleanupfiles 0
 
@@ -560,3 +564,10 @@ function isremote(){
 		esac
 	fi
 }
+
+# Used to temporarily disable Sophos AntiVirus
+# This is a file not included in the Git repo I use to disable AV during updates
+if [ -s $HOME/.aliases/sophos ]; then
+	. $HOME/.aliases/sophos
+	AV=1
+fi

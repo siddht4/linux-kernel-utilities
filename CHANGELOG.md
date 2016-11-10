@@ -2,7 +2,7 @@
 
 ## v1.0.9 (pending)
 NEW FEATURES
-- none
+- Check for Broadcom networking device and add to dependencies if found
 
 IMPROVEMENTS
 - none

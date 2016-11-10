@@ -2,6 +2,12 @@
 
 . ./colors
 
+# Used to temporarily disable Sophos AntiVirus
+if [ -s $HOME/.aliases/sophos ]; then
+	. $HOME/.aliases/sophos
+	sophosOFF
+fi
+
 # shellcheck disable=SC2154
 echo -e "\n\n${Red}		++++++++++++++++++++++++++++++++"
 echo -e "		+++       W A R N I N G      +++ "
@@ -33,4 +39,7 @@ fi
 
 dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e "$(uname -r | cut -f1,2 -d"-")" | grep -e "[0-9]" | grep -E "(image|headers)" | xargs $SUDO apt-get -y purge
 
-#dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | grep -E "(image|headers)" | xargs $SUDO apt-get -y purge
+# Used to temporarily disable Sophos AntiVirus
+if [ -s $HOME/.aliases/sophos ]; then
+	sophosON
+fi

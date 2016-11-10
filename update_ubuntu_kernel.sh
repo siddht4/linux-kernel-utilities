@@ -18,10 +18,6 @@ chk_version
 
 # Set overlap variables
 DEPENDENCIES+="lynx "
-# Check for Broadcom Wifi device and if found add to Dependencies
-if lspci | grep "Network controller: Broadcom Corporation" > /dev/null ; then
-	DEPENDENCIES+="bcmwl-kernel-source "
-fi
 
 # shellcheck disable=SC2034
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
@@ -47,6 +43,11 @@ fi
 
 echo -e "${PLUS} Checking Dependencies"
 check_deps
+
+echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
+if [ $AV -eq 1 ]; then
+	sophosOFF
+fi
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
 cd "$TMP_FLDR" 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
