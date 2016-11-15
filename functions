@@ -438,12 +438,6 @@ function clearline(){
 	echo -ne "\033[2K" ; printf "\r"
 }
 
-function usage(){
-	echo -e "\n TO DO: Create usage feedback"
-	exit 0
-}
-
-
 #####
 # Spinner for foreground processes
 #####
@@ -565,9 +559,56 @@ function isremote(){
 	fi
 }
 
+function show_help_update(){
+	echo -e $c_msg_one
+}
+
+function parse_opts(){
+	while getopts ":hlv-" opt; do
+	case "$opt" in
+			h)	show_help_update
+				exit 0
+				;;
+			l)	USE_LATEST=1
+				;;
+			v)	show_version
+				exit 0
+				;;
+			-)	[ $OPTIND -ge 1 ] && optind=$(expr $OPTIND - 1 ) || optind=$OPTIND
+				eval OPTION="\$$optind"
+				OPTARG=$(echo $OPTION | cut -d'=' -f2)
+				OPTION=$(echo $OPTION | cut -d'=' -f1)
+				case $OPTION in
+					--help)		show_help_update
+								exit 0
+								;;
+					--latest)	USE_LATEST=1
+								;;
+					--version)	show_version
+								exit 0
+								;;
+					*)			echo -e "Invalid option: $OPTION\n" >&2
+								show_help_update
+								exit 1
+								;;
+				esac
+				OPTIND=1
+				shift
+				;;
+			\?)
+				echo -e "Invalid option: -$OPTARG\n" >&2
+				show_help_update
+				exit 1
+				;;
+		esac
+done
+shift "$((OPTIND-1))" #Shift off the options and optional --
+}
+
 # Used to temporarily disable Sophos AntiVirus
 # This is a file not included in the Git repo I use to disable AV during updates
 if [ -s $HOME/.aliases/sophos ]; then
 	. $HOME/.aliases/sophos
 	AV=1
 fi
+

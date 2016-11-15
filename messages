@@ -34,3 +34,11 @@ w_msg_three+="can continue in a fully unattended manner."
 w_title_four="Outdated Scripts Detected"
 w_msg_four="Your local scripts are not current with the repository.\nIt is recommended "
 w_msg_four+="that you exit now and update with:\n\n                                 git pull\n\nthen rerun this script... continue anyway?"
+
+# console messages
+c_msg_one="Usage: ${0##*/} [OPTION]\n\n"
+c_msg_one+="Bash script that will poll https://kernel.ubuntu.com for available precompiled \nkernels and present the user with a menu for selection and installation.\n\n"
+c_msg_one+="Optional arguments:\n"
+c_msg_one+="\t  -h, --help  \t  Display this help and exit\n"
+c_msg_one+="\t  -l, --latest  \t  Autoselect latest kernel release\n"
+c_msg_one+="\t  -v, --version  \t  Show version information and exit\n"

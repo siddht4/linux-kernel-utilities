@@ -22,15 +22,18 @@ DEPENDENCIES+="lynx "
 # shellcheck disable=SC2034
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
-if [ "$#" -gt 1 ]; then
-	usage
-elif [ "$1" = "latest" ]; then
-	# shellcheck disable=SC2034
-	USE_LATEST=1
-elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
-		show_version
-		exit 0
+if [ "$1" = "latest" ]; then
+	echo -e "DEPRICATED: Please use the standard argument form (${Yellow}--latest${Reg}).\n"
+	echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
+	echo -e "Try ${Yellow}--help${Reg} for more information.\n"
+	exit 1
 fi
+
+# Parse arguments
+parse_opts "$@"
+
+echo "STOP ME"
+exit
 
 shopt -s nocasematch
 if [[ "$OS" != "ubuntu" ]]; then

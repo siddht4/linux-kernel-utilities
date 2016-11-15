@@ -5,16 +5,16 @@ NEW FEATURES
 - none
 
 IMPROVEMENTS
-- none
+- Formal argument options for update_ubuntu_kernel
 
 FIXES
 - Correct sourcing of colors in remove_old_kernels.sh
 
 DEPRECATED
-- none
+- `latest` flag
 
 WORK IN PROCESS
-- none
+- Formal argument options
 
 TO DO
 - Update unit tests for `make deb-pkg`
