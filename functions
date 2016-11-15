@@ -379,7 +379,7 @@ function sudobg() {
 TEMPFILES=( )
 function cleanupfiles() {
 	rm -f "${TEMPFILES[@]}"
-	if [ $AV -eq 1 ]; then
+	if [ $AV -eq 1 -a $AV_ACTIVE -eq 1 ]; then
 		echo -e "${PLUS} Restoring AntiVirus"
 		sophosON
 	fi
@@ -551,7 +551,7 @@ function chk_version (){
 function show_version (){
 	revisioncount=$(git log --oneline | wc -l)
 	projectversion=$(git describe --tags --long)
-	echo "Version: $projectversion-$revisioncount"
+	echo "Linux Kernel Utilities - Version: $projectversion-$revisioncount"
 }
 
 function isremote(){

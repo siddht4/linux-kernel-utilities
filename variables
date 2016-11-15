@@ -38,6 +38,7 @@ fi
 
 # AntiVirus management
 AV=0
+AV_ACTIVE=0
 
 # Compile
 # shellcheck disable=SC2034

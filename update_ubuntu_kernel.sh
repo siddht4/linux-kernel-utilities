@@ -46,7 +46,10 @@ check_deps
 
 echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
 if [ $AV -eq 1 ]; then
-	sophosOFF
+	if [ $(/opt/sophos-av/bin/savdstatus | grep -v "not running" > /dev/null) ]; then
+		sophosOFF
+		AV_ACTIVE=1
+	fi
 fi
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
