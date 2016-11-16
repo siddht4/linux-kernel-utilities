@@ -8,9 +8,6 @@ if (( EUID != 0 )); then
 	SUDO='sudo'
 fi
 
-# Reset GETOPTS
-OPTIND=1
-
 # Shared variables
 # shellcheck disable=SC2034
 QT5CHECK=1

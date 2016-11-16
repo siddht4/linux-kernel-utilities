@@ -16,6 +16,9 @@ tput clear
 
 chk_version
 
+# Reset GETOPTS
+OPTIND=1
+
 # Set overlap variables
 DEPENDENCIES+="bc build-essential gnupg libnotify-bin libssl-dev pkg-config \
 				time "
@@ -23,39 +26,15 @@ DEPENDENCIES+="bc build-essential gnupg libnotify-bin libssl-dev pkg-config \
 # shellcheck disable=SC2034
 BASEURL=kernel.org
 
-if [ "$#" -gt 1 ]; then
-	usage
+if ! [[ $1 =~ ^- ]]; then
+	echo -e "DEPRICATED: Please use the standard argument form.\n"
+	echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
+	echo -e "Try ${Yellow}--help${Reg} for more information.\n"
+	exit 1
 fi
 
-if [ "$#" -eq 1 ]; then
-	if ! [[ -f "$1" ]]; then
-		if [[ "$1" = "latest" ]]; then
-			# shellcheck disable=SC2034
-			USE_LATEST=1
-		elif [[ "$1" == "-h" || "$1" == "--help" || "$1" == "usage" ]]; then
-			usage
-		elif [[ "$1" == "-v" || "$1" == "--version" ]]; then
-			show_version
-			exit 0
-		else
-			shopt -s nullglob
-			PROFILES=(profiles/*)
-			for FILE in "${PROFILES[@]}"; do
-				if [[ "profiles/$1" == "${FILE}" ]]; then
-					. profiles/"$1"
-					$1
-				fi
-			done
-			error ${LINENO} "$1 is not a file or the profile does not exist." 1
-		fi
-	else
-		OUTPUT=$1
-		LOCALFILE=1
-	fi
-
-else
-	echo -e "If you have a local kernel archive, pass it as an argument to use it.\n"
-fi
+# Parse arguments
+parse_opts_comp "$@"
 
 # shellcheck disable=SC2154
 whip_msg  "${w_title_one}" "${w_msg_one}"

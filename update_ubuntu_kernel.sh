@@ -16,6 +16,9 @@ tput clear
 
 chk_version
 
+# Reset GETOPTS
+OPTIND=1
+
 # Set overlap variables
 DEPENDENCIES+="lynx "
 

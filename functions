@@ -563,6 +563,10 @@ function show_help_update(){
 	echo -e $c_msg_one
 }
 
+function show_help_comp(){
+	echo -e $c_msg_two
+}
+
 function parse_opts_ubu(){
 	while getopts ":hlv-" opt; do
 	case "$opt" in
@@ -599,6 +603,87 @@ function parse_opts_ubu(){
 				echo -e "Invalid option: -$OPTARG\n" >&2
 				show_help_update
 				exit 1
+				;;
+		esac
+done
+shift "$((OPTIND-1))" #Shift off the options and optional --
+}
+
+function parse_opts_comp(){
+	while getopts ":A:hlvP:-" opt; do
+	case "$opt" in
+			A)	if [ ! -e "$OPTARG" ]; then
+					error ${LINENO} "The kernel archive file: $OPTARG was not found." 1
+				fi
+				OUTPUT="$OPTARG"
+				LOCALFILE=1
+				;;
+			h)	show_help_comp
+				exit 0
+				;;
+			l)	USE_LATEST=1
+				;;
+			P)	shopt -s nullglob
+				PROFILES=(profiles/*)
+				for FILE in "${PROFILES[@]}"; do
+					if [[ "profiles/$OPTARG" == "${FILE}" ]]; then
+						. profiles/"$OPTARG"
+						$OPTARG
+					fi
+				done
+				error ${LINENO} "$OPTARG is not a file or the profile does not exist." 1
+				;;
+			v)	show_version
+				exit 0
+				;;
+			-)	[ $OPTIND -ge 1 ] && optind=$(expr $OPTIND - 1 ) || optind=$OPTIND
+				eval OPTION="\$$optind"
+				OPTARG=$(echo $OPTION | cut -d'=' -f2)
+				OPTION=$(echo $OPTION | cut -d'=' -f1)
+				case $OPTION in
+					--archive)	if [[ "$OPTARG" == "--archive" ]]; then
+									error ${LINENO} "Either you did not enter an archive file location,\nor you did not use the correct argument format.\n\nYou must use the form --archive=</path/to/archive.tar.xz>\n\nExample: --archive=linux-4.8.8.tar.xz" 1
+								fi
+								if [ ! -e "$OPTARG" ]; then
+									error ${LINENO} "The kernel archive file: $OPTARG was not found." 1
+								fi
+								OUTPUT="$OPTARG"
+								LOCALFILE=1
+								;;
+					--help)		show_help_comp
+								exit 0
+								;;
+					--latest)	USE_LATEST=1
+								;;
+					--profile)	if [[ "$OPTARG" == "--profile" ]]; then
+									error ${LINENO} "Either you did not enter a profile name,\nor you did not use the correct argument format.\n\nYou must use the form --profile=<profileName>\n\nExample: --profile=zeus" 1
+								fi
+								shopt -s nullglob
+								PROFILES=(profiles/*)
+								for FILE in "${PROFILES[@]}"; do
+									if [[ "profiles/$OPTARG" == "${FILE}" ]]; then
+										. profiles/"$OPTARG"
+										$OPTARG
+									fi
+								done
+								error ${LINENO} "$OPTARG is not a file or the profile does not exist." 1
+								;;
+					--version)	show_version
+								exit 0
+								;;
+					*)			echo -e "Invalid option: $OPTION\n" >&2
+								show_help_comp
+								exit 1
+								;;
+				esac
+				OPTIND=1
+				shift
+				;;
+			\?)	echo -e "Invalid option: -$OPTARG\n" >&2
+				show_help_comp
+				exit 1
+				;;
+			:)	error ${LINENO} "Missing required option argument for -$OPTARG." 1
 				;;
 		esac
 done
