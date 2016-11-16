@@ -563,7 +563,7 @@ function show_help_update(){
 	echo -e $c_msg_one
 }
 
-function parse_opts(){
+function parse_opts_ubu(){
 	while getopts ":hlv-" opt; do
 	case "$opt" in
 			h)	show_help_update

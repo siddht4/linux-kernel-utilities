@@ -6,6 +6,7 @@ NEW FEATURES
 
 IMPROVEMENTS
 - Formal argument options for update_ubuntu_kernel
+- Formal argument options for compile_linux_kernel
 
 FIXES
 - Correct sourcing of colors in remove_old_kernels.sh

@@ -40,7 +40,7 @@ To compile a kernel with manual version selection
 To compile the latest kernel available
 <a href="https://www.youtube.com/watch?v=Us88qzNL3oI" target="_blank"><img src="img/youtube.png" /></a>
 
-    ./compile_linux_kernel.sh latest
+    ./compile_linux_kernel.sh --latest
 
 To compile a kernel from a local archive file
 

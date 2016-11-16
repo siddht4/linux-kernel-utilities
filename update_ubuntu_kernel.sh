@@ -30,10 +30,7 @@ if [ "$1" = "latest" ]; then
 fi
 
 # Parse arguments
-parse_opts "$@"
-
-echo "STOP ME"
-exit
+parse_opts_ubu "$@"
 
 shopt -s nocasematch
 if [[ "$OS" != "ubuntu" ]]; then
