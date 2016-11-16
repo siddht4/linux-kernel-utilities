@@ -1,5 +1,25 @@
 # linux-kernel-utilities Changelog
 
+## v1.0.10 (pending)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+- none
+
+FIXES
+- none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- Profile usage README
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
 ## v1.0.9 (Nov 15, 2016)
 NEW FEATURES
 - none
