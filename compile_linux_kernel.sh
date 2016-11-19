@@ -59,8 +59,6 @@ else
 	DEPENDENCIES+="qt5-qmake "
 fi
 
-#DEPENDENCIES+="libncurses5 libncurses5-dev qt5-qmake "
-
 check_deps
 
 # Check if remote session
