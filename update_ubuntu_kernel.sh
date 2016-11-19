@@ -49,11 +49,13 @@ check_deps
 
 echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
 if [ $AV -eq 1 ]; then
-	if [ $(/opt/sophos-av/bin/savdstatus | grep -v "not running" > /dev/null) ]; then
-		sophosOFF
+	if /opt/sophos-av/bin/savdstatus | egrep "active" > /dev/null; then
+	echo "YES"
 		AV_ACTIVE=1
 	fi
 fi
+
+exit
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
 cd "$TMP_FLDR" 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
