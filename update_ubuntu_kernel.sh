@@ -50,6 +50,7 @@ check_deps
 echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
 if [ $AV -eq 1 ]; then
 	if /opt/sophos-av/bin/savdstatus | egrep "active" > /dev/null; then
+		sophosOFF
 		AV_ACTIVE=1
 	fi
 fi
