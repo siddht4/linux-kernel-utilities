@@ -25,13 +25,30 @@ Bash script that will purge **ALL** inactive kernels.
 This may not be prudent for some as this will leave no default / backup safety kernel. The only kernel that will remain is the currently loaded version. It is highly recommended that a reboot be performed before executing this script.
 
 ----
-## Usage
-Download and enable scripts
+## Installation
+#### Method 1: (Recommended) - Download and enable scripts wtih `git`
 
     git clone https://github.com/mtompkins/linux-kernel-utilities.git
     cd linux-kernel-utilities
     chmod 750 *.sh
 
+#### Method 2: DEB packages
+Standard DEB installation packages are avaialble from the [Releases](https://github.com/mtompkins/linux-kernel-utilities/releases) section.  
+
+Install:
+
+    sudo dpkg -i linux-kernel-utilities*.deb
+
+Remove: 
+
+    sudo dpkg -r linux-kernel-utilities 
+
+**Notes:** 
+- Scripts are installed to `/opt` to minimize ownership conflicts.
+- Scripts will prompt to update using `git` when a new **Release** is published
+
+----
+## Usage
 ### Compilation
 To compile a kernel with manual version selection
 
@@ -65,6 +82,7 @@ To remove ALL non-active kernels
 
     ./remove_old_kernels.sh
 
+----
 ## Notes
 > Do not run the scripts with `sudo`. They will prompt for elevated privileges if necessary.     
 >

@@ -1,11 +1,10 @@
 # linux-kernel-utilities Changelog
 
-## v1.0.10 (pending)
+## v1.1.1 (pending)
 NEW FEATURES
 - none
 
 IMPROVEMENTS
-- none
 - none
 
 FIXES
@@ -15,7 +14,26 @@ DEPRECATED
 - none
 
 WORK IN PROCESS
-- Travis .deb creation
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
+## v1.1.0 (Nov 27, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- .deb package creation
+
+FIXES
+- none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
 
 TO DO
 - Update unit tests for `make deb-pkg`
