@@ -1,15 +1,26 @@
 sudo: required
 dist: trusty
-
 before_install:
-  - sudo add-apt-repository -y ppa:duggan/bats
-  - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
+- sudo add-apt-repository -y ppa:duggan/bats
+- sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+- sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
+- sudo apt-get -qq update
+- sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package
+  build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
+- sudo apt-get -qq install ruby-dev gcc make
+- sudo gem install fpm
 script:
-  - bats ./unitTesting/tests-linux-kernel-utilities.bats 
-  - source /opt/qt56/bin/qt56-env.sh
+- bats ./unitTesting/tests-linux-kernel-utilities.bats
+- source /opt/qt56/bin/qt56-env.sh
+- fpm -s dir -t deb -n "linux-kernel-utilities" --deb-no-default-config-files linux-kernel-utilities=/opt
 addons:
-    code_climate:
-        repo_token: af81e68f1d0e98adef124a52b75c13fff35e8da804b9276e3086e1a837685541
+  code_climate:
+    repo_token: af81e68f1d0e98adef124a52b75c13fff35e8da804b9276e3086e1a837685541
+deploy:
+  provider: releases
+  api_key:
+    secure: L5UWAh3C9JOLv4TWcfQSzNIihurtpMflFoWgsL96su0T3KyjUGyCJiEJilktc8lXTM6k9n/XTAVckDxiFCeNBYNn6NFVH7pdijfaZCnZyFDqxN4o9Qk6UeSgFRvkbVteCtBO7zwjjLCykJ3k/9BXZAzrpJdyt4nUURHYqsILPCjXkcDHZKl9mExI6ootukaa18thwgXszSLScV0Z5Z9isCGUVI/r4kyO846bUmO8BOSkGD5MtUoCvg+nnfO/PlhOXkcnB8DFjvPBQQKt09uUp3r1JfuE1HWHiBSoc5xNjalFdYKctWtQKhzmt+D6XVShgQ4AXAlJXAGs4pFSO32sEcfmcuDQBktlGOfbXRoZlg6AGHPE/c0Cpel40WItZsRl2ZxywMa/VPA6PdXQC7yE7fEqp+sYnLBE0W7JiEKPdE+MVbc7HT29vbb3h7jkSI1wgBnRdcvNpRbJW+1ZJgSY0emPRDdWqHilFEE3U+a9wT79REP195XZGP+SEjycE++WrV6PUfv3+mt9zKRpmQYZDklosHzvFXCyqeUH4ZvKHkaEt2/D4zVlWYQ6zA6z1dDOAdgNxAMG7LDppTBJRG8ZPTfTvnjGdoOhzAA9ff+pyMub3sivRwqa4ZEVvjzHjKD7SPAyun2QTMmG9bdUk+IzAbN5nlQUoaxqvZLIOXlxS1Q=
+  file: linux-kernel-utilities.deb
+  skip_cleanup: true
+  on:
+    repo: mtompkins/linux-kernel-utilities

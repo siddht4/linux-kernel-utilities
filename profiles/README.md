@@ -7,7 +7,7 @@ To fully automate the kernel compilation process by entering a single command to
 ## Approach:
 By using a small stub script (`xprofile`), we can predefine the necessary variables in a *profile* that in effect replaces any necessary keyboard entry. In addition, as this is simply a **sourced** file, any desired pre- and post-executing hooks may be added.
 ## Template:
-Let's examine the [zeus](./zeus) *profile* included the [profiles](../profiles) directory: 
+Let's examine the [zeus](./zeus) *profile* included in the [profiles](../profiles) directory: 
 #### Code
 ```
 1  . ./profiles/xprofile

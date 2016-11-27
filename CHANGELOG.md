@@ -15,7 +15,7 @@ DEPRECATED
 - none
 
 WORK IN PROCESS
-- Profile usage README
+- Travis .deb creation
 
 TO DO
 - Update unit tests for `make deb-pkg`
