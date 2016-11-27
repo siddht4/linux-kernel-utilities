@@ -10,7 +10,7 @@ before_install:
 # Build FPM
   - CURDIR=$(pwd) && cd ..
   - git clone https://github.com/jordansissel/fpm.git && cd fpm
-  - sudo gem install bundler
+  - sudo gem install bundler rspec
   - bundle install
   - sudo make
   - cd ${CURDIR}
