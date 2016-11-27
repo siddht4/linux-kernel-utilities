@@ -1,5 +1,6 @@
 sudo: required
 dist: xenial
+rvm: 2.0.0-p247
 before_install:
   - sudo add-apt-repository -y ppa:duggan/bats
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
