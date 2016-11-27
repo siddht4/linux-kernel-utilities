@@ -9,8 +9,6 @@ before_install:
   - sudo apt-get -qq install ruby-dev
   - sudo gem install fpm
   - gem outdated
-  - sudo gem install rubygems-update
-  - sudo update_rubygems
   - sudo gem update --system
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
