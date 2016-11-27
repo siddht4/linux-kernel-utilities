@@ -44,7 +44,7 @@ Remove:
     sudo dpkg -r linux-kernel-utilities 
 
 **Notes:** 
-- Scripts are installed to `/opt` to minimize ownership conflicts.
+- Scripts are installed to `/opt` when using **DEB** method.
 - Scripts will prompt to update using `git` when a new **Release** is published
 
 ----
