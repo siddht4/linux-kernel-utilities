@@ -8,6 +8,10 @@ before_install:
   - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
   - sudo apt-get -qq install ruby-dev
   - sudo gem install fpm
+  - gem outdated
+  - sudo gem install rubygems-update
+  - sudo update_rubygems
+  - sudo gem update --system
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
