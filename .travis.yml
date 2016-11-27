@@ -12,6 +12,10 @@ before_install:
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
+- pwd
+- ls
+- echo "-- HERE --"
+- ls ../
 - fpm -s dir -t deb -n "linux-kernel-utilities" --deb-no-default-config-files ../linux-kernel-utilities=/opt
 addons:
   code_climate:
