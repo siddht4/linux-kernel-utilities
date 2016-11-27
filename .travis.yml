@@ -5,15 +5,20 @@ before_install:
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
   - sudo apt -y update
-  - sudo apt -y full-upgrade
   - sudo apt -y install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
-  - sudo apt -y install ruby-dev
-  - sudo gem install fpm
+  - sudo apt -y install ruby-dev bsdtar
+  - sudo rvm reinstall all
+  - CURDIR=$(pwd) && cd ..
+  - git clone git@github.com:yourusername/fpm.git && cd fpm
+  - sudo gem install bundler
+  - sudo bundle install
+  - sudo make
+  - cd ${CURDIR}
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
 #- fpm -s dir -t deb -n "linux-kernel-utilities" --deb-no-default-config-files ../linux-kernel-utilities=/opt
-- fpm --help
+- ../fpm/fpm --help
 addons:
   code_climate:
     repo_token: af81e68f1d0e98adef124a52b75c13fff35e8da804b9276e3086e1a837685541
