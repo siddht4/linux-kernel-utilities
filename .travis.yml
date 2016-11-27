@@ -23,7 +23,7 @@ deploy:
   provider: releases
   api_key:
     secure: L5UWAh3C9JOLv4TWcfQSzNIihurtpMflFoWgsL96su0T3KyjUGyCJiEJilktc8lXTM6k9n/XTAVckDxiFCeNBYNn6NFVH7pdijfaZCnZyFDqxN4o9Qk6UeSgFRvkbVteCtBO7zwjjLCykJ3k/9BXZAzrpJdyt4nUURHYqsILPCjXkcDHZKl9mExI6ootukaa18thwgXszSLScV0Z5Z9isCGUVI/r4kyO846bUmO8BOSkGD5MtUoCvg+nnfO/PlhOXkcnB8DFjvPBQQKt09uUp3r1JfuE1HWHiBSoc5xNjalFdYKctWtQKhzmt+D6XVShgQ4AXAlJXAGs4pFSO32sEcfmcuDQBktlGOfbXRoZlg6AGHPE/c0Cpel40WItZsRl2ZxywMa/VPA6PdXQC7yE7fEqp+sYnLBE0W7JiEKPdE+MVbc7HT29vbb3h7jkSI1wgBnRdcvNpRbJW+1ZJgSY0emPRDdWqHilFEE3U+a9wT79REP195XZGP+SEjycE++WrV6PUfv3+mt9zKRpmQYZDklosHzvFXCyqeUH4ZvKHkaEt2/D4zVlWYQ6zA6z1dDOAdgNxAMG7LDppTBJRG8ZPTfTvnjGdoOhzAA9ff+pyMub3sivRwqa4ZEVvjzHjKD7SPAyun2QTMmG9bdUk+IzAbN5nlQUoaxqvZLIOXlxS1Q=
-  file: linux-kernel-utilities_${PACKAGE_VERSION}.deb
+  file: linux-kernel-utilities_${PACKAGE_VERSION}_amd64.deb
   skip_cleanup: true
   on:
     repo: mtompkins/linux-kernel-utilities
