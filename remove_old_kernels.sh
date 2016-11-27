@@ -1,11 +1,27 @@
 #!/bin/bash
 
-. ./colors
+# Clear the terminal so we can see things
+tput clear
 
-# Used to temporarily disable Sophos AntiVirus
-if [ -s $HOME/.aliases/sophos ]; then
-	. $HOME/.aliases/sophos
-	sophosOFF
+# Source terminal colors
+. ./colors
+# Source error trap
+. ./error_trap
+# Source variables
+. ./variables
+# Source functions
+. ./functions
+# Source whiptail messages
+. ./messages
+
+chk_version
+
+# Temporarily disable Sophos AntiVirus
+if [ $AV -eq 1 ]; then
+	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
+		sophosOFF
+		AV_ACTIVE=1
+	fi
 fi
 
 # shellcheck disable=SC2154

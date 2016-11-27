@@ -5,7 +5,7 @@ NEW FEATURES
 - none
 
 IMPROVEMENTS
-- none
+- Add version check to remove_old_kernels
 
 FIXES
 - none
