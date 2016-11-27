@@ -6,11 +6,12 @@ before_install:
   - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
   - sudo apt-get -qq update
   - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
-  - sudo apt-get -qq install ruby-dev gcc make
+  - sudo apt-get -qq install bison openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-0 libxml2-dev libxslt-dev autoconf libc6-dev
+  - CURDIR=$(pwd) && cd ..
   - git clone https://github.com/jordansissel/fpm.git
-  - cd fpm/examples/fpm-with-system-ruby && make package
+  - cd fpm/examples/fpm && make package
   - sudo dpkg -i fpm*.deb
-  - cd ../../..
+  - cd ${CURDIR}
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
