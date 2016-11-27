@@ -4,12 +4,11 @@ before_install:
   - sudo add-apt-repository -y ppa:duggan/bats
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
-  - sudo apt-get -qq install ruby-dev
+  - sudo apt -y update
+  - sudo apt -y full-upgrade
+  - sudo apt -y install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
+  - sudo apt -y install ruby-dev
   - sudo gem install fpm
-  - gem outdated
-  - sudo gem update --system
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
