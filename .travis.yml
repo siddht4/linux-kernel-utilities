@@ -11,7 +11,7 @@ before_install:
   - CURDIR=$(pwd) && cd ..
   - git clone https://github.com/jordansissel/fpm.git && cd fpm
   - sudo gem install bundler
-  - sudo bundle install
+  - bundle install
   - sudo make
   - cd ${CURDIR}
 script:
