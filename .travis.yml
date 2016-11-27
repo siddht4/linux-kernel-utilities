@@ -1,16 +1,16 @@
 sudo: required
 dist: xenial
 before_install:
-- sudo add-apt-repository -y ppa:duggan/bats
-- sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-- sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
-- sudo apt-get -qq update
-- sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package
-  build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
-- sudo apt-get -qq install ruby-dev gcc make libffi-dev
-- sudo gem uninstall ffi 
-- sudo gem install ffi 
-- sudo gem install fpm
+  - sudo add-apt-repository -y ppa:duggan/bats
+  - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-add-repository -y ppa:beineri/opt-qt561-trusty
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
+  - sudo apt-get -qq install ruby-dev gcc make
+  - git clone https://github.com/jordansissel/fpm.git
+  - cd fpm/examples/fpm-with-system-ruby && make package
+  - sudo dpkg -i fpm*.deb
+  - cd ../../..
 script:
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
@@ -18,7 +18,7 @@ script:
 - ls
 - echo "-- HERE --"
 - ls ../
-- fpm -s dir -t deb -n "linux-kernel-utilities" --deb-no-default-config-files ../linux-kernel-utilities=/opt
+- /opt/fpm/bin/fpm -s dir -t deb -n "linux-kernel-utilities" --deb-no-default-config-files ../linux-kernel-utilities=/opt
 addons:
   code_climate:
     repo_token: af81e68f1d0e98adef124a52b75c13fff35e8da804b9276e3086e1a837685541
