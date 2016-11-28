@@ -1,6 +1,6 @@
 env:
   global:
-    - PKG_VER="1.1.0"
+    - PKG_VER="1.1.1"
     - NAME="linux-kernel-utilities"
     - DESC="Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
     - URL="https://github.com/mtompkins/linux-kernel-utilities"
@@ -22,8 +22,7 @@ before_install:
 script: 
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
-- fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files \
-  --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" --url "${URL}" ../linux-kernel-utilities=/opt
+- fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" --url "${URL}" ../linux-kernel-utilities=/opt
 
 addons:
   code_climate:
@@ -36,4 +35,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: mtompkins/linux-kernel-utilities
+    tags: true
 

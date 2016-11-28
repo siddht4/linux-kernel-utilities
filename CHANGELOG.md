@@ -1,6 +1,25 @@
 # linux-kernel-utilities Changelog
 
-## v1.1.1 (pending)
+## v1.1.2 (pending)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
+## v1.1.1 (Nov 28, 2016)
 NEW FEATURES
 - none
 
@@ -9,12 +28,13 @@ IMPROVEMENTS
 
 FIXES
 - Update --latest option logic for Canonical directory order
+- DEB installation .git override
 
 DEPRECATED
 - none
 
 WORK IN PROCESS
-- DEB installation .git override
+- none
 
 TO DO
 - Update unit tests for `make deb-pkg`
