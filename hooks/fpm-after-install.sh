@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Overrides Github configuration when installing using DEB packaging.
-cat << EOF > ./.git/config
+cat << EOF > /opt/linux-kernel-utilities/.git/config
 [core]
 	repositoryformatversion = 0
 	filemode = true
