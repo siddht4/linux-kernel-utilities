@@ -552,8 +552,6 @@ function chk_version (){
 			exit 0
 		fi
 	fi
-
-
 }
 
 function show_version (){
@@ -583,7 +581,7 @@ function show_help_comp(){
 
 function parse_opts_ubu(){
 	while getopts ":hlv-" opt; do
-	case "$opt" in
+		case "$opt" in
 			h)	show_help_update
 				exit 0
 				;;
@@ -619,13 +617,13 @@ function parse_opts_ubu(){
 				exit 1
 				;;
 		esac
-done
-shift "$((OPTIND-1))" #Shift off the options and optional --
+	done
+	shift "$((OPTIND-1))" #Shift off the options and optional --
 }
 
 function parse_opts_comp(){
 	while getopts ":A:hlvP:-" opt; do
-	case "$opt" in
+		case "$opt" in
 			A)	if [ ! -e "$OPTARG" ]; then
 					error ${LINENO} "The kernel archive file: $OPTARG was not found." 1
 				fi
@@ -700,8 +698,8 @@ function parse_opts_comp(){
 			:)	error ${LINENO} "Missing required option argument for -$OPTARG." 1
 				;;
 		esac
-done
-shift "$((OPTIND-1))" #Shift off the options and optional --
+	done
+	shift "$((OPTIND-1))" #Shift off the options and optional --
 }
 
 # Used to temporarily disable Sophos AntiVirus
