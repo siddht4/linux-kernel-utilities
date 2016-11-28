@@ -1,9 +1,5 @@
 env:
   - PACKAGE_VERSION="1.1.0"
-  - MAINTAINER="mets_dev@outlook.com"
-  - DESCRIPTION="Utilities to compile and / or update linux kernels for Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)"
-  - URL="https://github/mtompkins/linux-kernel-utilities"
-  - NAME="linux-kernel-utilities"
 sudo: required
 dist: xenial
 before_install:
@@ -18,9 +14,10 @@ before_install:
 script: 
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
-- fpm -s dir -t deb -n ${NAME} -v ${PACKAGE_VERSION} --deb-no-default-config-files \
+- fpm -s dir -t deb -n linux-kernel-utilities -v ${PACKAGE_VERSION} --deb-no-default-config-files \
   --before-install ./hooks/fpm-before-install.sh --before-uninstall ./hooks/fpm-before-uninstall.sh \
-  -m ${MAINTAINER} --description ${DESCRIPTION} --url ${URL} ../linux-kernel-utilities=/opt
+  -m mets_dev@outlook.com --description "Utilities to compile and / or update linux kernels for Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)" \
+  --url "https://github/mtompkins/linux-kernel-utilities" ../linux-kernel-utilities=/opt
 
 addons:
   code_climate:
