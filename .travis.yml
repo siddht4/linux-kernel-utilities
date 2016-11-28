@@ -4,7 +4,7 @@ env:
     - NAME="linux-kernel-utilities"
     - DESC="Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
     - URL="https://github.com/mtompkins/linux-kernel-utilities"
-    - A_INST="hooks/fpm-before-install.sh"
+    - A_INST="hooks/fpm-after-install.sh"
     - B_REMOVE="hooks/fpm-before-uninstall.sh"
     - MAINT="mets_dev@outlook.com"
 sudo: required
