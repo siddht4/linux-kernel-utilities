@@ -14,7 +14,7 @@ DEPRECATED
 - none
 
 WORK IN PROCESS
-- none
+- DEB installation .git override
 
 TO DO
 - Update unit tests for `make deb-pkg`
