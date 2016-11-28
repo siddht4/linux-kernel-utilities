@@ -1,5 +1,12 @@
 env:
-  - PACKAGE_VERSION="1.1.0"
+  global:
+    - PKG_VER="1.1.0"
+    - NAME="linux-kernel-utilities"
+    - DESC="Utilities to compile and / or update linux kernels for Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)"
+    - URL="https://github/mtompkins/linux-kernel-utilities"
+    - B_INST="./hooks/fpm-before-install.sh"
+    - B_UNINST="./hooks/fpm-before-uninstall.sh"
+    - MAINT="mets_dev@outlook.com"
 sudo: required
 dist: xenial
 before_install:
@@ -14,10 +21,7 @@ before_install:
 script: 
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
-- fpm -s dir -t deb -n linux-kernel-utilities -v ${PACKAGE_VERSION} --deb-no-default-config-files \
-  --before-install ./hooks/fpm-before-install.sh --before-uninstall ./hooks/fpm-before-uninstall.sh \
-  -m mets_dev@outlook.com --description "Utilities to compile and / or update linux kernels for Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)" \
-  --url "https://github/mtompkins/linux-kernel-utilities" ../linux-kernel-utilities=/opt
+- fpm -s dir -t deb -n ${NAME} -v ${PKG_VER} --deb-no-default-config-files --before-install ${B_INST} --before-uninstall ${BE_UNINST} -m ${MAINT} --description ${DESC} --url ${URL} ../linux-kernel-utilities=/opt
 
 addons:
   code_climate:
@@ -26,7 +30,7 @@ deploy:
   provider: releases
   api_key:
     secure: L5UWAh3C9JOLv4TWcfQSzNIihurtpMflFoWgsL96su0T3KyjUGyCJiEJilktc8lXTM6k9n/XTAVckDxiFCeNBYNn6NFVH7pdijfaZCnZyFDqxN4o9Qk6UeSgFRvkbVteCtBO7zwjjLCykJ3k/9BXZAzrpJdyt4nUURHYqsILPCjXkcDHZKl9mExI6ootukaa18thwgXszSLScV0Z5Z9isCGUVI/r4kyO846bUmO8BOSkGD5MtUoCvg+nnfO/PlhOXkcnB8DFjvPBQQKt09uUp3r1JfuE1HWHiBSoc5xNjalFdYKctWtQKhzmt+D6XVShgQ4AXAlJXAGs4pFSO32sEcfmcuDQBktlGOfbXRoZlg6AGHPE/c0Cpel40WItZsRl2ZxywMa/VPA6PdXQC7yE7fEqp+sYnLBE0W7JiEKPdE+MVbc7HT29vbb3h7jkSI1wgBnRdcvNpRbJW+1ZJgSY0emPRDdWqHilFEE3U+a9wT79REP195XZGP+SEjycE++WrV6PUfv3+mt9zKRpmQYZDklosHzvFXCyqeUH4ZvKHkaEt2/D4zVlWYQ6zA6z1dDOAdgNxAMG7LDppTBJRG8ZPTfTvnjGdoOhzAA9ff+pyMub3sivRwqa4ZEVvjzHjKD7SPAyun2QTMmG9bdUk+IzAbN5nlQUoaxqvZLIOXlxS1Q=
-  file: linux-kernel-utilities_${PACKAGE_VERSION}_amd64.deb
+  file: linux-kernel-utilities_${PKG_VER}_amd64.deb
   skip_cleanup: true
   on:
     repo: mtompkins/linux-kernel-utilities
