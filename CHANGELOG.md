@@ -8,7 +8,7 @@ IMPROVEMENTS
 - Add version check to remove_old_kernels
 
 FIXES
-- none
+- Update --latest option logic for Canonical directory order
 
 DEPRECATED
 - none

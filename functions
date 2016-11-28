@@ -230,6 +230,13 @@ function get_precompiled_ubu_kernel(){
 	get_arch
 	# shellcheck disable=SC2128
 	for ver in $(echo -e "$TOTAL"); do
+		# Check for actual latest release from Ubuntu page
+		if [[ $USE_LATEST -eq 1 ]] ; then
+			CHKLATEST=(${TOTAL//'\n'/ })
+			if [[ "${CHKLATEST[1]}" == *"${CHKLATEST[0]}"* ]]; then
+				((INPUT++))
+			fi
+		fi
 		((COUNT++))
 		if [ $COUNT -eq "$INPUT" ]; then
 			# shellcheck disable=SC2034
@@ -245,6 +252,7 @@ function get_precompiled_ubu_kernel(){
 					echo -e "${Cyan} \_ Locating source of ${ver} ${KTYPE} kernel packages.${Reg}"
 
 					RSLT=$(lynx -dump -listonly -dont-wrap-pre "${BASEURL}/${ver}" | grep "$1" | grep "$2" | grep "$arch" | grep -v "BUILD.LOG" | rev | cut -d ' ' -f 1 | rev | uniq)
+
 					if [[ -z ${RSLT} ]]; then
 						# shellcheck disable=SC2154
 						whip_msg "${w_title_two}" "${w_msg_two}"
