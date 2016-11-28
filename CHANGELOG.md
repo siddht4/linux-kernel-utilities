@@ -1,6 +1,6 @@
 # linux-kernel-utilities Changelog
 
-## v1.1.2 (pending)
+## v1.1.3 (pending)
 NEW FEATURES
 - none
 
@@ -9,6 +9,25 @@ IMPROVEMENTS
 
 FIXES
 - none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
+## v1.1.2 (Nov 28, 2016)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Travis CI filename from fpm
 
 DEPRECATED
 - none
