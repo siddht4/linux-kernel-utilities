@@ -44,8 +44,8 @@ Remove:
     sudo dpkg -r linux-kernel-utilities 
 
 **Notes:** 
-- Scripts are installed to `/opt` when using **DEB** method.
-- Scripts will prompt to update using `git` when a new **Release** is published
+- Scripts are installed to `/opt` when using **DEB** packages.
+- Scripts will prompt to update when necessary. To update, use: `git pull`.
 
 ----
 ## Usage
