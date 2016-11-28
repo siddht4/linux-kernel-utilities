@@ -5,7 +5,7 @@ env:
     - DESC="Utilities to compile and / or update linux kernels for Debian and derivatives (e.g. Ubuntu, LinuxMint, etc.)"
     - URL="https://github/mtompkins/linux-kernel-utilities"
     - B_INST="./hooks/fpm-before-install.sh"
-    - B_UNINST="./hooks/fpm-before-uninstall.sh"
+    - B_REMOVE="./hooks/fpm-before-uninstall.sh"
     - MAINT="mets_dev@outlook.com"
 sudo: required
 dist: xenial
@@ -21,7 +21,7 @@ before_install:
 script: 
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
-- fpm -s dir -t deb -n ${NAME} -v ${PKG_VER} --deb-no-default-config-files --before-install ${B_INST} --before-uninstall ${BE_UNINST} -m ${MAINT} --description ${DESC} --url ${URL} ../linux-kernel-utilities=/opt
+- fpm -s dir -t deb -n ${NAME} -v ${PKG_VER} --deb-no-default-config-files --before-install ${B_INST} --before-remove ${B_REMOVE} -m ${MAINT} --description ${DESC} --url ${URL} ../linux-kernel-utilities=/opt
 
 addons:
   code_climate:
