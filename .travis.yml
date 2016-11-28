@@ -15,11 +15,11 @@ before_install:
   - sudo apt -y install bats gcc make fakeroot libncurses5 libncurses5-dev kernel-package build-essential pkg-config libnotify-bin gnupg qt56tools qt56svg qt56script
   - sudo apt -y install ruby-dev
   - sudo gem install fpm
-script: >
+script: 
 - bats ./unitTesting/tests-linux-kernel-utilities.bats
 - source /opt/qt56/bin/qt56-env.sh
-- fpm -s dir -t deb -n ${NAME} -v ${PACKAGE_VERSION} --deb-no-default-config-files 
-  --before-install ./hooks/fpm-before-install.sh --before-uninstall ./hooks/fpm-before-uninstall.sh
+- fpm -s dir -t deb -n ${NAME} -v ${PACKAGE_VERSION} --deb-no-default-config-files \
+  --before-install ./hooks/fpm-before-install.sh --before-uninstall ./hooks/fpm-before-uninstall.sh \
   -m ${MAINTAINER} --description ${DESCRIPTION} --url ${URL} ../linux-kernel-utilities=/opt
 
 addons:
