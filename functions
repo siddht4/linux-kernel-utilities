@@ -229,14 +229,16 @@ function select_kernel_ubu(){
 function get_precompiled_ubu_kernel(){
 	get_arch
 	# shellcheck disable=SC2128
-	for ver in $(echo -e "$TOTAL"); do
-		# Check for actual latest release from Ubuntu page
-		if [[ $USE_LATEST -eq 1 ]] ; then
-			CHKLATEST=(${TOTAL//'\n'/ })
-			if [[ "${CHKLATEST[1]}" == *"${CHKLATEST[0]}"* ]]; then
-				((INPUT++))
-			fi
+	# Check for actual latest release from Ubuntu page
+	if [[ $USE_LATEST -eq 1 ]] ; then
+		CHKLATEST=(${TOTAL//'\n'/ })
+		if [[ "${CHKLATEST[1]}" == *"${CHKLATEST[0]}"* ]]; then
+			((INPUT++))
 		fi
+	fi
+
+	for ver in $(echo -e "$TOTAL"); do
+		
 		((COUNT++))
 		if [ $COUNT -eq "$INPUT" ]; then
 			# shellcheck disable=SC2034
