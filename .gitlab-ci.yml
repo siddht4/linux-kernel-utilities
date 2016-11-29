@@ -1,6 +1,6 @@
 before_script:
   - apt-get -qq update
-  - apt-get -qq install bc git lsb-release whiptail ruby-full
+  - apt-get -qq install bc git lsb-release whiptail ruby-full ruby-dev
   - git clone https://github.com/sstephenson/bats.git /tmp/bats
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
