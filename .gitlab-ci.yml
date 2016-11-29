@@ -1,11 +1,14 @@
 before_script:
   - apt-get -qq update
-  - apt-get -qq install bc git lsb-release whiptail ruby-full ruby-dev
+  - apt-get -qq install bc git lsb-release whiptail
   - git clone https://github.com/sstephenson/bats.git /tmp/bats
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
   - export TERM=xterm-256color
+  - gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  - curl -sSL https://get.rvm.io -o rvm.sh | bash -s stable --rails
+  - rvm install 1.9.3
   - gem install fpm
 
 variables:
