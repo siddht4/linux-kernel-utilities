@@ -18,3 +18,22 @@ test:debian:
   script:
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
+
+  production:
+    type: deploy
+    script:
+    - export PKG_VER="1.1.2"
+    - export NAME="linux-kernel-utilities"
+    - export DESC="Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
+    - export URL="https://github.com/mtompkins/linux-kernel-utilities"
+    - export A_INST="hooks/fpm-after-install.sh"
+    - export B_REMOVE="hooks/fpm-before-uninstall.sh"
+    - export MAINT="mets_dev@outlook.com"
+    - export ARCH="all"
+    - gem install fpm
+    - fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" --url "${URL}" ../linux-kernel-utilities=/opt
+    artifacts:
+        paths:
+        - linux-kernel-utilities_${PKG_VER}_${ARCH}.deb
+    only:
+    - tags

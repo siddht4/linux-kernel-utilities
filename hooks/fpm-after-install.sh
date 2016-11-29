@@ -14,3 +14,9 @@ cat << EOF > /opt/linux-kernel-utilities/.git/config
 	remote = origin
 	merge = refs/heads/master
 EOF
+
+# Set active git branch
+CURDIR=$(pwd)
+cd /opt/linux-kernel-utilities
+git fetch && git checkout master
+cd "${CURDIR}"
