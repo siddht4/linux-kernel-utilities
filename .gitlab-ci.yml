@@ -1,17 +1,11 @@
 before_script:
   - apt-get -qq update
-  - apt-get -qq install bc git lsb-release whiptail curl
+  - apt-get -qq install bc git lsb-release whiptail
   - git clone https://github.com/sstephenson/bats.git /tmp/bats
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
   - export TERM=xterm-256color
-  - gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-  # curl -sSL https://get.rvm.io -o rvm.sh | bash -s stable --rails
-  - curl -sSL https://get.rvm.io | bash -s stable --rails
-  - source /usr/local/rvm/scripts/rvm
-  - rvm install 1.9.3
-  - gem install fpm
 
 variables:
   PKG_VER: "1.1.2"
@@ -23,15 +17,31 @@ variables:
   MAINT: "mets_dev@outlook.com"
   ARCH: "all"
 
-test:ubuntu:
+ubu-notag:ubuntu:
   image: ubuntu
   script:
+    - bats --version
+    - bats ./unitTesting/tests-linux-kernel-utilities.bats
+  except:
+    - tags
+
+ubu-tag:ubuntu:
+  image: ubuntu
+  script:
+    - apt-get -qq install curl
+    - gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    - curl -sSL https://get.rvm.io | bash -s stable --rails
+    - source /usr/local/rvm/scripts/rvm
+    - rvm install 1.9.3
+    - gem install fpm
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
     - fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" --url "${URL}" ../linux-kernel-utilities=/opt
   artifacts:
     paths:
     - linux-kernel-utilities_${PKG_VER}_${ARCH}.deb
+  only:
+    - tags
 
 test:debian:
   image: debian
