@@ -9,14 +9,14 @@ before_script:
   - gem install fpm
 
 variables:
-  - export PKG_VER="1.1.2"
-  - export NAME="linux-kernel-utilities"
-  - export DESC="Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
-  - export URL="https://github.com/mtompkins/linux-kernel-utilities"
-  - export A_INST="hooks/fpm-after-install.sh"
-  - export B_REMOVE="hooks/fpm-before-uninstall.sh"
-  - export MAINT="mets_dev@outlook.com"
-  - export ARCH="all"
+  - PKG_VER: "1.1.2"
+  - NAME: "linux-kernel-utilities"
+  - DESC: "Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
+  - URL: "https://github.com/mtompkins/linux-kernel-utilities"
+  - A_INST: "hooks/fpm-after-install.sh"
+  - B_REMOVE: "hooks/fpm-before-uninstall.sh"
+  - MAINT: "mets_dev@outlook.com"
+  - ARCH: "all"
 
 test:ubuntu:
   image: ubuntu:15.10
