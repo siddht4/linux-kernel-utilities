@@ -19,7 +19,7 @@ variables:
   ARCH: "all"
 
 test:ubuntu:
-  image: ubuntu:
+  image: ubuntu
   script:
     - bats --version
     - bats ./unitTesting/tests-linux-kernel-utilities.bats
