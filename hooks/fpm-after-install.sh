@@ -19,4 +19,6 @@ EOF
 CURDIR=$(pwd)
 cd /opt/linux-kernel-utilities
 git fetch && git checkout master
+chmod -x -R /opt/linux-kernel-utilities
+chmod 750 /opt/linux-kernel-utilities/*.sh
 cd "${CURDIR}"
