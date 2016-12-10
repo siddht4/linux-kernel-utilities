@@ -2,7 +2,8 @@
 
 ## v1.1.3 (pending)
 NEW FEATURES
-- none
+- Add `-o` `--low` parameters for Ubuntu kernel
+- Default to generic Ubuntu kernel if no lowlatency parameter passed on `--latest`
 
 IMPROVEMENTS
 - none

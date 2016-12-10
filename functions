@@ -153,7 +153,7 @@ function select_kernel_deb(){
 	# Override if using 'LATEST' else whiptail menu
 	if [[ $USE_LATEST -eq 1 ]] ; then
 		if [[ $1 != "quiet" ]]; then
-			echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection."
+			echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option."
 		fi
 		OPTION="${ARR_LIST}"
 	else
@@ -199,8 +199,11 @@ function get_kernel_archive(){
 
 function select_kernel_ubu(){
 	if [[ $USE_LATEST -eq 1 ]] ; then
-		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option. Automating selection to latest kernel."
+		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option."
 		INPUT=1
+		if [[ $lowlatency -eq 1 ]] ; then
+				echo -e "Script started with ${Yellow}LOWLATENCY${Reg} option."
+		fi
 	else
 		echo -n -e "\n\nSelect your desired kernel: "
 		read INPUT
@@ -209,8 +212,12 @@ function select_kernel_ubu(){
 		if [[ $((INPUT)) != $INPUT ]] || [ "$INPUT" -gt $NUMOPTS ]; then
 			reqexit
 		fi
-	fi
 
+		select_low_latency		
+	fi
+}
+
+function select_low_latency(){
 	# Prompt for Ubuntu Low Latency kernel
 	if [ "$(basename "$0")" = "update_ubuntu_kernel.sh" ]; then
 		echo ""
@@ -392,7 +399,10 @@ function sudobg() {
 # TRAPS
 TEMPFILES=( )
 function cleanupfiles() {
-	rm -f "${TEMPFILES[@]}"
+	if [ -n  ${TEMPFILES} ]; then
+		rm -f "${TEMPFILES[@]}"
+	fi
+	
 	if [ $AV -eq 1 -a $AV_ACTIVE -eq 1 ]; then
 		echo -e "${PLUS} Restoring AntiVirus"
 		sophosON
@@ -580,12 +590,14 @@ function show_help_comp(){
 }
 
 function parse_opts_ubu(){
-	while getopts ":hlv-" opt; do
+	while getopts ":hlov-" opt; do
 		case "$opt" in
 			h)	show_help_update
 				exit 0
 				;;
 			l)	USE_LATEST=1
+				;;
+			o)	lowlatency=1
 				;;
 			v)	show_version
 				exit 0
@@ -599,6 +611,8 @@ function parse_opts_ubu(){
 								exit 0
 								;;
 					--latest)	USE_LATEST=1
+								;;
+					--low)		lowlatency=1
 								;;
 					--version)	show_version
 								exit 0

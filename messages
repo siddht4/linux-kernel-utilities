@@ -41,7 +41,14 @@ c_msg_one+="Bash script that will poll https://kernel.ubuntu.com for available p
 c_msg_one+="Optional arguments:\n"
 c_msg_one+="\t  -h, --help  \t  Display this help and exit\n"
 c_msg_one+="\t  -l, --latest  \t  Autoselect latest kernel release\n"
+c_msg_one+="\t  -o, --low  \t  Autoselect low latency kernel\n"
 c_msg_one+="\t  -v, --version  \t  Show version information and exit\n"
+c_msg_one+="\nNOTE: Do not mix parameter types:\n"
+c_msg_one+="\t  ${Red}WRONG${Reg} \t ./update_ubuntu_kernel ${Red}-l --low${Reg}\n"
+c_msg_one+="\t  ${Yellow}RIGHT${Reg} \t ./update_ubuntu_kernel ${Yellow}-lo${Reg}\n"
+c_msg_one+="\t  ${Yellow}RIGHT${Reg} \t ./update_ubuntu_kernel ${Yellow}-l -o${Reg}\n"
+c_msg_one+="\t  ${Yellow}RIGHT${Reg} \t ./update_ubuntu_kernel ${Yellow}--latest --low${Reg}\n"
+
 
 c_msg_two="Usage: ${0##*/} [OPTION][=FILE]\n\n"
 c_msg_two+="Bash script that will poll https://www.kernel.org for available kernels \nand present the user with a menu for selection, compilation and installation.\n\n"
