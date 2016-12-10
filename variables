@@ -58,3 +58,5 @@ FIELD=7
 MINVER=4
 # shellcheck disable=SC2034
 TMP_FLDR="/tmp"
+# shellcheck disable=SC2034
+lowlatency=-1

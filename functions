@@ -222,13 +222,14 @@ function select_low_latency(){
 	if [ "$(basename "$0")" = "update_ubuntu_kernel.sh" ]; then
 		echo ""
 
-		# Set low latency default to no
-		read -p "Do you want the lowlatency kernel? (y/[n]):" lowlatency
-		case "$lowlatency" in
-		   y* | Y*) lowlatency=1 ;;
-		   *) lowlatency=0 ;;
-		esac
-
+		if [[ $lowlatency -eq -1 ]] ; then
+			# Set low latency default to no
+			read -p "Do you want the lowlatency kernel? (y/[n]):" lowlatency
+			case "$lowlatency" in
+			y* | Y*) lowlatency=1 ;;
+			*) lowlatency=0 ;;
+			esac
+		fi
 		echo ""
 	fi
 }
@@ -257,10 +258,10 @@ function get_precompiled_ubu_kernel(){
 				((COUNTD++))
 				if [ $COUNTD -eq "$INPUT" ]; then
 					# Download Kernel
-					if [ ${lowlatency} -eq 0 ]; then
-						KTYPE="generic"
-					else
+					if [ ${lowlatency} -eq 1 ]; then
 						KTYPE="lowlatency"
+					else
+						KTYPE="generic"
 					fi
 					echo -e "${Cyan} \_ Locating source of ${ver} ${KTYPE} kernel packages.${Reg}"
 
