@@ -16,15 +16,6 @@ tput clear
 
 chk_version
 
-# Temporarily disable Sophos AntiVirus
-if [ $AV -eq 1 ]; then
-	echo -e "${PLUS} Disabling AntiVirus${Reg}\n"
-	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
-		sophosOFF
-		AV_ACTIVE=1
-	fi
-fi
-
 # shellcheck disable=SC2154
 echo -e "\n\n${Red}		++++++++++++++++++++++++++++++++"
 echo -e "		+++       W A R N I N G      +++ "
@@ -52,6 +43,15 @@ SUDO=''
 
 if (( EUID != 0 )); then
     SUDO='sudo'
+fi
+
+# Temporarily disable Sophos AntiVirus
+if [ $AV -eq 1 ]; then
+	echo -e "${PLUS} Disabling AntiVirus${Reg}\n"
+	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
+		sophosOFF
+		AV_ACTIVE=1
+	fi
 fi
 
 dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e "$(uname -r | cut -f1,2 -d"-")" | grep -e "[0-9]" | grep -E "(image|headers)" | xargs $SUDO apt-get -y purge

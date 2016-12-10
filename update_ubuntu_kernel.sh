@@ -47,14 +47,6 @@ fi
 echo -e "${PLUS} Checking Dependencies"
 check_deps
 
-echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
-if [ $AV -eq 1 ]; then
-	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
-		sophosOFF
-		AV_ACTIVE=1
-	fi
-fi
-
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
 cd "$TMP_FLDR" 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }
 # shellcheck disable=SC2154
@@ -74,6 +66,14 @@ select_kernel_ubu
 
 echo -e "${PLUS} Processing selection"
 get_precompiled_ubu_kernel
+
+echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
+if [ $AV -eq 1 ]; then
+	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
+		sophosOFF
+		AV_ACTIVE=1
+	fi
+fi
 
 echo -e "${PLUS} Installing kernel . . ."
 ${SUDO} dpkg -i linux*.deb
