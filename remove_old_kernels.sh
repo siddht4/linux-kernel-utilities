@@ -45,7 +45,7 @@ if (( EUID != 0 )); then
     SUDO='sudo'
 fi
 
-# Temporarily disable Sophos AntiVirus
+# Temporarily disable Sophos AntiVirus 
 if [ $AV -eq 1 ]; then
 	echo -e "${PLUS} Disabling AntiVirus${Reg}\n"
 	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
