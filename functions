@@ -136,6 +136,7 @@ function get_debian_list(){
 
 	ARR_LIST=(${LIST[@]})
 	ARR_END=${#ARR_LIST[@]}
+	# shellcheck disable=SC2034
 	NEW_ARR_END=$((ARR_END*2-1))
 
 	for (( i=NEW_ARR_END; i>0; i=i-2 ))
@@ -155,7 +156,8 @@ function select_kernel_deb(){
 		if [[ $1 != "quiet" ]]; then
 			echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option."
 		fi
-		OPTION="${ARR_LIST}"
+
+		OPTION="${ARR_LIST[0]}"
 	else
 		OPTION=$(whiptail --title "Available Kernels" --backtitle "${BACKTITLE}" --menu "Select kernel arhive to download" 20 80 "${ARR_END}" "${ARR_LIST[@]}" 3>&1 1>&2 2>&3)
 	fi
@@ -213,7 +215,7 @@ function select_kernel_ubu(){
 			reqexit
 		fi
 
-		select_low_latency		
+		select_low_latency
 	fi
 }
 
@@ -246,7 +248,7 @@ function chk_latest(){
 function get_precompiled_ubu_kernel(){
 	get_arch
 	# shellcheck disable=SC2128
-	
+
 	# Confirm actual latest release from Ubuntu page
 	chk_latest
 
@@ -400,10 +402,10 @@ function sudobg() {
 # TRAPS
 TEMPFILES=( )
 function cleanupfiles() {
-	if [ -n  ${TEMPFILES} ]; then
+	if [ -n  "${TEMPFILES}" ]; then
 		rm -f "${TEMPFILES[@]}"
 	fi
-	
+
 	if [ $AV -eq 1 -a $AV_ACTIVE -eq 1 ]; then
 		echo -e "${PLUS} Restoring AntiVirus"
 		sophosON
@@ -723,4 +725,3 @@ if [ -s $HOME/.aliases/sophos ]; then
 	. $HOME/.aliases/sophos
 	AV=1
 fi
-
