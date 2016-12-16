@@ -22,7 +22,9 @@ before_install:
 script: 
   - bats ./unitTesting/tests-linux-kernel-utilities.bats
   - source /opt/qt56/bin/qt56-env.sh
-  - fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" --url "${URL}" ../linux-kernel-utilities=/opt
+  - fpm -s dir -t deb -n "${NAME}" -v "${PKG_VER}" -a "${ARCH}" --deb-no-default-config-files \
+  --after-install "${A_INST}" --before-remove "${B_REMOVE}" -m "${MAINT}" --description "${DESC}" \
+  --url "${URL}" ../linux-kernel-utilities=/opt
 
 addons:
   code_climate:
