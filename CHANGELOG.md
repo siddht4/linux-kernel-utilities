@@ -1,15 +1,36 @@
 # linux-kernel-utilities Changelog
 
-## v1.1.3 (pending)
+## v1.1.4 (Pending)
 NEW FEATURES
-- Add `-o` `--low` parameters for Ubuntu kernel
-- Default to generic Ubuntu kernel if no lowlatency parameter passed on `--latest`
+- none
 
 IMPROVEMENTS
 - none
 
 FIXES
 - none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
+## v1.1.3 (December 16, 2016)
+NEW FEATURES
+- Add `-o` `--low` parameters for Ubuntu kernel
+- Default to generic Ubuntu kernel if no lowlatency parameter passed on `--latest`
+
+IMPROVEMENTS
+- Refactor is_remote function to pseudo-boolean
+- Get GPG user information and display prior to import
+
+FIXES
+- Argument check on compile_linux_kernel
+- Missing public key detection, parsing and retrieval
 
 DEPRECATED
 - none

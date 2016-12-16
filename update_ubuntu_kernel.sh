@@ -25,13 +25,14 @@ DEPENDENCIES+="lynx "
 # shellcheck disable=SC2034
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
-if [ "$1" = "latest" ]; then
-	echo -e "DEPRICATED: Please use the standard argument form (${Yellow}--latest${Reg}).\n"
-	echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
-	echo -e "Try ${Yellow}--help${Reg} for more information.\n"
-	exit 1
+if ! [[ $# == 0 ]]; then
+	if [[ $1 =~ ^- ]]; then
+		echo -e "DEPRICATED: Please use the standard argument form (${Yellow}--latest${Reg}).\n"
+		echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
+		echo -e "Try ${Yellow}--help${Reg} for more information.\n"
+		exit 1
+	fi
 fi
-
 # Parse arguments
 parse_opts_ubu "$@"
 

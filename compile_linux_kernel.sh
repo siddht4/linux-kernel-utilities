@@ -26,11 +26,13 @@ DEPENDENCIES+="bc build-essential gnupg libnotify-bin libssl-dev pkg-config \
 # shellcheck disable=SC2034
 BASEURL=kernel.org
 
-if ! [[ $1 =~ ^- ]]; then
-	echo -e "DEPRICATED: Please use the standard argument form.\n"
-	echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
-	echo -e "Try ${Yellow}--help${Reg} for more information.\n"
-	exit 1
+if ! [[ $# == 0 ]]; then
+		if ! [[ $1 =~ ^- ]]; then
+		echo -e "DEPRICATED: Please use the standard argument form.\n"
+		echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
+		echo -e "Try ${Yellow}--help${Reg} for more information.\n"
+		exit 1
+	fi
 fi
 
 # Parse arguments
@@ -48,28 +50,34 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Check if remote session
-isremote
+##isremote
 
 echo -e "${PLUS} Checking Dependencies"
 
 # Configure dependencies basted on local / remote
-if [ -n "$SESSION_TYPE" ]; then
+#if [ -n "$SESSION_TYPE" ]; then
+if is_remote; then
+	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
+	USENCURSES=1
 	DEPENDENCIES+="libncurses5 libncurses5-dev "
 else
 	DEPENDENCIES+="qt5-qmake "
+	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
+	check_qt5
+	unset USENCURSES
 fi
 
 check_deps
 
 # Check if remote session
-if [ -n "$SESSION_TYPE" ]; then
-	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
-	USENCURSES=1
-else
-	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
-	check_qt5
-	unset USENCURSES
-fi
+#if [ -n "$SESSION_TYPE" ]; then
+#	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
+#	USENCURSES=1
+#else
+#	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
+#	check_qt5
+#	unset USENCURSES
+#fi
 
 if ! [ $LOCALFILE ]; then
 	select_kernel_deb

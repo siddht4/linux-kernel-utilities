@@ -417,19 +417,30 @@ trap cleanupfiles 0
 function check_sign(){
 	start_spinner "Checking archive signature . . ."
 	CHK_SIGN=$(unxz -c "${OUTPUT}" | gpg --verify "${SIGNfile}" - 2>&1)
-	CHK_SIGN_MISS_SIG=$(grep -o 'public key not found' <<<$CHK_SIGN)
 	CHK_ID=$(grep -Po -- 'RSA key ID \K\w*' <<< "$CHK_SIGN")
+	if [ -z $CHK_ID ]; then
+		CHK_ID=$(grep -Po -- 'using RSA key \K\w*' <<< "$CHK_SIGN")
+	fi
+
+	if [ -z $CHK_ID ]; then
+
+		error "Func: check_sign" "Could not parse RSA key ID. Exiting." $1
+	fi
+
 	stop_spinner 0
 	clearline
 	echo -en "\e[1A"
 	echo -e "\n${PLUS} Checking archive signature . . ."
 
-	if [[ "$CHK_SIGN_MISS_SIG" == "public key not found" ]] ; then
+	if ! chk_got_keyID; then
 		if [ $# -ne 0 ] && [[ "${1}" == "add" ]]; then
 			INSTALL_ID="y"
 		else
+			local KEY_INFO=$(gpg --batch --keyserver hkp://pgp.mit.edu --search-keys $CHK_ID 2>/dev/null)
 			echo -e "\n[!] The public key for this file was not found in your PGP store."
-			echo -e "[?] Do you want to install ID $CHK_ID:"
+			echo -e "[?] Do you want to install ID the key with ID: ${Yellow}$CHK_ID${Reg}\n"
+			echo -e "${Yellow}${KEY_INFO}${Reg}"
+			echo -e
 			echo -e "    [Y]es  - Install the RSA key ID for ${Yellow}$CHK_ID${Reg}"
 			echo -e "    [n]o   - Do NOT install ID and EXIT"
 			echo -e "    [s]kip - Do NOT install ID and CONTINUE"
@@ -459,6 +470,14 @@ function check_sign(){
 			error "Func: chk_sign" "Signature invalid. Exiting." 1
 		fi
 	fi
+}
+
+function chk_got_keyID(){
+	local NO_KEY=$(grep -Eo 'public key not found|No public key' <<<$CHK_SIGN)
+	if [[ -z $NO_KEY ]]; then
+		return 0
+	fi
+	return 1
 }
 
 function clearline(){
@@ -573,15 +592,20 @@ function show_version (){
 	echo "Linux Kernel Utilities - Version: $projectversion-$revisioncount"
 }
 
-function isremote(){
+function is_remote(){
 	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-		SESSION_TYPE=remote/ssh
+		# 0 = true
+		return 0;
+		##SESSION_TYPE=remote/ssh
 	else
 		# shellcheck disable=SC2034
 		case $(ps -o comm= -p $PPID) in
-			sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+			##sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+			sshd|*/sshd) return 0;;
 		esac
 	fi
+	# 1 = false
+	return 1;
 }
 
 function show_help_update(){
