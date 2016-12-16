@@ -1,6 +1,6 @@
 env:
   global:
-    - PKG_VER="1.1.2"
+    - PKG_VER="1.1.3"
     - NAME="linux-kernel-utilities"
     - DESC="Utilities to compile & update linux kernels for Debian and deriv's (e.g. Ubuntu, LinuxMint, etc.)"
     - URL="https://github.com/mtompkins/linux-kernel-utilities"
