@@ -49,13 +49,9 @@ if [[ $EUID -ne 0 ]]; then
 	chk_sudoer
 fi
 
-# Check if remote session
-##isremote
-
 echo -e "${PLUS} Checking Dependencies"
 
 # Configure dependencies basted on local / remote
-#if [ -n "$SESSION_TYPE" ]; then
 if is_remote; then
 	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
 	USENCURSES=1
@@ -68,16 +64,6 @@ else
 fi
 
 check_deps
-
-# Check if remote session
-#if [ -n "$SESSION_TYPE" ]; then
-#	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
-#	USENCURSES=1
-#else
-#	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
-#	check_qt5
-#	unset USENCURSES
-#fi
 
 if ! [ $LOCALFILE ]; then
 	select_kernel_deb
