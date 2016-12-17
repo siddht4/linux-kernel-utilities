@@ -26,7 +26,7 @@ DEPENDENCIES+="lynx "
 BASEURL=kernel.ubuntu.com/~kernel-ppa/mainline/
 
 if ! [[ $# == 0 ]]; then
-	if [[ $1 =~ ^- ]]; then
+	if ! [[ $1 =~ ^- ]]; then
 		echo -e "DEPRICATED: Please use the standard argument form (${Yellow}--latest${Reg}).\n"
 		echo -e "Example: ${Yellow}./${0##*/} --latest${Reg}\n"
 		echo -e "Try ${Yellow}--help${Reg} for more information.\n"
