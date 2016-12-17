@@ -15,6 +15,7 @@ function chk_os(){
 		UPOS=${OS^^}
 		if ! (whiptail --yesno --defaultno --title "Precompiled Ubuntu Kernel Updater" "This script is intended to update an Ubuntu distro.\n\nYour distro detected as [${UPOS}] ... continue anyway?" 20 80); then
 			whip_msg  "Non-Ubuntu Distro Cancel" "Exiting and cleaning up."
+			echo -e "${Cyan} \_ Distro identified as ${Yellow}${OS}${Reg}. Exit requested.\n"
 			exit 0
 		fi
 	fi
