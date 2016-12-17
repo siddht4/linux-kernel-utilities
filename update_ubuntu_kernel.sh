@@ -36,15 +36,8 @@ fi
 # Parse arguments
 parse_opts_ubu "$@"
 
-shopt -s nocasematch
-if [[ "${OS,,}" != "ubuntu"" ]] && [[ "${OS,,}" != "linuxmint"" ]] && [[ "${OS,,}" != "edubuntu"" ]] \
-	&& [[ "${OS,,}" != "kubuntu"" ]] && [[ "${OS,,}" != "lubuntu"" ]] && [[ "${OS,,}" != "mythbuntu"" ]]; then
-	UPOS=${OS^^}
-	if ! (whiptail --yesno --defaultno --title "Precompiled Ubuntu Kernel Updater" "This script is intended to update an Ubuntu distro.\n\nYour distro detected as [${UPOS}] ... continue anyway?" 20 80); then
-		whip_msg  "Non-Ubuntu Distro Cancel" "Exiting and cleaning up."
-		exit 0
-	fi
-fi
+# Check OS
+chk_os
 
 echo -e "${PLUS} Checking Dependencies"
 check_deps
@@ -70,8 +63,8 @@ echo -e "${PLUS} Processing selection"
 get_precompiled_ubu_kernel
 
 echo -e "${PLUS} Checking AntiVirus flag and disabling if necessary"
-if [ $AV -eq 1 ]; then
-	if ${SUDO} /opt/sophos-av/bin/savdstatus | grep -w "on-access scanning is running" > /dev/null; then
+if [ $AV -eq 1 ] && [ -e "${AV_BINARY}" ]; then
+	if ${SUDO} "${AV_BINARY}" | grep -w "on-access scanning is running" > /dev/null; then
 		sophosOFF
 		AV_ACTIVE=1
 	fi

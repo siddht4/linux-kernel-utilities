@@ -39,6 +39,7 @@ fi
 # AntiVirus management
 AV=0
 AV_ACTIVE=0
+AV_BINARY="/opt/sophos-av/bin/savdstatus"
 
 # Compile
 # shellcheck disable=SC2034

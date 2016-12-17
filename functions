@@ -8,6 +8,18 @@ function whip_msg(){
 	whiptail --title "${title}" --msgbox "${msg}" --backtitle "${BACKTITLE}" 20 80
 }
 
+function chk_os(){
+	shopt -s nocasematch
+	if [[ "${OS,,}" != "ubuntu" ]] && [[ "${OS,,}" != "linuxmint" ]] && [[ "${OS,,}" != "edubuntu" ]] \
+	&& [[ "${OS,,}" != "kubuntu" ]] && [[ "${OS,,}" != "lubuntu" ]] && [[ "${OS,,}" != "mythbuntu" ]]; then
+		UPOS=${OS^^}
+		if ! (whiptail --yesno --defaultno --title "Precompiled Ubuntu Kernel Updater" "This script is intended to update an Ubuntu distro.\n\nYour distro detected as [${UPOS}] ... continue anyway?" 20 80); then
+			whip_msg  "Non-Ubuntu Distro Cancel" "Exiting and cleaning up."
+			exit 0
+		fi
+	fi
+}
+
 function chk_root(){
 	if [[ $EUID -eq 0 ]]; then
 		# shellcheck disable=SC2154
