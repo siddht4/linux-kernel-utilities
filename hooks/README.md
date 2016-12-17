@@ -1,1 +1,1 @@
-Folder for housing git hooks to be symlinked
+Folder for housing various hooks

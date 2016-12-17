@@ -156,7 +156,6 @@ function select_kernel_deb(){
 		if [[ $1 != "quiet" ]]; then
 			echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option."
 		fi
-
 		OPTION="${ARR_LIST[0]}"
 	else
 		OPTION=$(whiptail --title "Available Kernels" --backtitle "${BACKTITLE}" --menu "Select kernel arhive to download" 20 80 "${ARR_END}" "${ARR_LIST[@]}" 3>&1 1>&2 2>&3)
@@ -178,14 +177,12 @@ function get_kernel_archive(){
 	whiptail --title "Download Kernel Archive" --backtitle "${BACKTITLE}" --gauge "Downloading kernel archive . . ." 7 70 0
 
 	err=${PIPESTATUS[0]}
-	if [ $err -ne 0 ]
-	then
+	if [ $err -ne 0 ]; then
 		error "Func: print_kernels" "Download source failure." $err
 	fi
 
 	SIGNurl=$(sed 's/.xz/.sign/g' <<< ${TGTFILE})
 	SIGNfile=$(sed 's/.xz/.xz.sign/g' <<< ${OPTION})
-
 	TEMPFILES+=( "${SIGNfile}" )
 	# shellcheck disable=SC2016
 	wget -O "${SIGNfile}" "${SIGNurl}" 2>&1 | \
@@ -204,7 +201,7 @@ function select_kernel_ubu(){
 		echo -e "\n\nScript started with ${Yellow}LATEST${Reg} option."
 		INPUT=1
 		if [[ $lowlatency -eq 1 ]] ; then
-				echo -e "Script started with ${Yellow}LOWLATENCY${Reg} option."
+			echo -e "Script started with ${Yellow}LOWLATENCY${Reg} option."
 		fi
 	else
 		echo -n -e "\n\nSelect your desired kernel: "
@@ -214,7 +211,6 @@ function select_kernel_ubu(){
 		if [[ $((INPUT)) != $INPUT ]] || [ "$INPUT" -gt $NUMOPTS ]; then
 			reqexit
 		fi
-
 		select_low_latency
 	fi
 }
@@ -223,13 +219,12 @@ function select_low_latency(){
 	# Prompt for Ubuntu Low Latency kernel
 	if [ "$(basename "$0")" = "update_ubuntu_kernel.sh" ]; then
 		echo ""
-
 		if [[ $lowlatency -eq -1 ]] ; then
 			# Set low latency default to no
 			read -p "Do you want the lowlatency kernel? (y/[n]):" lowlatency
 			case "$lowlatency" in
-			y* | Y*) lowlatency=1 ;;
-			*) lowlatency=0 ;;
+				y* | Y*) lowlatency=1 ;;
+				*) lowlatency=0 ;;
 			esac
 		fi
 		echo ""
@@ -248,7 +243,6 @@ function chk_latest(){
 function get_precompiled_ubu_kernel(){
 	get_arch
 	# shellcheck disable=SC2128
-
 	# Confirm actual latest release from Ubuntu page
 	chk_latest
 
@@ -284,6 +278,7 @@ function get_precompiled_ubu_kernel(){
 	done
 	echo -e "${Cyan} \_ Done${Reg}\n"
 }
+
 function get_ubu_shared_header(){
 	TEMPFILES+=( "${ver}" )
 	# shellcheck disable=SC2016
@@ -291,8 +286,7 @@ function get_ubu_shared_header(){
 	stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} shared header . . ." 7 70 0
 	err=${PIPESTATUS[0]}
-	if [ $err -ne 0 ]
-	then
+	if [ $err -ne 0 ]; then
 		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
 	fi
 }
@@ -305,8 +299,7 @@ function get_ubu_files() {
 	whiptail --title "Download Precompiled Ubuntu Kernel Packages" --backtitle "${BACKTITLE}" --gauge "Downloading ${ver} ${1} ${2} . . ." 7 70 0
 
 	err=${PIPESTATUS[0]}
-	if [ $err -ne 0 ]
-	then
+	if [ $err -ne 0 ]; then
 		error "Download package failure." "There was a problem downloading the packages. Exiting." $err
 	fi
 }
@@ -343,21 +336,18 @@ function update(){
 	MSG="-- Installing Dependencies --"
     center-text "${Cyan}" "${MSG}" "${Reg}"
 	echo -e "\n${Yellow}[!]${Reg} The first time this script is run missing dependencies will be installed."
-	echo -e "    For compiling a kernel this may take a bit of time. Feedback will be provided."
-	echo
+	echo -e "    For compiling a kernel this may take a bit of time. Feedback will be provided.\n"
 	echo -e "${PLUS} Dependencies"
 	echo -e " \_Elevating permissions as necessary . . ."
 	$SUDO echo -e "[%] ${Green}Elevated${Reg}\n"
 	EXIT_STAT=$?
-	if [ $EXIT_STAT -ne 0 ]
-	then
+	if [ $EXIT_STAT -ne 0 ]; then
 		error ${LINENO} "An error occured while elevating permissions." $EXIT_STAT
 	fi
 	echo -e "${PLUS} Testing for previous held packages and trying to correct any found."
 	$SUDO apt-get -qqf install &>/dev/null
 	EXIT_STAT=$?
-	if [ $EXIT_STAT -ne 0 ]
-	then
+	if [ $EXIT_STAT -ne 0 ]; then
 		error ${LINENO} "An error occured while examining possible apt held packages." $EXIT_STAT
 	fi
 	echo -e " \_${Green}Passed${Reg}\n"
@@ -386,9 +376,9 @@ function countdown(){
 	local txt=$1
 	local secs=$2
 	while [ "$secs" -gt 0 ]; do
-	echo -ne "$txt $secs\033[0K\r"
-	sleep 1
-	: $((secs--))
+		echo -ne "$txt $secs\033[0K\r"
+		sleep 1
+		: $((secs--))
 	done
 }
 
@@ -405,7 +395,6 @@ function cleanupfiles() {
 	if [ -n  "${TEMPFILES}" ]; then
 		rm -f "${TEMPFILES[@]}"
 	fi
-
 	if [ $AV -eq 1 -a $AV_ACTIVE -eq 1 ]; then
 		echo -e "${PLUS} Restoring AntiVirus"
 		sophosON
@@ -421,7 +410,6 @@ function check_sign(){
 	if [ -z $CHK_ID ]; then
 		CHK_ID=$(grep -Po -- 'using RSA key \K\w*' <<< "$CHK_SIGN")
 	fi
-
 	if [ -z $CHK_ID ]; then
 
 		error "Func: check_sign" "Could not parse RSA key ID. Exiting." $1
@@ -439,12 +427,10 @@ function check_sign(){
 			local KEY_INFO=$(gpg --batch --keyserver hkp://pgp.mit.edu --search-keys $CHK_ID 2>/dev/null)
 			echo -e "\n[!] The public key for this file was not found in your PGP store."
 			echo -e "[?] Do you want to install ID the key with ID: ${Yellow}$CHK_ID${Reg}\n"
-			echo -e "${Yellow}${KEY_INFO}${Reg}"
-			echo -e
+			echo -e "${Yellow}${KEY_INFO}${Reg}\n"
 			echo -e "    [Y]es  - Install the RSA key ID for ${Yellow}$CHK_ID${Reg}"
 			echo -e "    [n]o   - Do NOT install ID and EXIT"
 			echo -e "    [s]kip - Do NOT install ID and CONTINUE"
-
 			echo -n -e "\n\nSelect your desired action: "
 			read INSTALL_ID
 		fi

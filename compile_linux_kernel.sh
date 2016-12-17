@@ -108,14 +108,12 @@ else
 	make xconfig 2>/dev/null || error ${LINENO} "Error occured while running \"make xconfig\"." 1
 fi
 
-
 echo -e "\n${PLUS} Disabling DEBUG INFO . . . "
 scripts/config --disable DEBUG_INFO || error ${LINENO} "Error occurred while disabling DEBUG INFO." $?
 echo -e " \_ ${Green}Done${Reg}\n"
 
 echo -e "${PLUS} Cleaning the workspace after configuration . . . "
-	make clean &>/dev/null || error ${LINENO} "Error occurred while running \"make clean clean\"." 1
-
+make clean &>/dev/null || error ${LINENO} "Error occurred while running \"make clean clean\"." 1
 echo -e " \_ ${Green}Cleaned${Reg}\n"
 
 read -p "[?] Would you like to build the kernel now? This will take a while (y/N):" -n 1 -r
@@ -142,7 +140,6 @@ else
 
 	/usr/bin/time -f "\n\n\tTime Elapsed: %E\n\n" make -j"${NUMTHREADS}" modules LOCALVERSION=-"${VERAPPEND}" \
 			|| error ${LINENO} "Something happened during the modules compilation process, but I can't help you." 1
-
 fi
 
 # Provide a user notification
