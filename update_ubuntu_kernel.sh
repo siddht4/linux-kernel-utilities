@@ -37,7 +37,8 @@ fi
 parse_opts_ubu "$@"
 
 shopt -s nocasematch
-if [[ "$OS" != "ubuntu" ]]; then
+if [[ "${OS,,}" != "ubuntu"" ]] && [[ "${OS,,}" != "linuxmint"" ]] && [[ "${OS,,}" != "edubuntu"" ]] \
+	&& [[ "${OS,,}" != "kubuntu"" ]] && [[ "${OS,,}" != "lubuntu"" ]] && [[ "${OS,,}" != "mythbuntu"" ]]; then
 	UPOS=${OS^^}
 	if ! (whiptail --yesno --defaultno --title "Precompiled Ubuntu Kernel Updater" "This script is intended to update an Ubuntu distro.\n\nYour distro detected as [${UPOS}] ... continue anyway?" 20 80); then
 		whip_msg  "Non-Ubuntu Distro Cancel" "Exiting and cleaning up."
