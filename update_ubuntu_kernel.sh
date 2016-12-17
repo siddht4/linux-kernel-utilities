@@ -37,7 +37,9 @@ fi
 parse_opts_ubu "$@"
 
 # Check OS
+echo -e "${PLUS} Checking Distro"
 chk_os
+echo -e "${Cyan} \_ Distro identified as ${Yellow}${OS}${Reg}.\n"
 
 echo -e "${PLUS} Checking Dependencies"
 check_deps
