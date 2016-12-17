@@ -11,7 +11,7 @@ xprofile(){
     fi
     #Do not background dependency check - it calls sudobg 
     echo -e "${PLUS} Checking Dependencies"
-        check_deps
+        chk_deps
     echo -e "${PLUS} Managing dependencies"
     echo -e " \_${Green}Complete${Reg}"
     

@@ -42,7 +42,7 @@ chk_os
 echo -e "${Cyan} \_ Distro identified as ${Yellow}${OS}${Reg}.\n"
 
 echo -e "${PLUS} Checking Dependencies"
-check_deps
+chk_deps
 
 echo -e "${PLUS} Changing to temporary directory to work in . . ."
 cd "$TMP_FLDR" 2>/dev/null || { echo "Unable to access temporary workspace ... exiting." >&2; exit 1; }

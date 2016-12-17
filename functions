@@ -8,6 +8,24 @@ function whip_msg(){
 	whiptail --title "${title}" --msgbox "${msg}" --backtitle "${BACKTITLE}" 20 80
 }
 
+function chk_deps(){
+	for dep in $(echo "${DEPENDENCIES}" | tr ' ' $'\n'); do
+		printf '\t%-24s' "${dep}"
+		#if [[ -z $(dpkg -l | grep "^ii  $dep") ]]; then
+		if ! ( dpkg -l | grep -q "^ii  $dep" ); then
+			echo -e "${Red}Not Found${Reg}"
+			UPDATENEEDED=1
+			TOINSTALL+="${dep} "
+		else
+			echo -e "${Green}Found${Reg}"
+		fi
+	done
+	echo ""
+	if [ $UPDATENEEDED -eq 1 ]; then
+		update
+	fi
+}
+
 function chk_os(){
 	shopt -s nocasematch
 	if [[ "${OS,,}" != "ubuntu" ]] && [[ "${OS,,}" != "linuxmint" ]] && [[ "${OS,,}" != "edubuntu" ]] \
@@ -18,6 +36,18 @@ function chk_os(){
 			echo -e "${Cyan} \_ Distro identified as ${Yellow}${OS}${Reg}. Exit requested.\n"
 			exit 0
 		fi
+	fi
+}
+
+function check_qt(){
+	printf '\t%-24s' "QT4 or QT5"
+	if pkg-config --exists Qt5Core || pkg-config --exists QtCore; then \
+		# shellcheck disable=SC2154
+		echo -e "${Green}Found${Reg}"; \
+		return 0; \
+	else \
+		echo -e "${Red}Not Found${Reg}"; \
+		return 1; \
 	fi
 }
 
@@ -51,33 +81,16 @@ function reqexit(){
 	exit 0
 }
 
-function check_qt(){
-	printf '\t%-24s' "QT4 or QT5"
-	if pkg-config --exists Qt5Core || pkg-config --exists QtCore; then \
-		# shellcheck disable=SC2154
-		echo -e "${Green}Found${Reg}"; \
-		return 0; \
-	else \
-		echo -e "${Red}Not Found${Reg}"; \
-		return 1; \
-	fi
-}
-
-function check_deps(){
-	for dep in $(echo "${DEPENDENCIES}" | tr ' ' $'\n'); do
-		printf '\t%-24s' "${dep}"
-		#if [[ -z $(dpkg -l | grep "^ii  $dep") ]]; then
-		if ! ( dpkg -l | grep -q "^ii  $dep" ); then
-			echo -e "${Red}Not Found${Reg}"
-			UPDATENEEDED=1
-			TOINSTALL+="${dep} "
-		else
-			echo -e "${Green}Found${Reg}"
-		fi
-	done
-	echo ""
-	if [ $UPDATENEEDED -eq 1 ]; then
-		update
+function set_deps(){
+	if is_remote; then
+		echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
+		USENCURSES=1
+		DEPENDENCIES+="libncurses5 libncurses5-dev "
+	else
+		DEPENDENCIES+="qt5-qmake "
+		echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
+		check_qt5
+		unset USENCURSES
 	fi
 }
 
@@ -382,7 +395,7 @@ function update(){
 	echo -e " \_${Green}Complete${Reg}\n"
 	UPDATENEEDED=0
 	tput clear
-	check_deps
+	chk_deps
 }
 
 function countdown(){

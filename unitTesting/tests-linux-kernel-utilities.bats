@@ -48,7 +48,7 @@ source ${BATS_TEST_DIRNAME}/../variables
 }
 
 @test "Test check dependencies" {
-	run check_deps
+	run chk_deps
 	assert_success
 }
 

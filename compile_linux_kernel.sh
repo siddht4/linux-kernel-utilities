@@ -52,18 +52,10 @@ fi
 echo -e "${PLUS} Checking Dependencies"
 
 # Configure dependencies basted on local / remote
-if is_remote; then
-	echo -e "${PLUS} Remote usage detected. Enabling ncurses . . ."
-	USENCURSES=1
-	DEPENDENCIES+="libncurses5 libncurses5-dev "
-else
-	DEPENDENCIES+="qt5-qmake "
-	echo -e "${PLUS} This build script uses QT to provide a menu for the user. Detecting . . ."
-	check_qt5
-	unset USENCURSES
-fi
+set_deps
 
-check_deps
+# Check all deps are installed
+chk_deps
 
 if ! [ $LOCALFILE ]; then
 	select_kernel_deb
