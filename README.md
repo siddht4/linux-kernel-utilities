@@ -16,7 +16,7 @@ The configuration routine will pull the current machine's configuration in to th
 Bash script that will poll https://kernel.ubuntu.com for available precompiled kernels and present the user with a menu for selection.
 It is set to currently filter for kernels at v4. Both **generic** and **lowlatency** choices are provided.    
 
-This is intended explicitly for **Ubuntu** and derivatives like **linuxMint**.
+This is intended explicitly for **Ubuntu** and derivatives like **LinuxMint**.
 
 ----
 ### Remove all inactive kernels: `remove_old_kernels.sh`
@@ -78,7 +78,7 @@ To download and install the latest precompiled Ubuntu kernel from [kernel.ubuntu
     ./update_ubuntu_kernel.sh --latest
 
 ### Removal of inactive kernels
-To remove ALL non-active kernels
+To remove ALL inactive kernels (i.e. all kernels other than the currently loaded instance)
 
     ./remove_old_kernels.sh
 

@@ -58,6 +58,6 @@ FIELD=7
 # shellcheck disable=SC2034
 MINVER=4
 # shellcheck disable=SC2034
-TMP_FLDR="/tmp"
+TMP_FLDR=$(mktemp -d)
 # shellcheck disable=SC2034
 lowlatency=-1

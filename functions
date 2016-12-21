@@ -11,7 +11,6 @@ function whip_msg(){
 function chk_deps(){
 	for dep in $(echo "${DEPENDENCIES}" | tr ' ' $'\n'); do
 		printf '\t%-24s' "${dep}"
-		#if [[ -z $(dpkg -l | grep "^ii  $dep") ]]; then
 		if ! ( dpkg -l | grep -q "^ii  $dep" ); then
 			echo -e "${Red}Not Found${Reg}"
 			UPDATENEEDED=1
