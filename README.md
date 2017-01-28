@@ -118,4 +118,6 @@ sudo mount --bind /sys /mnt/sys
 >       - They must be removed in a non-dependency order, so just take your time.
 >       - `dpkg --list | grep "ii[[:space:]][[:space:]]linux-[f,h,i,l]"`   
            will help list your installs
->   - Buy me a beer through [PayPal](https://www.paypal.me/metsdev)
+>   - Buy me a beer through [PayPal](https://www.paypal.me/metsdev) or   
+
+<img height="150" width="150" align="left" src="img/bits.png" alt="Bitcoin" title="Bitcoin">
