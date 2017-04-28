@@ -145,7 +145,7 @@ function print_kernels_ubu(){
 }
 
 function get_debian_list(){
-	local FILES=($(curl -s https://kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
+	local FILES=($(curl -s https://www.kernel.org | grep "Download complete tarball" | cut -d '.' -f 2- | cut -d '"' -f 1 ))
 	local FILTERED_FILES=(${FILES[@]/*$RC_FILTER*/})
 
 	for ver in "${FILTERED_FILES[@]}"; do

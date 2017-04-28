@@ -1,6 +1,6 @@
 # linux-kernel-utilities Changelog
 
-## v1.1.4 (Pending)
+## v1.1.5 (Pending)
 NEW FEATURES
 - none
 
@@ -9,6 +9,25 @@ IMPROVEMENTS
 
 FIXES
 - none
+
+DEPRECATED
+- none
+
+WORK IN PROCESS
+- none
+
+TO DO
+- Update unit tests for `make deb-pkg`
+
+## v1.1.4 (April 28, 2017)
+NEW FEATURES
+- none
+
+IMPROVEMENTS
+- none
+
+FIXES
+- Update for new URL at kernel.org (301)
 
 DEPRECATED
 - none
