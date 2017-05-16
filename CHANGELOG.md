@@ -1,6 +1,6 @@
 # linux-kernel-utilities Changelog
 
-## v1.1.6 (Pending)
+## v1.1.7 (Pending)
 NEW FEATURES
 - none
 
@@ -19,7 +19,7 @@ WORK IN PROCESS
 TO DO
 - Update unit tests for `make deb-pkg`
 
-## v1.1.5 (May 15, 2017)
+## v1.1.6 (May 15, 2017)
 NEW FEATURES
 - none
 
