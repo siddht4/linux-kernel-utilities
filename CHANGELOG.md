@@ -19,7 +19,7 @@ WORK IN PROCESS
 TO DO
 - Update unit tests for `make deb-pkg`
 
-## v1.1.5 (Pending)
+## v1.1.5 (May 15, 2017)
 NEW FEATURES
 - none
 
