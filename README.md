@@ -3,7 +3,7 @@
 <img align="right" src="img/tux.png" alt="Linux Logo" title="Tux">
 # Linux Kernel Utilities
 
-## Note: Due to a lack of external support updates to these scripts are on hold.
+
 ----
 ## Descriptions
 
